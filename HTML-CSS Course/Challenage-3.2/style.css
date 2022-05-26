@@ -1,0 +1,159 @@
+/* GLOBAL SETTINGS */
+
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+body {
+  font-family: sans-serif;
+  line-height: 1.4;
+}
+
+/* PRODUCT DESCRIPTION */
+
+.product {
+  border: 4px solid black;
+  width: 825px;
+  margin: 50px auto;
+  position: relative;
+}
+.product-tytle {
+  font-size: 22px;
+  text-align: center;
+  text-transform: uppercase;
+  background-color: #f7f7f7;
+  padding: 15px;
+}
+
+/* product voriants here */
+
+.price {
+  font-size: 20px;
+}
+
+.shipping-cost {
+  font-size: 12px;
+  color: #6a6a6a;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.sale {
+  color: white;
+  background-color: red;
+  font-size: 12px;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 0.2rem;
+  padding: 5px 10px;
+  position: absolute;
+  top: -15px;
+  left: -35px;
+}
+
+.more-info {
+  margin-bottom: 20px;
+}
+.more-info:link,
+.more-info:visited {
+  color: black;
+}
+.more-info:hover,
+.more-info:active {
+  color: black;
+  text-decoration: none;
+}
+
+/* PRODUCT DETAILS */
+
+.details-tytle {
+  text-transform: uppercase;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.details-list {
+  list-style: square;
+  margin-left: 25px;
+}
+.details-list li {
+  margin-bottom: 10px;
+}
+
+/* BUTTON */
+
+.add-cart {
+  font-size: 18px;
+  text-transform: uppercase;
+  color: white;
+  background-color: black;
+  /* font-weight: bold; */
+  cursor: pointer;
+  border-top: 4px solid black;
+  width: 100%;
+  height: 40px;
+}
+.add-cart:hover {
+  font-size: 18px;
+  text-transform: uppercase;
+  color: black;
+  background-color: white;
+  /* font-weight: bold; */
+  cursor: pointer;
+  border-top: 4px solid black;
+  width: 100%;
+  height: 40px;
+}
+/* Variants (Colors) */
+.v1 {
+  background-color: black;
+  width: 40px;
+  height: 40px;
+  margin-right: 30px;
+  margin-top: 10px;
+}
+.v2 {
+  background-color: royalblue;
+  width: 40px;
+  height: 40px;
+  margin-right: 30px;
+  margin-top: 10px;
+}
+.v3 {
+  background-color: red;
+  width: 40px;
+  height: 40px;
+  margin-right: 30px;
+  margin-top: 10px;
+}
+.v4 {
+  background-color: yellow;
+  width: 40px;
+  height: 40px;
+  margin-right: 30px;
+  margin-top: 10px;
+}
+.v5 {
+  background-color: yellowgreen;
+  width: 40px;
+  height: 40px;
+  margin-right: 30px;
+  margin-top: 10px;
+}
+.v6 {
+  background-color: saddlebrown;
+  width: 40px;
+  height: 40px;
+  margin-right: 30px;
+  margin-top: 10px;
+}
+
+.product-variants div {
+  display: inline-block;
+}
+.product-variants:last-child {
+  margin-right: 0;
+}
