@@ -160,7 +160,7 @@ body {
   /* flex: 1; */
   margin-top: 20px;
 }
-` .details-title {
+.details-title {
   text-transform: uppercase;
   margin-bottom: 20px;
 }
