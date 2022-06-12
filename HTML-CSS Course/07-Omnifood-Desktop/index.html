@@ -22,7 +22,7 @@
       <img src="img/omnifood-logo.png" alt="" class="logo" />
       <nav class="main-nav">
         <ul class="main-nav-list">
-          <li><a class="main-nav-link" href="link.html">Section 1</a></li>
+          <li><a class="main-nav-link" href="#">Section 1</a></li>
           <li><a class="main-nav-link" href="#">Section 2</a></li>
           <li><a class="main-nav-link" href="#">Section 3</a></li>
           <li><a class="main-nav-link" href="#">Section 4</a></li>
@@ -400,7 +400,7 @@
           </h2>
         </div>
 
-        <div class="container grid grid--2-cols">
+        <div class="container grid grid--2-cols margin-bottom-md">
           <!-- PLAN 1 -->
           <div class="pricing-plan pricing-plan--starter">
             <header class="plan-header">
@@ -462,27 +462,95 @@
             </ul>
             <div class="plan-sign-up">
               <a href="#" class="btn btn--full margin-right-sm"
-                >Start eating well</a
+                >Start eating better</a
               >
             </div>
           </div>
+          </div>
         </div>
-        <!-- 
+ 
+        <div class="container grid">
+          <aside class="plan-details">Prices incude all applicable texes. You can cancel at any time. Both plans iclude the following:
+          </aside>
+        </div>
 
-            
-Prices include all applicable taxes. Users can cancel at any time.
-
-
-Complete: $649 per month
-
-- 2 meal2 per day
-- Order 24/7
-- Delivery is free
-- Get access to latest recipes
-
-            
-           -->
+        <div class="container grid grid--4-cols">
+          <!-- 1 -->
+          <div class="feature">
+            <ion-icon class="feature-icon" name="infinite-outline"></ion-icon>
+            <p class="feature-title">Never cook again!</p>
+            <p class="feature-text">
+              Never cook again!: Our subscriptions cover 365 days per year, even including major holidays.
+            </p>
+          </div>
+          <!-- 2 -->
+          <div class="feature">
+            <ion-icon  class="feature-icon" name="nutrition-outline"></ion-icon>
+            <p class="feature-title">Local and organic</p>
+            <p class="feature-text">
+              Local and organic: Our cooks only use local, fresh, and organic products to prepare your meals.
+            </p>
+          </div>
+          <!-- 3 -->
+          <div class="feature">
+            <ion-icon class="feature-icon" name="leaf-outline">No waste</ion-icon>
+            <p class="feature-title">Local and organic</p>
+            <p class="feature-text">
+            No waste: All our partners only use reusable containers to package all your meals.
+            </p>
+          </div>
+          <!-- 4 -->
+          <div class="feature">
+            <ion-icon class="feature-icon" name="pause-outline"></ion-icon>
+            <p class="feature-title">Puse anytime</p>
+            <p class="feature-text">
+            Pause anytime: Going on vacation? Just pause your subscription, and we refund unused days.
+            </p>
+          </div>
+        </div>
       </section>
+
+      <section class="section-cta">
+        <div class="container">
+          <div class="cta">
+            <div class="cta-text-box">
+             <h2 class="heading-secondary">
+              Get your first meal for free!</h2>
+              <p class="cta-text">Healthy, tasty and hassle-free meals are waiting for you. Start eating well today. You can cancel or pause anytime. And the first meal is on us!
+              </p>
+              <form action="" class="cta-form">
+                <div>
+                  <label for="full-name">Full Name</label>
+                  <input id="full-name" type="text" placeholder="John Smith" required/>
+                </div>
+                <div>
+                  <label for="email">Email address</label>
+                  <input id="email" type="email" placeholder="youremail@gmail.com" required/>
+                </div>
+                <div>
+                  <label for="select-where">Where did you hear from us?</label>
+                  <select name="" id="select-where" required>
+                    <option value="">Please choose one option</option>
+                    <option value="friends">Friends</option>
+                    <option value="youtube">YouTube</option>
+                    <option value="podcast">Podcast</option>
+                    <option value="your-mom">Your Mom</option>
+                    <option value="others">Others</option>
+                  </select>
+                </div>
+                <button class="btn">Sign up now</button>
+                
+                <!-- <input type="checkbox">
+                <input type="number"> -->
+                
+              </form>
+                
+            </div>
+            <div class="cta-img-box" role="img"
+            aria-label="Woman enfoying food">Image</div>
+          </div>
+        </div>
+        </section>
     </main>
     <!-- ICON PACK INJECTION -->
     <script
