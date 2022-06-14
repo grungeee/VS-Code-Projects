@@ -1,0 +1,7 @@
+/* rem and em do NOT depend on html font-size in media queries!
+Instead 1 rem = 1 em - 16px */
+/************************************/
+/*  BELOW 1344px (Smaller desktops) */
+/************************************/
+@media (max-with: 84em) {
+}
