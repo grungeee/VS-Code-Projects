@@ -1,12 +1,10 @@
-/* rem and em do NOT depend on html font-size in media queries!
-Instead 1 rem = 1 em - 16px */
+/* rem and em do NOT depend on html font-size in media queries! Instead, 1rem = 1em = 16px */
 
-/************************************/
-/*  BELOW 1344px (Smaller desktops) */
-/************************************/
+/**************************/
+/* BELOW 1344px (Smaller desktops) */
+/**************************/
+
 @media (max-width: 84em) {
-  /* start */
-
   .hero {
     max-width: 120rem;
   }
@@ -18,18 +16,15 @@ Instead 1 rem = 1 em - 16px */
   .gallery {
     grid-template-columns: repeat(2, 1fr);
   }
-  /* end */
 }
 
-/************************************/
-/*  BELOW 1200px (Tablets) */
-/************************************/
+/**************************/
+/* BELOW 1200px (Landscape Tablets) */
+/**************************/
 
 @media (max-width: 75em) {
-  /* start */
-
   html {
-    /* 9px/16px */
+    /* 9px / 16px  */
     font-size: 56.25%;
   }
 
@@ -41,6 +36,7 @@ Instead 1 rem = 1 em - 16px */
   .heading-secondary {
     font-size: 3.6rem;
   }
+
   .heading-tertiary {
     font-size: 2.4rem;
   }
@@ -54,30 +50,28 @@ Instead 1 rem = 1 em - 16px */
   }
 
   .hero {
-    padding: 4.8rem;
+    gap: 4.8rem;
   }
 
   .testimonials-container {
-    padding: 9.6rem 6.4rem;
+    padding: 9.6rem 3.2rem;
   }
-  /* end */
 }
 
-/************************************/
-/*  BELOW 940px (Smaller Tablets) */
-/************************************/
+/**************************/
+/* BELOW 944px (Tablets) */
+/**************************/
 
 @media (max-width: 59em) {
-  /* start */
-
-  /* 8px/16px */
   html {
+    /* 8px / 16px = 0.5 = 50% */
     font-size: 50%;
   }
 
   .hero {
     grid-template-columns: 1fr;
     padding: 0 8rem;
+    gap: 6.4rem;
   }
 
   .hero-text-box,
@@ -86,11 +80,12 @@ Instead 1 rem = 1 em - 16px */
   }
 
   .hero-img {
-    width: 50%;
+    width: 60%;
   }
 
   .delivered-meals {
     justify-content: center;
+    margin-top: 3.2rem;
   }
 
   .logos img {
@@ -98,7 +93,7 @@ Instead 1 rem = 1 em - 16px */
   }
 
   .step-number {
-    font-size: 7.2rem;
+    font-size: 7.4rem;
   }
 
   .meal-content {
@@ -112,8 +107,9 @@ Instead 1 rem = 1 em - 16px */
   .gallery {
     grid-template-columns: repeat(6, 1fr);
   }
-  /* 60/40 -> 3/2 */
+
   .cta {
+    /* 3/5 = 60% + 2/5 = 40% */
     grid-template-columns: 3fr 2fr;
   }
 
@@ -125,31 +121,32 @@ Instead 1 rem = 1 em - 16px */
     margin-top: 1.2rem;
   }
 
-  /* MOBILE NAVIGATION */
+  /* !MOBILE NAVIGATION */
+
   .btn-mobile-nav {
     display: block;
+    z-index: 9999;
   }
 
   .main-nav {
-    background-color: rgba(255, 255, 255, 0.843);
+    background-color: rgba(255, 255, 255, 0.97);
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
-    /* For the slide In Animation */
     transform: translateX(100%);
 
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.5s ease-out;
+    transition: all 0.5s ease-in;
 
     /* Hide navigation */
     /* Allows NO transitions at all */
     /* display: none; */
 
-    /* 1) Hide it visually  */
+    /* 1) Hide it visually */
     opacity: 0;
 
     /* 2) Make it unaccessible to mouse and keyboard */
@@ -163,7 +160,7 @@ Instead 1 rem = 1 em - 16px */
     opacity: 1;
     pointer-events: auto;
     visibility: visible;
-    transform: translate(0);
+    transform: translateX(0);
   }
 
   .nav-open .icon-mobile-nav[name="close-outline"] {
@@ -179,19 +176,17 @@ Instead 1 rem = 1 em - 16px */
     gap: 4.8rem;
   }
 
-  .main-nav-link:link {
-    font-size: 3.6rem;
+  .main-nav-link:link,
+  .main-nav-link:visited {
+    font-size: 3rem;
   }
-
-  /* end */
 }
 
-/************************************/
-/*  BELOW 700px (X-Smaller Tablets) */
-/************************************/
+/**************************/
+/* BELOW 704px (Smaller tablets) */
+/**************************/
 
 @media (max-width: 44em) {
-  /* start */
   .grid--3-cols,
   .grid--4-cols {
     grid-template-columns: repeat(2, 1fr);
@@ -203,7 +198,7 @@ Instead 1 rem = 1 em - 16px */
   }
 
   .heading-secondary {
-    margin-bottom: 2.8rem;
+    margin-bottom: 4.8rem;
   }
 
   .pricing-plan {
@@ -214,31 +209,25 @@ Instead 1 rem = 1 em - 16px */
     grid-template-columns: repeat(6, 1fr);
   }
 
+  .logo-col,
+  .address-col {
+    grid-column: span 3;
+  }
+
   .nav-col {
     grid-row: 1;
     grid-column: span 2;
     margin-bottom: 3.2rem;
   }
-
-  .logo-col {
-    grid-row: 2;
-    grid-column: span 3;
-  }
-  .address-col {
-    grid-row: 2;
-    grid-column: span 3;
-  }
-  /* end */
 }
 
-/************************************/
-/*  BELOW 544px (Phones) */
-/************************************/
+/**************************/
+/* BELOW 544px (Phones) */
+/**************************/
 
 @media (max-width: 34em) {
-  /* start */
   .grid {
-    row-gap: 2.4rem;
+    row-gap: 4.8rem;
   }
 
   .grid--2-cols,
@@ -250,7 +239,7 @@ Instead 1 rem = 1 em - 16px */
   .btn,
   .btn:link,
   .btn:visited {
-    padding: 2.4rem;
+    padding: 2.4rem 1.6rem;
   }
 
   .section-hero {
@@ -272,6 +261,7 @@ Instead 1 rem = 1 em - 16px */
   .step-img-box:nth-child(2) {
     grid-row: 1;
   }
+
   .step-img-box:nth-child(6) {
     grid-row: 5;
   }
@@ -290,20 +280,23 @@ Instead 1 rem = 1 em - 16px */
   }
 
   .cta {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: 1fr;
+  }
+
+  .cta-text-box {
+    padding: 3.2rem;
   }
 
   .cta-img-box {
     height: 32rem;
     grid-row: 1;
   }
-
-  .cta-text-box {
-    padding: 3.2rem;
-  }
 }
 
-/* - Font sizes (px)
+/* 
+- Font sizes (px)
 10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
+
 - Spacing system (px)
-2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128 */
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+*/
