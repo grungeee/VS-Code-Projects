@@ -61,16 +61,58 @@
 // // Comparison in one step (now - ageNikita > now -ageSarah)
 // console.log(now - 1991 > now - 2018);
 
-const now = 2037;
-const ageNikita = now - 1991;
-const ageSarah = now - 2018;
+// const now = 2037;
+// const ageNikita = now - 1991;
+// const ageSarah = now - 2018;
 
-console.log(now - 1991 > now - 2018);
+// console.log(now - 1991 > now - 2018);
 
-let x, y;
-x = y = 25 - 10 - 5; // x = y = 10, x = 10h
-console.log(x, y); // 10, 10
+// let x, y;
+// x = y = 25 - 10 - 5; // x = y = 10, x = 10h
+// console.log(x, y); // 10, 10
 
-const averageAge = ageNikita + ageSarah / 2;
-console.log(ageNikita, ageSarah, averageAge);
-// First ageSarah will be devided by 2 then ageNikita added to the quotient
+// const averageAge = ageNikita + ageSarah / 2;
+// console.log(ageNikita, ageSarah, averageAge);
+// // First ageSarah will be devided by 2 then ageNikita added to the quotient
+
+// const firstName = "Jonas";
+// const job = "teacher";
+// const birthYear = 1991;
+// const year = 2037;
+
+// const jonas =
+//   "I'm " + firstName + ", a " + (year - birthYear) + " years old " + job + "!";
+// console.log(jonas);
+
+// const jonasNew = `I'm ${firstName}, a ${year - birthYear} years old ${job}!`;
+// console.log(jonasNew);
+
+// console.log(`Just a regualr string...`);
+
+// console.log("String with \n\
+// multiple  \n\
+// lines");
+
+// console.log(`String
+// with
+// lines`);
+
+const age = 15;
+
+if (age >= 18) {
+  console.log("Sarah can start her driving license 🚗");
+} else {
+  const yearsLeft = 18 - age;
+  console.log(`Sarah is too young. Wait another ${yearsLeft} years :)`);
+}
+
+const birthYear = 1991;
+
+let century;
+if (birthYear <= 2000) {
+  let century = 20;
+} else {
+  let century = 21;
+}
+
+console.log(century);
