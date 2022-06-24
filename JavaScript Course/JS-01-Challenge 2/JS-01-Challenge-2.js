@@ -23,22 +23,22 @@
 //Data #1
 
 // Mark
-const weightMark = "78"; //kg
-const heightMark = "1.69"; //m
+const weightMark = 78; //kg
+const heightMark = 1.69; //m
 
 // John
-const weightJohn = "92"; //kg
-const heightJohn = "1.95"; //m
+const weightJohn = 92; //kg
+const heightJohn = 1.95; //m
 
 //Data #2
 
 // Mark
-const weightMarkV2 = "95"; //kg
-const heightMarkV2 = "1.88"; //m
+const weightMarkV2 = 95; //kg
+const heightMarkV2 = 1.88; //m
 
 // Johnk
-const weightJohnV2 = "85"; //kg
-const heightJohnV2 = "1.76"; //m
+const weightJohnV2 = 95; //kg
+const heightJohnV2 = 1.76; //m
 
 //Todo: Calculating BMI
 
