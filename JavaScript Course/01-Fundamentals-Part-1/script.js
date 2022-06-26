@@ -263,20 +263,28 @@
 //   console.log("Not a valid day!");
 // }
 
-const age = 23;
-age >= 18
-  ? console.log("I like to drink wine 🍷") //* ? = if
-  : console.log("I like to drink water 💧"); // : = else
+// const age = 23;
+// age >= 18
+// ? console.log("I like to drink wine 🍷") //  ? = if
+// : console.log("I like to drink water 💧"); //  : = else
 
-const drink = age >= 18 ? "wine" : "water";
-console.log(drink);
+// const drink = age >= 18 ? "wine🍷" : "water💧";
+// console.log(drink);
 
-let drink2;
-if (age >= 18) {
-  drink2 = "wine 🍷";
-} else {
-  drink2 = "water 💧";
-}
-console.log(drink2);
+// let drink2;
+// if (age >= 18) {
+//   drink2 = "wine 🍷";
+// } else {
+//   drink2 = "water 💧";
+// }
+// console.log(drink2);
 
-console.log(`I like to drink ${age >= 18 ? "wine" : "water"}`);
+// console.log(`I like to drink ${age >= 18 ? "wine" : "water"}`);
+
+// const age = 20;
+// if (age >= 18) {
+//   console.log("Sarah can start her driving license 🚗");
+// } else {
+//   const yearsLeft = 18 - age;
+//   console.log(`Sarah is too young. Wait another ${yearsLeft} years :)`);
+// }
