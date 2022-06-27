@@ -43,7 +43,7 @@ console.log(avgDolhins(44, 23, 71));
 
 console.log(avgKoalas(65, 54, 49));
 
-//! First made it with arrow function but I like a 'Declaration Function' more
+//! First I made it with arrow function but I like a 'Declaration Function' more
 // const checkWinner = (avgDolphins, avgKoalas) => {
 function checkWinner(avgDolphins, avgKoalas) {
   if (avgDolphins >= avgKoalas * 2) {
@@ -56,7 +56,7 @@ function checkWinner(avgDolphins, avgKoalas) {
 }
 
 //* Data 1 Dolphins score 44, 23 and 71. Koalas score 65, 54 and 49
-// console.log(checkWinner((44, 23, 71), (65, 54, 49)));
+console.log(checkWinner(avgDolhins(44, 23, 71), avgDolhins(65, 54, 49)));
 //* Data 2 Dolphins score 85, 54 and 41. Koalas score 23, 34 and 27
 console.log(checkWinner(avgDolhins(85, 54, 41), avgKoalas(23, 34, 27)));
 console.log(avgDolhins(85, 54, 41), avgKoalas(23, 34, 27));
