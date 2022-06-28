@@ -30,7 +30,7 @@ const heightMark = 1.69; //m
 const weightJohn = 92; //kg
 const heightJohn = 1.95; //m
 
-//Data #2
+//Data #3
 
 // Mark
 const weightMarkV2 = 95; //kg

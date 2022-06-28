@@ -170,9 +170,129 @@
 //   console.log(`You have a friend called Peter`);
 // }
 
-// OBJECTS
+//* OBJECTS
 
-const jonasArray = [
+//* Introduction to objects
+// const jonasArray = [
+//   "Jonas",
+//   "Schmedtmann",
+//   2037 - 1991,
+//   "teacher",
+//   ["Michael", "Peter", "Steven"],
+// ];
+
+// // Object literal synatax
+// const jonas = {
+//   firstName: "Jonas",
+//   lastName: "Schmedtmann",
+//   age: 2037 - 1991,
+//   job: "teacher",
+//   friends: ["Michael", "Perer", "Steven"],
+// };
+// console.log(jonas);
+
+// console.log(jonas.lastName); // Dot notation
+// console.log(jonas["lastName"]); //Bracket notation we can put a value inside of it
+
+// const nameKey = "Name";
+// console.log(jonas["first" + nameKey]);
+// console.log(jonas["last" + nameKey]);
+
+// const interestedIn = prompt(
+//   "What do oyou want to know about Jonas? Choose between firstName, lastName, age, job, and friends"
+// );
+// console.log(jonas[interestedIn]);
+
+// if (jonas[interestedIn]) {
+//   console.log(jonas[interestedIn]);
+// } else {
+//   console.log("not defined");
+// }
+
+// jonas.location = "Portugal";
+// jonas["twitter"] = "@jonasschmedtman";
+// console.log(jonas);
+
+// // Challenge
+// // "Jonas has 3 friends, and his best friend is called Michael"
+
+// console.log(jonas[("firstName", "lastName")]);
+
+// console.log(
+//   `${jonas.firstName} has ${jonas.friends.length} friends, and his best friend is called ${jonas.friends[0]}`
+// );
+
+// const jonas = {
+//   firstName: "Jonas",
+//   lastName: "Schmedtmann",
+//   birthYear: 1991,
+//   job: "teacher",
+//   friends: ["Michael", "Perer", "Steven"],
+//   hasDriversLicense: true,
+
+//   // calcAge: function (birthYear) {
+//   // Only works with function expression
+//   // return 2037 - birthYear;
+//   // },
+//   // calcAge: function () {
+//   //   // console.log(this);
+//   //   return 2037 - this.birthYear;
+//   // },
+//   calcAge: function () {
+//     this.age = 2037 - this.birthYear;
+//     return this.age;
+//   },
+//   // hasDriversLicense: function () {
+//   //   if (this.hasDriversLicense) {
+//   //     return "a";
+//   //   } else {
+//   //     return "no";
+//   //   }
+//   // },
+//   getSummery: function () {
+//     return `${this.firstName} is a ${this.calcAge()} ${this.job}, and he has ${
+//       this.hasDriversLicense ? "a" : "no"
+//     } drivers's license`;
+//   },
+// };
+
+// console.log(jonas.calcAge());
+// // console.log(jonas["calcAge"](1991));
+
+// // efficient way of retrieving data out of the funcion instead of calcuculating t multiple times
+// console.log(jonas.age);
+// console.log(jonas.age);
+// console.log(jonas.age);
+
+// // "Jonas is a 46-year old teacher, and he has a/no driver's license"
+
+// // console.log(
+// //   `${jonas.firstName} is a ${
+// //     jonas.job
+// //   } and he has ${jonas.hasDriversLicense()} drver's license`
+// // );
+
+// console.log(jonas.getSummery());
+
+//* LOOPS
+
+console.log("Lifting weights repetition 1");
+console.log("Lifting weights repetition 2");
+console.log("Lifting weights repetition 3");
+console.log("Lifting weights repetition 4");
+console.log("Lifting weights repetition 5");
+
+// for loop keeps running while condition is TRUE
+// first we specify the starting point of the loop
+// then the end point
+// then what happens every ideration
+// rep = rep + 1 -> rep++
+// put the variable where it has to change
+for (let rep = 1; rep <= 10; rep++) {
+  console.log(`Lifting weights repetition ${rep}`);
+}
+
+const jonas = [
   "Jonas",
   "Schmedtmann",
   2037 - 1991,
@@ -180,43 +300,78 @@ const jonasArray = [
   ["Michael", "Peter", "Steven"],
 ];
 
-// Object literal synatax
-const jonas = {
-  firstName: "Jonas",
-  lastName: "Schmedtmann",
-  age: 2037 - 1991,
-  job: "teacher",
-  friends: ["Michael", "Perer", "Steven"],
-};
-console.log(jonas);
+//We want to induvidually log every element of the array to the console
+for (let i = 0; i < jonas.length; i++) {
+  console.log(jonas[i], typeof jonas[i]);
+}
+//i < 5 [0,1,2,3,4, 5 does not exist!] exits the loop at 4| i < jonas.lenght [1,2,3,4,5] exits the loop at 5
+const types = [];
+for (let i = 0; i < jonas.length; i++) {
+  // types[i] = typeof jonas[i];
+  types.push(typeof jonas[i]);
+}
+console.log(types);
 
-console.log(jonas.lastName); // Dot notation
-console.log(jonas["lastName"]); //Bracket notation we can put a value inside of it
-
-const nameKey = "Name";
-console.log(jonas["first" + nameKey]);
-console.log(jonas["last" + nameKey]);
-
-const interestedIn = prompt(
-  "What do oyou want to know about Jonas? Choose between firstName, lastName, age, job, and friends"
-);
-console.log(jonas[interestedIn]);
-
-if (jonas[interestedIn]) {
-  console.log(jonas[interestedIn]);
-} else {
-  console.log("not defined");
+// calulate age and store in a new array
+const years = [1991, 2007, 1969, 2020];
+const ages = [];
+for (let i = 0; i < years.length; i++) {
+  ages.push(2037 - years[i]);
 }
 
-jonas.location = "Portugal";
-jonas["twitter"] = "@jonasschmedtman";
-console.log(jonas);
+console.log(ages);
 
-// Challenge
-// "Jonas has 3 friends, and his best friend is called Michael"
+// continue and break
+console.log("--- ONLY STRINGS ---");
+for (let i = 0; i < jonas.length; i++) {
+  if (typeof jonas[i] !== "string") continue;
 
-console.log(jonas[("firstName", "lastName")]);
+  console.log(jonas[i], typeof jonas[i]);
+}
 
-console.log(
-  `${jonas.firstName} has ${jonas.friends.length} friends, and his best friend is called ${jonas.friends[0]}`
-);
+console.log("--- BREAK WITH NUMBER ---");
+for (let i = 0; i < jonas.length; i++) {
+  if (typeof jonas[i] === "number") break;
+
+  console.log(jonas[i], typeof jonas[i]);
+}
+const jonas = [
+  "Jonas",
+  "Schmedtmann",
+  2037 - 1991,
+  "teacher",
+  ["Michael", "Peter", "Steven"],
+];
+
+//0, 1, ..., 4
+//4, 3, ..., 0
+
+for (let i = jonas.length - 1; i >= 0; i--) {
+  console.log(jonas[i]);
+}
+
+for (let exercise = 1; exercise < 4; exercise++) {
+  console.log(`------- Starting exercise ${exercise}`);
+  for (let rep = 1; rep < 6; rep++) {
+    console.log(`Exercise ${exercise}: Lifting weights repetiotion ${rep} ❤
+  `);
+  }
+}
+
+for (let rep = 1; rep <= 10; rep++) {
+  // console.log(`Lifting weights repetition ${rep}`);
+}
+
+let rep = 1;
+while (rep <= 10) {
+  // console.log(`WHILE: Lifting weights repetition ${rep}`);
+  rep++;
+}
+
+let dice = Math.trunc(Math.random() * 6) + 1;
+
+while (dice !== 6) {
+  console.log(`You rolled a ${dice}`);
+  dice = Math.trunc(Math.random() * 6) + 1;
+  if (dice === 6) console.log(`You've got a 6! Loop is about to end...`);
+}
