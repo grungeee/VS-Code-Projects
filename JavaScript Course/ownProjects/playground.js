@@ -2,19 +2,19 @@
 
 var str = "How can mirrors be real if our eyes aren't real";
 
-console.log(`--- TEST ---`);
-const toJadenCase = function (prototype) {
-  //...
-  str = prototype;
-  for (i = 0; i < prototype.length; i++)
-    if (prototype[i] === prototype[i].lowerCase) {
-      return console.log("lower");
-    } else if (prototype[i] === prototype[i].uppercase) {
-      return console.log("upper");
-    }
-};
+// console.log(`--- TEST ---`);
+// const toJadenCase = function (prototype) {
+//   //...
+//   str = prototype;
+//   for (i = 0; i < prototype.length; i++)
+//     if (prototype[i] === prototype[i].lowerCase) {
+//       return console.log("lower");
+//     } else if (prototype[i] === prototype[i].uppercase) {
+//       return console.log("upper");
+//     }
+// };
 
-toJadenCase(str);
+// toJadenCase(str);
 
 // //* I think temps.push(array1[i], array[2])
 
@@ -57,22 +57,22 @@ toJadenCase(str);
 // // calcTempAmplitude(temperatures);
 // calcTempAmplitudeNew(temps1, temps2);
 //* I want to concatinate n arrays, basically withot defining n ammount of parameters
-const temps1 = [-6, 17, 12, 12, 14];
-const temps2 = [-7, 18, 3, 3, 4, 6];
-function arraySum() {
-  let temps = [];
-  let temporar = [];
-  for (let i = 0; i < arguments.length; i++) {
-    //  let temps = [];
-    // let temporar = [];
-    // temps = arguments[0].concat(arguments[1]);
-    temps = temporar.concat(arguments[i]);
-  }
-  return console.log(temps);
-}
-arraySum(temps1, temps2);
+// const temps1 = [-6, 17, 12, 12, 14];
+// const temps2 = [-7, 18, 3, 3, 4, 6];
+// function arraySum() {
+//   let temps = [];
+//   let temporar = [];
+//   for (let i = 0; i < arguments.length; i++) {
+//     //  let temps = [];
+//     // let temporar = [];
+//     // temps = arguments[0].concat(arguments[1]);
+//     temps = temporar.concat(arguments[i]);
+//   }
+//   return console.log(temps);
+// }
+// arraySum(temps1, temps2);
 
-console.log(`--- TEST concatinate ---`);
+// console.log(`--- TEST concatinate ---`);
 // console.log(temps1.indexOf(temps1[]));
 //*
 // function arraySum(arr) {
@@ -95,3 +95,13 @@ console.log(`--- TEST concatinate ---`);
 // console.log(arraySum(temps1, temps2));
 // console.log(typeof arraySum(temps1, temps2));
 // console.log(temps1, temps2);
+const current0El = 0;
+const current1El = 1;
+let currentScore = 0;
+let activePlayer = 0;
+while (activePlayer === 0) {
+  currentScore = current0El;
+}
+while (player === 1) {
+  currentScore = current1El;
+}

@@ -36,21 +36,32 @@
 //   }
 // }
 
-// Versoin with a warning for too many letters
-const wordle = "actor";
-const guess = "acorn";
+//* Versoin with a warning for too many letters
+// const wordle = "actor";
+// const guess = "acorn";
 
-console.log("--- LOGIC TEST ---");
-console.log(`Input length: ${guess.length} letters `);
-for (let i = 0; i < guess.length; i++) {
-  if (guess.length > 5) {
-    console.log("The word you are looking for has exactly 5 letters!");
-    break;
-  } else if (wordle[i] === guess[i]) {
-    console.log(`${guess[i]} - green`);
-  } else if (wordle.includes(guess[i])) {
-    console.log(`${guess[i]} - yellow`);
-  } else if (!wordle.includes(guess[i])) {
-    console.log(`${guess[i]} - gray`);
-  }
+// console.log("--- LOGIC TEST ---");
+// console.log(`Input length: ${guess.length} letters `);
+// for (let i = 0; i < guess.length; i++) {
+//   if (guess.length > 5) {
+//     console.log("The word you are looking for has exactly 5 letters!");
+//     break;
+//   } else if (wordle[i] === guess[i]) {
+//     console.log(`${guess[i]} - green`);
+//   } else if (wordle.includes(guess[i])) {
+//     console.log(`${guess[i]} - yellow`);
+//   } else if (!wordle.includes(guess[i])) {
+//     console.log(`${guess[i]} - gray`);
+//   }
+// }
+let p = 0;
+
+if (p === 0) {
+  console.log("0");
+  p++;
+}
+
+if (p === 1) {
+  console.log("1");
+  p--;
 }
