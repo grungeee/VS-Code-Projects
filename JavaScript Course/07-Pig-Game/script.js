@@ -7,12 +7,31 @@ const btnNew = document.querySelector(".btn--new");
 const btnRoll = document.querySelector(".btn--roll");
 const btnHold = document.querySelector(".btn--hold");
 const diceEl = document.querySelector(".dice");
-const currentScoreEl = document.querySelector(".current-score");
 const score0El = document.querySelector("#score--0");
 const score1El = document.getElementById("score--1");
 const current0El = document.getElementById("current--0");
 const current1El = document.getElementById("current--1");
 const playerActive = document.querySelector(".player--active");
+
+//*  Scoping the funcions variables
+let scores, currentScore, activePlayer, playing;
+//? Starting conditions // function which has to be executed at the start of the game and on reset
+function init() {
+  scores = [0, 0];
+  currentScore = 0;
+  activePlayer = 0;
+  playing = true;
+
+  setScoreTextContentToZero(current0El, current1El, score0El, score1El);
+  hide(diceEl);
+  player0EL.classList.remove("player--winner");
+  player1EL.classList.remove("player--winner");
+  player0EL.classList.add("player--active");
+  player1EL.classList.remove("player--active");
+  playing = true;
+}
+//? Starts the game with initial parameters
+init();
 
 //* FUNCIONS
 //? My own function to hide elements
@@ -24,8 +43,9 @@ function reveal(element) {
   element.classList.remove("hidden");
 }
 //? set Player as active (change background)
-function active(element) {
-  element.classList.toggle("player--active");
+function active() {
+  for (let i = 0; i < arguments.length; i++)
+    arguments[i].classList.toggle("player--active");
 }
 //? set the winner color
 function winner(element) {
@@ -37,24 +57,12 @@ function switchPlayer() {
   currentPlayer.textContent = 0;
   currentScore = 0;
   activePlayer = activePlayer === 0 ? 1 : 0;
-  active(player0EL);
-  active(player1EL);
+  active(player0EL, player1EL);
 }
-//? RNG
-// let dice = 0;
-// function roll() {
-// return (dice = Math.trunc(Math.random() * 6 + 1));
-// }
-//? Starting conditions
-score0El.textContent = 0;
-score1El.textContent = 0;
-hide(diceEl);
-const scores = [0, 0];
-let currentScore = 0;
-let activePlayer = 0;
-let playing = true;
-
-//?
+//? best thing I made sofar function that works for any number of arguments
+function setScoreTextContentToZero() {
+  for (let i = 0; i < arguments.length; i++) arguments[i].textContent = 0;
+}
 
 btnRoll.addEventListener("click", function () {
   if (playing) {
@@ -79,7 +87,7 @@ btnRoll.addEventListener("click", function () {
 });
 btnHold.addEventListener("click", function () {
   if (playing) {
-    const currentPlayer = document.getElementById(`current--${activePlayer}`);
+    // const currentPlayer = document.getElementById(`current--${activePlayer}`);
     const currentPlayerScore = document.getElementById(
       `score--${activePlayer}`
     );
@@ -91,7 +99,7 @@ btnHold.addEventListener("click", function () {
     console.log(scores);
     // finish the game
     currentPlayerScore.textContent = scores[activePlayer];
-    if (scores[activePlayer] >= 10) {
+    if (scores[activePlayer] >= 100) {
       playing = false;
       hide(diceEl);
       active(currentPlayerCard);
@@ -102,5 +110,5 @@ btnHold.addEventListener("click", function () {
     }
   }
 });
-
-btnNew.addEventListener("click", function () {});
+//? resets the game // calls the initiatig funcion which will set the variables to to 0
+btnNew.addEventListener("click", init);

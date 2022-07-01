@@ -1,6 +1,6 @@
 "use strickt";
 
-var str = "How can mirrors be real if our eyes aren't real";
+// var str = "How can mirrors be real if our eyes aren't real";
 
 // console.log(`--- TEST ---`);
 // const toJadenCase = function (prototype) {
@@ -95,13 +95,38 @@ var str = "How can mirrors be real if our eyes aren't real";
 // console.log(arraySum(temps1, temps2));
 // console.log(typeof arraySum(temps1, temps2));
 // console.log(temps1, temps2);
-const current0El = 0;
-const current1El = 1;
-let currentScore = 0;
-let activePlayer = 0;
-while (activePlayer === 0) {
-  currentScore = current0El;
-}
-while (player === 1) {
-  currentScore = current1El;
-}
+
+//? Reverse string function
+// const str = "apple";
+
+// function reverse(str) {
+//   let ctr = "";
+//   for (i = str.length; i !== 0; i--) {
+//     ctr += str[i - 1];
+//   }
+//   return ctr;
+// }
+// console.log(reverse(str));
+
+//
+// const str = "apple";
+
+// function reverse(str) {
+//   let reversed = "";
+//   for (let character of str) {
+//     //* This basically means we put "character" in front of reversed
+//     reversed = character + reversed;
+//   }
+//   return reversed;
+// }
+
+// console.log(reverse(str));
+// //? Stupid little funcion to add things into an array multiple times
+// function runMultiplyer(multiplyWhat, multiplyBy) {
+//   let result = [];
+//   for (let i = 0; i < multiplyBy; i++) {
+//     result += multiplyWhat;
+//   }
+//   return console.log(result);
+// }
+// runMultiplyer(5, 3);

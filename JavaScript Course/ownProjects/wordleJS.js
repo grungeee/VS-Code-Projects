@@ -2,29 +2,7 @@
 
 //* WORDLE //
 
-// const wordle = "actor";
-// const guess = "acorn";
-
-// loops thou a word and spits out it's letters from start to end
-// for (let i = 0; i < wordle.length; i++) {
-//   console.log(wordle[i]);
-// }
-
-// // compares the first letter of a hidden word to a guess word
-// if (wordle[0] === guess[0]) {
-//   console.log("green");
-// } else {
-//   console.log("red");
-// }
-
-// // test if a letter from guess is in the word if it works log should print 'yellow for a letter in the word but not in right position
-// if (wordle.includes(guess[4])) {
-//   console.log("yellow");
-// } else {
-//   console.log("red");
-// }
-
-// combining green, yellow, red
+// // combining green, yellow, red
 // console.log("--- LOGIC TEST ---");
 // for (let i = 0; i < guess.length; i++) {
 //   if (wordle[i] === guess[i]) {
@@ -36,7 +14,7 @@
 //   }
 // }
 
-//* Versoin with a warning for too many letters
+// // * Versoin with a warning for too many letters
 // const wordle = "actor";
 // const guess = "acorn";
 
@@ -54,14 +32,53 @@
 //     console.log(`${guess[i]} - gray`);
 //   }
 // }
-let p = 0;
+//* Part of the code which picks a random word from the database
 
-if (p === 0) {
-  console.log("0");
-  p++;
-}
+const wordleDataBase = [
+  "women",
+  "nikau",
+  "swack",
+  "feens",
+  "fyles",
+  "poled",
+  "clags",
+  "starn",
+  "bindi",
+  "woops",
+];
 
-if (p === 1) {
-  console.log("1");
-  p--;
+//? RNG funcion: generates number = strings(index) in the array
+function rng() {
+  return Math.trunc(Math.random() * wordleDataBase.length);
 }
+//* This picks a random word for 'wordle' from database
+let wordle = wordleDataBase[rng()];
+console.log(wordle);
+let guess = "swack";
+console.log(guess);
+//* This code looks for the matching word in the database
+function isInDB() {
+  return wordleDataBase.includes(guess)
+    ? console.log("yes")
+    : console.log("no");
+}
+isInDB();
+
+//* This code should merge characters into one sting
+let c1 = "s";
+let c2 = "w";
+let c3 = "a";
+let c4 = "c";
+let c5 = "k";
+let guess2 = "";
+guess2 = c1 + c2 + c3 + c4 + c5;
+console.log(typeof guess2, guess2);
+
+//! This should change text to UPPERCASE on input but rn works only the first class
+document.querySelector(".character").addEventListener("input", function () {
+  document.querySelector("body").style.backgroundColor = "#000";
+  // let p = this.selectionStart;
+  // this.value = this.value.toUpperCase();
+  // this.setSelectionRange(p, p);
+  this.value = this.value.toUpperCase();
+});
