@@ -6,30 +6,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wordle and other projects</title>
     <style>
-      body {
-        background-color: antiquewhite;
-        font-family: Arial, Helvetica, sans-serif;
-        text-transform: uppercase;
-      }
-      .character {
-        font-size: 82px;
-        border: 4px solid black;
-        display: inline-block;
-        height: 100px;
-        width: 100px;
-        text-align: center;
-        
-      }
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html {
+  font-size: 62.5%;
+
+}
+body {
+  background-color: antiquewhite;
+  font-family: Arial, Helvetica, sans-serif;
+  text-transform: uppercase;
+}
+.container {
+  max-width: 120rem;
+  margin: 0 auto;
+}
+
+.game-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:1rem
+}
+.row {
+ display: flex;
+  gap:1rem;
+  } 
+.char {
+ 
+  font-size: 82px;
+  border: 4px solid black;
+  display: inline-block;
+  height: 100px;
+  width: 100px;
+  text-align: center;
+       
+}
+
+     /* End of Styles */
     </style>
   </head>
   <body>
     <main>
-      <input  class="c1 character"></input>
-      <input oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);" class="c2 character"></input>
-      <input oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);" class="c3 character"></input>
-      <input oninput="let p=this.selectionStart;this.value=this.value.toUpperCase();this.setSelectionRange(p, p);" class="c4 character"></input>
-      <input  class="c5 character"></input>
-    </main>
+      <div class="container">
+        <div class="game-box">
+          <div class="row">
+            <input class="c1 char"></input>
+            <input class="c2 char"></input>
+            <input class="c3 char"></input>
+            <input class="c5 char"></input>
+            <input class="c5 char"></input>
+          </div>
+          <div class="row">
+            <input class="c1 char"></input>
+            <input class="c2 char"></input>
+            <input class="c3 char"></input>
+            <input class="c5 char"></input>
+            <input class="c5 char"></input>
+          </div>
+        </div>
+        </div>
+      </div>
+      </main>
     <script src="wordleJS.js"></script>
     <script src="playground.js"></script>
   </body>

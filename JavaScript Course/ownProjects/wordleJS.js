@@ -33,7 +33,6 @@
 //   }
 // }
 //* Part of the code which picks a random word from the database
-
 const wordleDataBase = [
   "women",
   "nikau",
@@ -74,11 +73,12 @@ let guess2 = "";
 guess2 = c1 + c2 + c3 + c4 + c5;
 console.log(typeof guess2, guess2);
 
-//! This should change text to UPPERCASE on input but rn works only the first class
-document.querySelector(".character").addEventListener("input", function () {
-  document.querySelector("body").style.backgroundColor = "#000";
-  // let p = this.selectionStart;
-  // this.value = this.value.toUpperCase();
-  // this.setSelectionRange(p, p);
-  this.value = this.value.toUpperCase();
-});
+//* This should changes text to UPPERCASE on input
+const charInput = document.querySelectorAll(".char");
+for (let i = 0; i < charInput.length; i++) {
+  charInput[i].addEventListener("input", function () {
+    //todo: Need to make a function that changes color on selectin MAYBE?
+    this.style.backgroundColor = "#deaede";
+    this.value = this.value.toUpperCase();
+  });
+}
