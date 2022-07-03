@@ -96,7 +96,7 @@
 // console.log(typeof arraySum(temps1, temps2));
 // console.log(temps1, temps2);
 
-//? Reverse string function
+// ? Reverse string function
 // const str = "apple";
 
 // function reverse(str) {
@@ -108,7 +108,6 @@
 // }
 // console.log(reverse(str));
 
-//
 // const str = "apple";
 
 // function reverse(str) {

@@ -1,17 +1,17 @@
-"use strict";
+'use strict';
 
 //? Selecting elements
-const player0EL = document.querySelector(".player--0");
-const player1EL = document.querySelector(".player--1");
-const btnNew = document.querySelector(".btn--new");
-const btnRoll = document.querySelector(".btn--roll");
-const btnHold = document.querySelector(".btn--hold");
-const diceEl = document.querySelector(".dice");
-const score0El = document.querySelector("#score--0");
-const score1El = document.getElementById("score--1");
-const current0El = document.getElementById("current--0");
-const current1El = document.getElementById("current--1");
-const playerActive = document.querySelector(".player--active");
+const player0EL = document.querySelector('.player--0');
+const player1EL = document.querySelector('.player--1');
+const btnNew = document.querySelector('.btn--new');
+const btnRoll = document.querySelector('.btn--roll');
+const btnHold = document.querySelector('.btn--hold');
+const diceEl = document.querySelector('.dice');
+const score0El = document.querySelector('#score--0');
+const score1El = document.getElementById('score--1');
+const current0El = document.getElementById('current--0');
+const current1El = document.getElementById('current--1');
+const playerActive = document.querySelector('.player--active');
 
 //*  Scoping the funcions variables
 let scores, currentScore, activePlayer, playing;
@@ -24,10 +24,10 @@ function init() {
 
   setScoreTextContentToZero(current0El, current1El, score0El, score1El);
   hide(diceEl);
-  player0EL.classList.remove("player--winner");
-  player1EL.classList.remove("player--winner");
-  player0EL.classList.add("player--active");
-  player1EL.classList.remove("player--active");
+  player0EL.classList.remove('player--winner');
+  player1EL.classList.remove('player--winner');
+  player0EL.classList.add('player--active');
+  player1EL.classList.remove('player--active');
   playing = true;
 }
 //? Starts the game with initial parameters
@@ -36,20 +36,20 @@ init();
 //* FUNCIONS
 //? My own function to hide elements
 function hide(element) {
-  element.classList.add("hidden");
+  element.classList.add('hidden');
 }
 //? reveal funcion
 function reveal(element) {
-  element.classList.remove("hidden");
+  element.classList.remove('hidden');
 }
 //? set Player as active (change background)
 function active() {
   for (let i = 0; i < arguments.length; i++)
-    arguments[i].classList.toggle("player--active");
+    arguments[i].classList.toggle('player--active');
 }
 //? set the winner color
 function winner(element) {
-  element.classList.toggle("player--winner");
+  element.classList.toggle('player--winner');
 }
 //? everything on what happens on player swithing
 function switchPlayer() {
@@ -64,7 +64,7 @@ function setScoreTextContentToZero() {
   for (let i = 0; i < arguments.length; i++) arguments[i].textContent = 0;
 }
 
-btnRoll.addEventListener("click", function () {
+btnRoll.addEventListener('click', function () {
   if (playing) {
     //! I made it to make the code a bit cleaner
     const currentPlayer = document.getElementById(`current--${activePlayer}`);
@@ -85,7 +85,7 @@ btnRoll.addEventListener("click", function () {
     }
   }
 });
-btnHold.addEventListener("click", function () {
+btnHold.addEventListener('click', function () {
   if (playing) {
     // const currentPlayer = document.getElementById(`current--${activePlayer}`);
     const currentPlayerScore = document.getElementById(
@@ -111,4 +111,4 @@ btnHold.addEventListener("click", function () {
   }
 });
 //? resets the game // calls the initiatig funcion which will set the variables to to 0
-btnNew.addEventListener("click", init);
+btnNew.addEventListener('click', init);

@@ -216,46 +216,98 @@
 // jonas.greet();
 // jonas.calcAge();
 
-// ? Solutoions #2
+//? Solutoions #2
 
-const jonas = {
-  firstNmae: "jonas",
-  year: 1991,
-  calcAge: function () {
-    console.log(2037 - this.year);
+// const jonas = {
+//   firstNmae: "jonas",
+//   year: 1991,
+//   calcAge: function () {
+//     console.log(2037 - this.year);
 
-    //* Soution #2: Turn this funtion into an Arrow Funcion so it will automatically look for "this" in its parent
-    //* It basically inherits its parent scope's 'this' KW
-    const isMillenial = () => {
-      console.log(this);
-      console.log(this.year >= 1981 && this.year <= 1996);
-      //? this is how the funtion looked before the solution #1 & #2
-      // console.log(this.year >= 1981 && this.year <= 1996);
-    };
-    isMillenial();
-  },
+//     //* Soution #2: Turn this funtion into an Arrow Funcion so it will automatically look for "this" in its parent
+//     //* It basically inherits its parent scope's 'this' KW
+//     const isMillenial = () => {
+//       console.log(this);
+//       console.log(this.year >= 1981 && this.year <= 1996);
+//       //? this is how the funtion looked before the solution #1 & #2
+//       // console.log(this.year >= 1981 && this.year <= 1996);
+//     };
+//     isMillenial();
+//   },
 
-  greet: () => {
-    console.log(this);
-    console.log(`Hey ${this.firstName}`);
-  },
+//   greet: () => {
+//     console.log(this);
+//     console.log(`Hey ${this.firstName}`);
+//   },
+// };
+// jonas.greet();
+// jonas.calcAge();
+
+// //* --- Arguments Keyword ---
+
+// //* Does ONLY work for regular funtions
+// const addExpr = function (a, b) {
+//   console.log(arguments);
+//   return a + b;
+// };
+// addExpr(2, 5);
+
+// //! Doesn't work for Arrow funcions
+// var addArrow = (a, b) => {
+//   console.log(arguments);
+//   return a + b;
+// };
+
+// addArrow(2, 5, 8);
+
+//* -- Primitives VS Objects --
+
+// //? Primitives: Numbers, Strings, Booleans, Undefined, Null, Symbol, BigInt
+
+// let age = 30;
+// let oldAge = age;
+// age = 31;
+// console.log(age);
+// console.log(oldAge);
+
+// const me = {
+//   name: "Jonas",
+//   age: 30,
+// };
+// const friend = me;
+// friend.age = 27;
+// console.log("friend:", friend);
+// console.log("Me:", me);
+
+//* --- Primitive Types ---
+
+let lastName = "Williams";
+let oldlastName = lastName;
+lastName = "Davis";
+console.log(lastName, oldlastName);
+
+//* --- Reference Types ---
+
+const jessica = {
+  firstName: "Jessica",
+  lastName: "Williams",
+  age: 27,
 };
-jonas.greet();
-jonas.calcAge();
 
-//* --- Arguments Keyword ---
+const marriedJessica = jessica;
+marriedJessica.lastName = "Davis";
+console.log("Before marriage:", jessica.lastName);
+console.log("After marriage:", marriedJessica.lastName);
 
-//* Does ONLY work for regular funtions
-const addExpr = function (a, b) {
-  console.log(arguments);
-  return a + b;
+//* -- Copying Objects --
+const jessica2 = {
+  firstName: "Jessica",
+  lastName: "Williams",
+  age: 27,
 };
-addExpr(2, 5);
-
-//! Doesn't work for Arrow funcions
-var addArrow = (a, b) => {
-  console.log(arguments);
-  return a + b;
-};
-
-addArrow(2, 5, 8);
+//? Object.assign() -  Merges two objects and returns a new one (with an empty string)
+//! this works only on the first level - if we have an object inside the inner object
+const jessicaCopy = Object.assign({}, jessica2);
+jessicaCopy.lastName = "Davis";
+console.log("Before marriage:", jessica2);
+console.log("After marriage:", jessicaCopy);
