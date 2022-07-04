@@ -304,6 +304,7 @@ const jessica2 = {
   firstName: "Jessica",
   lastName: "Williams",
   age: 27,
+  family: ["Alice", "Bob"],
 };
 //? Object.assign() -  Merges two objects and returns a new one (with an empty string)
 //! this works only on the first level - if we have an object inside the inner object
@@ -311,3 +312,11 @@ const jessicaCopy = Object.assign({}, jessica2);
 jessicaCopy.lastName = "Davis";
 console.log("Before marriage:", jessica2);
 console.log("After marriage:", jessicaCopy);
+
+jessicaCopy.family.push("Mary");
+jessicaCopy.family.push("John");
+
+console.log("Before", jessica2);
+console.log("After", jessicaCopy);
+
+//! Deep Cloning is the solution to this problem
