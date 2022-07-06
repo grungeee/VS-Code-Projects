@@ -47,77 +47,130 @@ const restaurant = {
     console.log(otherIngredients);
   },
 };
+//
 
-//* --- Nullish Coalescing Operator ---
+const rest1 = {
+  name: 'Capri',
+  // numGuests: 20,
+  numGuests: 0,
+};
 
-//* OR (Short Circuit) to set a default value for guest if they are not defined
-//! Basically the same as if operator. It will log the 1st value if true, if false '10'
-//! Used solutions won't work if number of guest is 0
-//? logs: 10 if number of guest was defined as 0
-const guests2 = restaurant.numGuests || 10;
-console.log(guests2);
+const rest2 = {
+  name: 'La Piazza',
+  owner: 'Geivanni Rossi',
+};
+//* --- Logical Assignment Operators ---
 
-//* Solution to the problem
-//! It works with the concept of nullish values instead of falsy values
-//! Nullish: null and undefined (NOT 0 or '') it's like OR operator but Nullish values or for it TRUTHY
-//? logs: 0 if number of guest was defined as 0
-const guestCorrect = restaurant.numGuests ?? 10;
-console.log(guestCorrect);
+//* OR assignment operator
+// rest1.numGeusts = rest1.numGuests || 10;
+// rest2.numGeusts = rest2.numGuests || 10;
+// rest1.numGuests ||= 10; //? logs: 20 (if numGuests is defiend)
+// rest2.numGuests ||= 10; //? logs: 10
 
-//* --- Short Circuiting ---
+//* Nullish Assignment operator (null or undeifined) []
+rest1.numGuests ??= 10; //? logs: 0
+rest2.numGuests ??= 10; //? logs: 10
 
-//* - AND operator -
-//! OR statement can use ANY data type, return ANY data type, short-circuiting
-//! the result of OR operation doesn't always needs to be a boolean
+//* AND A.O.
+//! Short Circuits when the 1st value is FALSY then immediately returns that value if TRUTHY returns the 2nd value
+rest2.owner = rest2.owner && '<ANONIMOUS>'; //? logs: <anonimous>
+//! The same with this one but it will log 1st value and it is undefined
+rest1.owner = rest1.owner && '<ANONIMOUS>'; //? logs: undefined
+//* Short hand for the same shit(logical A.O.)
+rest2.owner &&= '<ANONNIMOUS>';
+rest1.owner &&= '<ANONNIMOUS>';
 
-//! In case of OR operator: short circuiting means that if the first value is a truthy value, it will immediatrly return that first value
-console.log(3 || 'Jonas'); //? Will return: 3
-console.log('' || 'Jonas'); //? Will return: Jonas
-console.log(true || 0); //? Will return: true
-console.log(undefined || null); //? Will return true
+console.log(rest1);
+console.log(rest2);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// //* --- Nullish Coalescing Operator ---
 
-//! The following OR chain starts with 0 [falsy] -> '' [falsy] -> 'Hello' [truthy]
-//? logs 'Hello'
-console.log(undefined || 0 || '' || 'Hello' || 23 || null);
+// //* OR (Short Circuit) to set a default value for guest if they are not defined
+// //! Basically the same as if operator. It will log the 1st value if true, if false '10'
+// //! Used solutions won't work if number of guest is 0
+// //? logs: 10 if number of guest was defined as 0
+// const guests2 = restaurant.numGuests || 10;
+// console.log(guests2);
 
-//* IF statement to set a default value for guests if they are not defined
-//? We want to define a variable based on the number of guests
-//! If the guests number = guests then it will keep the number, else it is basically undefined and a value '10' will be assigned
-// restaurant.numGuests = 23;
-const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
-//? logs: 10 if numGuests is undefined else '23'
-console.log(guests1);
+// //* Solution to the problem
+// //! It works with the concept of nullish values instead of falsy values
+// //! Nullish: null and undefined (NOT 0 or '') it's like OR operator but Nullish values or for it TRUTHY
+// //? logs: 0 if number of guest was defined as 0
+// const guestCorrect = restaurant.numGuests ?? 10;
+// console.log(guestCorrect);
 
-//* OR (Short Circuit) to set a default value for guest if they are not defined
-//? Basically the same as if operator. It will log the 1st value if true, if false '10'
-const guests2 = restaurant.numGuests || 10;
-console.log(guests2);
+// //* --- Short Circuiting ---
 
-//* Used solutions won't work if number of guest is 0
-//! Because 0 is a falsy value it will go from 1st value [0] to 2nd [10]
-//? logs: 10
+// //* - AND operator -
+// //! OR statement can use ANY data type, return ANY data type, short-circuiting
+// //! the result of OR operation doesn't always needs to be a boolean
 
-//* - AND Operator -
-//! If the first value is falsy it will return this value, It is like OR but reversed
-//? logs: 0 (because Falsy)
-console.log(0 && 'Jonas');
-//? logs: Jonas (because Truthy)
-console.log(7 && 'Jonas');
-//! The followng AND chain starts with 'Hello' [truthy] -> '23' [truthy] -> null [falsy]
-console.log('Hello' && 23 && null && 'jonas');
+// //! In case of OR operator: short circuiting means that if the first value is a truthy value, it will immediatrly return that first value
+// console.log(3 || 'Jonas'); //? Will return: 3
+// console.log('' || 'Jonas'); //? Will return: Jonas
+// console.log(true || 0); //? Will return: true
+// console.log(undefined || null); //? Will return true
 
-//* Real-World example: Ordering Pizza
+// //! The following OR chain starts with 0 [falsy] -> '' [falsy] -> 'Hello' [truthy]
+// //? logs 'Hello'
+// console.log(undefined || 0 || '' || 'Hello' || 23 || null);
 
-//! If there is an order Pizza method it will call it
-//? it executes a funcion
-if (restaurant.orderPizza) {
-  restaurant.orderPizza('mushrooms', 'spinach');
-}
+// //* IF statement to set a default value for guests if they are not defined
+// //? We want to define a variable based on the number of guests
+// //! If the guests number = guests then it will keep the number, else it is basically undefined and a value '10' will be assigned
+// // restaurant.numGuests = 23;
+// const guests1 = restaurant.numGuests ? restaurant.numGuests : 10;
+// //? logs: 10 if numGuests is undefined else '23'
+// console.log(guests1);
 
-//! AND statemnt best suits if we just want to check if something does exist
-//! IF there is an order Pizza method it will call it
-//? it executes a funcion
-restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
+// //* OR (Short Circuit) to set a default value for guest if they are not defined
+// //? Basically the same as if operator. It will log the 1st value if true, if false '10'
+// const guests2 = restaurant.numGuests || 10;
+// console.log(guests2);
+
+// //* Used solutions won't work if number of guest is 0
+// //! Because 0 is a falsy value it will go from 1st value [0] to 2nd [10]
+// //? logs: 10
+
+// //* - AND Operator -
+// //! If the first value is falsy it will return this value, It is like OR but reversed
+// //? logs: 0 (because Falsy)
+// console.log(0 && 'Jonas');
+// //? logs: Jonas (because Truthy)
+// console.log(7 && 'Jonas');
+// //! The followng AND chain starts with 'Hello' [truthy] -> '23' [truthy] -> null [falsy]
+// console.log('Hello' && 23 && null && 'jonas');
+
+// //* Real-World example: Ordering Pizza
+
+// //! If there is an order Pizza method it will call it
+// //? it executes a funcion
+// if (restaurant.orderPizza) {
+//   restaurant.orderPizza('mushrooms', 'spinach');
+// }
+
+// //! AND statemnt best suits if we just want to check if something does exist
+// //! IF there is an order Pizza method it will call it
+// //? it executes a funcion
+// restaurant.orderPizza && restaurant.orderPizza('mushrooms', 'spinach');
 
 // //* --- Rest Pattern and Parameters
 
