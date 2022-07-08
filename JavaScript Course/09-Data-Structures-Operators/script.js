@@ -1,33 +1,50 @@
-'use strict';
+"use strict";
 
 // Data needed for a later exercise
-const flights =
-  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
-
-// Data needed for first part of the section
-const restaurant = {
-  name: 'Classico Italiano',
-  location: 'Via Angelo Tavanti 23, Firenze, Italy',
-  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
-  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
-  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
-
-  openingHours: {
-    thu: {
+const weekdays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+const computingVariablesExample = {
+  openingHoursExample: {
+    //: Before calculating propery names was NOT possible
+    [weekdays[3]]: {
       open: 12,
       close: 22,
     },
-    fri: {
+    [weekdays[4]]: {
       open: 11,
       close: 23,
     },
-    sat: {
+    [`day-${2 + 4}`]: {
       open: 0, // Open 24 hours
       close: 24,
     },
   },
+};
+const flights =
+  "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
+const openingHours = {
+  thu: {
+    open: 12,
+    close: 22,
+  },
+  fri: {
+    open: 11,
+    close: 23,
+  },
+  sat: {
+    open: 0, // Open 24 hours
+    close: 24,
+  },
+};
+// Data needed for first part of the section
+const restaurant = {
+  name: "Classico Italiano",
+  location: "Via Angelo Tavanti 23, Firenze, Italy",
+  categories: ["Italian", "Pizzeria", "Vegetarian", "Organic"],
+  starterMenu: ["Focaccia", "Bruschetta", "Garlic Bread", "Caprese Salad"],
+  mainMenu: ["Pizza", "Pasta", "Risotto"],
+
   order: function (starterIndex, mainIndex) {
-    //! returns an array [] based on the given indexes
+    //> returns an array [] based on the given indexes
     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
   },
 
@@ -41,48 +58,281 @@ const restaurant = {
       `Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}`
     );
   },
-  //! first argument gets sotered in the mainIngredient, the rest in totherIngredients
+  //> first argument gets sotered in the mainIngredient, the rest in otherIngredients
   orderPizza: function (mainIngredient, ...otherIngredients) {
     console.log(mainIngredient);
     console.log(otherIngredients);
   },
+  openingHours,
 };
+//* Looping Objects: Object Keys, Values, and Entries
+
+//- Property NAMES
+//! property names are called KEYS
+const properties = Object.keys(openingHours);
+console.log(properties);
+
+//: We want to compute the ammount of stings in openingHours Object
+let openStr = `We are open on ${properties.length} days: `;
+for (const day of properties) {
+  openStr += `${day}, `;
+}
+console.log(openStr);
+
+//- Property VALUES
+const object = Object.values(openingHours);
+console.log(object);
+
+//- Entire Object
+const entries = Object.entries(openingHours);
+console.log(entries);
+
+for (const [key, { open, close }] of entries) {
+  console.log(`On ${key} we open at ${open} and close at ${close}`);
+}
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// //* --- Optional Chaining ---
+
+// //: We want to get the opening hours on monday
+// console.log(restaurant.openingHours.mon); //: This will log: undefined (mon is not defined)
+// //- WITHOUT Optional Chaining
+// //: We want to get the time restaurant is opening on monday:
+// //> Can NOT get a property of undefined
+// // console.log(restaurant.openingHours.mon.open); //: This will log: ERROR (mon.open)
+// //^! Uncomment ^^^ this line if done
+// //
+
+// //. Avoiding the error
+// //: We want to avoid an error if there is no defined property
+// //> This will log the opening hours, if mon is defined [true] -> else it is undefined [false] and does nothing
+// if (restaurant.openingHours.mon) console.log(restaurant.mon.openingHours.open);
+
+// //: We want to make this work too if 'mon' is not defined
+// if (restaurant.openingHours && restaurant.openingHours.mon)
+//   console.log(restaurant.openingHours.mon.open);
+// //
+// //- WITH Optional Chaining
+// //> Instead of just a dot we use Question Mark here.
+// //> Only if a property [monday] that is before this question mark exists [?.] -> then the property [open] after it will be read
+// //! It's like the Nullish Coalescing Operator - the result wll be immediately [undefined] if it is [null or undefined], else will read [open]
+// console.log(restaurant.openingHours.mon?.open); //: logs: undefined
+// //
+// //- Example:
+
+// //. Arrays
+// const days = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+// for (const day of days) {
+//   console.log(day);
+//   //: day comes from days
+//   restaurant.openingHours[day];
+//   //: using the nullish coalesing operator, to return 0 or closed
+//   //> if undefined it returns the next value, if 0 itself
+//   const open = restaurant.openingHours[day]?.open ?? "closed";
+//   console.log(`On ${day}, we open at ${open}`);
+// }
+// //
+// //. Methods
+// //> will log order, lest 'Method does not exist'
+// console.log(restaurant.order?.(0, 1) ?? "Method does not exist");
+
+// //. Arrays
+
+// //. With Optional Chaining
+// const users = [{ name: "Jonas", email: "hello@jonas.io" }];
+// //: checks if [name] is in the array
+// console.log(users[0]?.name ?? "User array empty");
+
+// //. Wthout Optional Chaining
+// if (users.length > 0) console.log(users[0].name);
+// else console.log("user array empty");
+
+//
+//
+//
+//
+//
+//
+//
+//
+// //* --- Enhanced Object Literals ---
+
+// //-  Old Way of including one Object into the other ...
+// //! Before ES6 we would assign object literal to the other by definining it inside of the one we need it in
+// const openingHoursExample = {
+//   mon: {
+//     open: 0,
+//     colose: 24,
+//   },
+// };
+// const restaurantExample = {
+//   nameExample: "Example",
+//   locationExample: "Exmample",
+//   //! A porblem with this aproach is that it has the same property name as its variable
+//   // openingHoursExample: openingHoursExample,
+//   openingHoursExample,
+//   //. Old Way of Writing Methods
+//   orderExampleOld: function () {
+//     //
+//   },
+// };
+// console.log(restaurantExample);
+// //
+// //- ... ES6 Enhanced Object Literals ...
+
+// //. ES6 incusion of object into another
+// //: Now it is just possible to write this object inside the other object for it to include it
+// //
+// //. ES6 Way of Writing Methods
+// const restaurantBeterExample = {
+//   orderExampleNew() {
+//     //
+//   },
+// };
+// //
+// //. Computing Property Names with ES6 | instead of having to write them out manually and literally
+// const weekdays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+// const computingVariablesExample = {
+//   openingHoursExample: {
+//     //: Before calculating propery names was NOT possible
+//     [weekdays[3]]: {
+//       open: 12,
+//       close: 22,
+//     },
+//     [weekdays[4]]: {
+//       open: 11,
+//       close: 23,
+//     },
+//     [`day-${2 + 4}`]: {
+//       open: 0, // Open 24 hours
+//       close: 24,
+//     },
+//   },
+// };
+// console.log(computingVariablesExample.openingHoursExample);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// //* --- For Of Loop ---
+// const menu = [...restaurant.starterMenu, ...restaurant.mainMenu];
+// //! This loop will automatically loop over the entire array and in each iteration it weill give us access to the current array  elemenent, which we can decalare as variable 'item'
+// for (const item of menu) console.log(item);
+// //
+// //- For Of Loop with indexOf
+// //! menu.entries() makes an array with variables 'items' index and varibles themself in it
+// for (const item of menu.entries()) {
+//   console.log(item);
+// }
+// //. Closer look at menu.entries()
+// //! It is an array which in each position contains a new array, which contains the elemenents index and the element itself
+// console.log(...menu.entries());
+// //. Numbered list with menu items
+// for (const item of menu.entries()) {
+//   console.log(`${item[0] + 1}: ${item[1]}`);
+// }
+
+// //. Better way to do this list with destructuring
+// //! first we define i, el as the wariables for menu.entirs() and then we deconstruct these in the previously defined variables
+// for (const [i, el] of menu.entries()) {
+//   console.log(`${i + 1}: ${el}`);
+// }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 
-const rest1 = {
-  name: 'Capri',
-  // numGuests: 20,
-  numGuests: 0,
-};
+// const rest1 = {
+//   name: 'Capri',
+//   // numGuests: 20,
+//   numGuests: 0,
+// };
 
-const rest2 = {
-  name: 'La Piazza',
-  owner: 'Geivanni Rossi',
-};
-//* --- Logical Assignment Operators ---
+// const rest2 = {
+//   name: 'La Piazza',
+//   owner: 'Geivanni Rossi',
+// };
+// //* --- Logical Assignment Operators ---
 
-//* OR assignment operator
-// rest1.numGeusts = rest1.numGuests || 10;
-// rest2.numGeusts = rest2.numGuests || 10;
-// rest1.numGuests ||= 10; //? logs: 20 (if numGuests is defiend)
-// rest2.numGuests ||= 10; //? logs: 10
+// //* OR assignment operator
+// // rest1.numGeusts = rest1.numGuests || 10;
+// // rest2.numGeusts = rest2.numGuests || 10;
+// // rest1.numGuests ||= 10; //? logs: 20 (if numGuests is defiend)
+// // rest2.numGuests ||= 10; //? logs: 10
 
-//* Nullish Assignment operator (null or undeifined) []
-rest1.numGuests ??= 10; //? logs: 0
-rest2.numGuests ??= 10; //? logs: 10
+// //* Nullish Assignment operator (null or undeifined) []
+// rest1.numGuests ??= 10; //? logs: 0
+// rest2.numGuests ??= 10; //? logs: 10
 
-//* AND A.O.
-//! Short Circuits when the 1st value is FALSY then immediately returns that value if TRUTHY returns the 2nd value
-rest2.owner = rest2.owner && '<ANONIMOUS>'; //? logs: <anonimous>
-//! The same with this one but it will log 1st value and it is undefined
-rest1.owner = rest1.owner && '<ANONIMOUS>'; //? logs: undefined
-//* Short hand for the same shit(logical A.O.)
-rest2.owner &&= '<ANONNIMOUS>';
-rest1.owner &&= '<ANONNIMOUS>';
+// //* AND A.O.
+// //! Short Circuits when the 1st value is FALSY then immediately returns that value if TRUTHY returns the 2nd value
+// rest2.owner = rest2.owner && '<ANONIMOUS>'; //? logs: <anonimous>
+// //! The same with this one but it will log 1st value and it is undefined
+// rest1.owner = rest1.owner && '<ANONIMOUS>'; //? logs: undefined
+// //* Short hand for the same shit(logical A.O.)
+// rest2.owner &&= '<ANONNIMOUS>';
+// rest1.owner &&= '<ANONNIMOUS>';
 
-console.log(rest1);
-console.log(rest2);
-//
+// console.log(rest1);
+// console.log(rest2);
+// //
 //
 //
 //
