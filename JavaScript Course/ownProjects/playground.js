@@ -1,4 +1,4 @@
-"use strickt";
+'use strickt';
 
 // var str = "How can mirrors be real if our eyes aren't real";
 
@@ -129,3 +129,115 @@
 //   return console.log(result);
 // }
 // runMultiplyer(5, 3);
+
+//* --- Last part of the challenge
+
+const game = {
+  team1: 'Bayern Munich',
+  team2: 'Borrussia Dortmund',
+  players: [
+    [
+      'Neuer',
+      'Pavard',
+      'Martinez',
+      'Alaba',
+      'Davies',
+      'Kimmich',
+      'Goretzka',
+      'Coman',
+      'Muller',
+      'Gnarby',
+      'Lewandowski',
+    ],
+    [
+      'Burki',
+      'Schulz',
+      'Hummels',
+      'Akanji',
+      'Hakimi',
+      'Weigl',
+      'Witsel',
+      'Hazard',
+      'Brandt',
+      'Sancho',
+      'Gotze',
+    ],
+  ],
+  score: '4:0',
+  scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+  scorers: {},
+  date: 'Nov 9th, 2037',
+  odds: {
+    team1: 1.33,
+    x: 3.25,
+    team2: 6.5,
+  },
+};
+
+// 4. Bonus: Create an object called 'scorers' which contains the names of the
+// players who scored as properties, and the number of goals as the value. In this
+// game, it will look like this:
+// {
+//  Gnarby: 1,
+//  Hummels: 1,
+//  Lewandowski: 2
+// }
+
+//: game -> scored =[p1, p2, p1, p4], scorers = {key, value}
+// game.scored [p1, p2, p1, p3]
+// > make ammount of strings = to strings
+// let arr = [];
+// for (player of game.scored) {
+// console.log(player === game.scored[player.indexOf()]);
+// console.log(player.indexOf(game.scored));
+// if (player )
+// }
+// let arr = [];
+// let scr = [];
+// for (let i = 0; i < game.scored.length; i++) {
+//   !arr.includes(game.scored[i]) && arr.push(game.scored[i]);
+//   arr.includes(game.scored[i]) && scr.push(`${game.scored[i]}: ${+1}`);
+//   //> if arr includes a player add 1 to his score if not do nothing
+// }
+// console.log(arr);
+// console.log(scr);
+//-
+//& scored: ['Lewandowski', 'Gnarby', 'Lewandowski', 'Hummels'],
+//. Step 1: Logic with a temp list -> take an item from it
+//. -> through it and remove the item which was looped through it
+let tempScored = [];
+tempScored = game.scored;
+for (let i = 0; i < tempScored.length; i++) {
+  if (tempScored.includes(tempScored[i])) {
+    //: if an array has this name then ->
+    game.scorers[tempScored[i]] = i;
+    console.log(game.scorers);
+    // console.log(tempScored[i], i);
+    // const tempPlayer = tempScored[i]; //: temporary stored players name
+    // const tempGoal = i; //: temporary sotered players goal count
+    // game.scorers[tempPlayer] = tempGoal;
+    // const tempProprty = { tempPlayer: tempScore };
+    // Object.assign(game.scorers, {Object.keys( tempPlayer ));
+    // game.scorers = { ...game.scorers, tempPlayer,  };
+    // game.scorers = { ...game.scorers, tempPlayer, tempScore };
+    // game.scorers[i] = {, tempProprty };
+  }
+  // tempScored.filter(tempScored[i]);
+}
+// console.log(game.scorers);
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// Object.assign(game.scorers, { p1: 1, p2: 2 });
+// const { p1 = 1, p2, p3 } = game.scorers;
+// console.log(game.scorers);
+// const {scorers: {p1: 2, p2: 1,},} = game;
+//: Not defined yet
+// console.log(scorers);
