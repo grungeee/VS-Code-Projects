@@ -132,3 +132,13 @@ const game = {
 //  Hummels: 1,
 //  Lewandowski: 2
 // }
+//. Solution (big portion of logic made by teacher)
+for (let i = 0; i < game.scored.length; i++) {
+  // if (game.scored.includes(game.scored[i])) {
+  if (game.scorers[game.scored[i]]) {
+    game.scorers[game.scored[i]]++;
+  } else {
+    game.scorers[game.scored[i]] = 1;
+  }
+}
+console.log(game.scorers);

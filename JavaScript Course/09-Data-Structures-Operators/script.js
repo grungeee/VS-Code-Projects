@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 
 // Data needed for a later exercise
-const weekdays = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 const computingVariablesExample = {
   openingHoursExample: {
     //: Before calculating propery names was NOT possible
@@ -20,7 +20,7 @@ const computingVariablesExample = {
   },
 };
 const flights =
-  "_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30";
+  '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 const openingHours = {
   thu: {
     open: 12,
@@ -37,11 +37,11 @@ const openingHours = {
 };
 // Data needed for first part of the section
 const restaurant = {
-  name: "Classico Italiano",
-  location: "Via Angelo Tavanti 23, Firenze, Italy",
-  categories: ["Italian", "Pizzeria", "Vegetarian", "Organic"],
-  starterMenu: ["Focaccia", "Bruschetta", "Garlic Bread", "Caprese Salad"],
-  mainMenu: ["Pizza", "Pasta", "Risotto"],
+  name: 'Classico Italiano',
+  location: 'Via Angelo Tavanti 23, Firenze, Italy',
+  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
   order: function (starterIndex, mainIndex) {
     //> returns an array [] based on the given indexes
@@ -65,31 +65,114 @@ const restaurant = {
   },
   openingHours,
 };
-//* Looping Objects: Object Keys, Values, and Entries
 
-//- Property NAMES
-//! property names are called KEYS
-const properties = Object.keys(openingHours);
-console.log(properties);
+const rest = new Map();
+rest.set('name', 'Classico Italiano');
+rest.set(1, 'Firenze, Italy');
+console.log(rest.set(2, 'Lisbon, Portugal'));
 
-//: We want to compute the ammount of stings in openingHours Object
-let openStr = `We are open on ${properties.length} days: `;
-for (const day of properties) {
-  openStr += `${day}, `;
-}
-console.log(openStr);
+rest
+  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
+  .set('open', 11)
+  .set('close', 23)
+  .set(true, 'We are open :D')
+  .set(false, 'We are closed :(');
 
-//- Property VALUES
-const object = Object.values(openingHours);
-console.log(object);
+//. Extracting Data
+//> To read the data out of a map use .get
+console.log(rest.get('name'));
+console.log(rest.get(true));
+//> Datatype is important, undefined elements return undefined
+console.log(rest.get('1'));
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// const ordersSet = new Set([
+//   'Pasta',
+//   'Pizza',
+//   'Pizza',
+//   'Risotto',
+//   'Pasta',
+//   'Pizza',
+// ]);
 
-//- Entire Object
-const entries = Object.entries(openingHours);
-console.log(entries);
+// console.log(ordersSet);
 
-for (const [key, { open, close }] of entries) {
-  console.log(`On ${key} we open at ${open} and close at ${close}`);
-}
+// console.log(new Set('Jonas'));
+// //> Logs the ammount of values in ordersSet
+// console.log(ordersSet.size); //: expected output: 3
+
+// //> Checks if there is Pizza in the set
+// console.log(ordersSet.has('Pizza')); //: true
+// console.log(ordersSet.has('Bread')); //: false
+// //> Adds this value, but once
+// ordersSet.add('Garlic Bread');
+// ordersSet.add('Garlic Bread');
+// //> Deletes this value, but once
+// ordersSet.delete('Risotto');
+// //> can deleate all the values out of the set
+// // ordersSet.clear()
+// console.log(ordersSet);
+
+// //> There is no way of getting values out of a set and it has no indexes
+
+// //> Looping is possible
+// for (const order of ordersSet) console.log(order);
+
+// //. Example
+// const staff = ['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter'];
+// //> Makes a set (unique values only) and spreads it into new array
+// const staffUnique = [...new Set(staff)];
+// console.log(staffUnique);
+// console.log(
+//   //> Logs how many unique values are in the set
+//   new Set(['Waiter', 'Chef', 'Waiter', 'Manager', 'Chef', 'Waiter']).size //: 3
+// );
+
+// //> Logs ammonut of unique letters
+// console.log(new Set('jonasschmedtmann').size); //: 11
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// //* Looping Objects: Object Keys, Values, and Entries
+
+// //- Property NAMES
+// //! property names are called KEYS
+// const properties = Object.keys(openingHours);
+// console.log(properties);
+
+// //: We want to compute the ammount of stings in openingHours Object
+// let openStr = `We are open on ${properties.length} days: `;
+// for (const day of properties) {
+//   openStr += `${day}, `;
+// }
+// console.log(openStr);
+
+// //- Property VALUES
+// const object = Object.values(openingHours);
+// console.log(object);
+
+// //- Entire Object
+// const entries = Object.entries(openingHours);
+// console.log(entries);
+
+// for (const [key, { open, close }] of entries) {
+//   console.log(`On ${key} we open at ${open} and close at ${close}`);
+// }
 //
 //
 //
