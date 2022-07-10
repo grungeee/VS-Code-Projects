@@ -113,7 +113,7 @@
 // function reverse(str) {
 //   let reversed = "";
 //   for (let character of str) {
-//     //* This basically means we put "character" in front of reversed
+//     //> This basically means we put "character" in front of reversed
 //     reversed = character + reversed;
 //   }
 //   return reversed;
@@ -153,25 +153,25 @@ const cc = '5132571359235';
 //   return console.log(str);
 // }
 
-//. Working solution
-function maskify(cc) {
-  let str = '';
-  for (let i = 0; i < cc.length; i++) {
-    i === cc.length - 1 ||
-    i === cc.length - 2 ||
-    i === cc.length - 3 ||
-    i === cc.length - 4
-      ? (str += cc[i])
-      : (str += '#');
-  }
-  return console.log(str);
-}
-//& TESTING THE FUNCION
-maskify('Skippy');
-maskify(cc);
+// //. Working solution
+// function maskify(cc) {
+//   let str = '';
+//   for (let i = 0; i < cc.length; i++) {
+//     i === cc.length - 1 ||
+//     i === cc.length - 2 ||
+//     i === cc.length - 3 ||
+//     i === cc.length - 4
+//       ? (str += cc[i])
+//       : (str += '#');
+//   }
+//   return console.log(str);
+// }
+// //& TESTING THE FUNCION
+// maskify('Skippy');
+// maskify(cc);
 
-console.log('--- TEST ---');
-const test = 'ABCDEF';
-for (i in test) {
-  console.log(typeof i, i);
-}
+// console.log('--- TEST ---');
+// const test = 'ABCDEF';
+// for (i in test) {
+//   console.log(typeof i, i);
+// }

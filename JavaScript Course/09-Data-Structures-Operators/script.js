@@ -2,8 +2,8 @@
 
 // Data needed for a later exercise
 const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-const computingVariablesExample = {
-  openingHoursExample: {
+const computingVariables = {
+  openingHours: {
     //: Before calculating propery names was NOT possible
     [weekdays[3]]: {
       open: 12,
@@ -59,31 +59,121 @@ const restaurant = {
     );
   },
   //> first argument gets sotered in the mainIngredient, the rest in otherIngredients
-  orderPizza: function (mainIngredient, ...otherIngredients) {
-    console.log(mainIngredient);
-    console.log(otherIngredients);
+  orderpizza: function (mainingredient, ...otheringredients) {
+    console.log(mainingredient);
+    console.log(otheringredients);
   },
   openingHours,
 };
+//& END
 
-const rest = new Map();
-rest.set('name', 'Classico Italiano');
-rest.set(1, 'Firenze, Italy');
-console.log(rest.set(2, 'Lisbon, Portugal'));
+// //* Maps: Integration
 
-rest
-  .set('categories', ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'])
-  .set('open', 11)
-  .set('close', 23)
-  .set(true, 'We are open :D')
-  .set(false, 'We are closed :(');
+// const question = new Map([
+//   ['question', 'What is the best programming language in the world?'],
+//   [1, 'C'],
+//   [2, 'Java'],
+//   [3, 'JavaScript'],
+//   ['correct', 3],
+//   [true, 'Correct :)'],
+//   [false, 'Try again!'],
+// ]);
+// console.log(question); //: logs the map
 
-//. Extracting Data
-//> To read the data out of a map use .get
-console.log(rest.get('name'));
-console.log(rest.get(true));
-//> Datatype is important, undefined elements return undefined
-console.log(rest.get('1'));
+// //. Convert object to map
+// console.log(Object.entries(openingHours));
+// const hoursMap = new Map(Object.entries(openingHours));
+// console.log(hoursMap);
+
+// //. Map interation: Quiz App
+// //> this is possible becuse maps are also interables
+
+// console.log(question.get('question')); //: logs: "What is the best programming language..."
+// //> We directly desturcuture the map in [key, value] variables and it works like with objects but without needing to convert into intarbles first (.entries())
+// //: We want only to print if key is a number
+// for (const [key, value] of question) {
+//   if (typeof key === 'number') console.log(`Answer ${key}: ${value}`);
+// }
+// //: Sends a message in broweser prompt and ask for input
+// //^! Disabled till the end of this lesson
+// const answer = 3;
+// // const answer = Number(prompt('Your answer:'));
+// console.log(answer); //: logs the input
+
+// //: My solution: if answer === 3 -> logs the frase of true/false
+// answer === question.get('correct')
+//   ? console.log(question.get(true)) //: 'Correct :)'
+//   : console.log(question.get(false)); //: 'Try again!'
+
+// console.log(question.get('correct')); //: 3
+// console.log(question.get(question.get('correct'))); //: JavaScript
+
+// //: Teachers solution:
+// //> if answer is the 3 ('correct' from the question) -> true/false
+// //> then logs the coresponding frase to true/false
+// console.log(question.get(question.get('correct') === answer)); //: logs: 'Correct :)' [if input is 3]
+
+// //. Convert Map to array
+// console.log([...question]);
+
+// //> Methods which work on arrays work on maps too
+// console.log(...question.entries());
+// //> Need to spread and add them to a new array
+// console.log([...question.keys()]);
+// console.log([...question.values()]);
+
+//
+//
+//
+//
+//
+//
+
+//* Maps: Fundamentals
+// const rest = new map();
+// rest.set('name', 'classico italiano');
+// rest.set(1, 'firenze, italy');
+// console.log(rest.set(2, 'lisbon, portugal'));
+
+// rest
+//   .set('categories', ['italian', 'pizzeria', 'vegetarian', 'organic'])
+//   .set('open', 11)
+//   .set('close', 23)
+//   .set(true, 'we are open :d')
+//   .set(false, 'we are closed :(');
+
+// //. extracting data
+// //> to read the data out of a map use .get
+// console.log(rest.get('name'));
+// console.log(rest.get(true));
+// //> datatype is important, undefined elements return undefined
+// console.log(rest.get('1'));
+
+// const time = 21;
+// console.log(rest.get(time > rest.get('open') && time < rest.get('close')));
+
+// console.log(rest.has('categories'));
+// rest.delete(2);
+// // rest.clear(2); //: clears all values
+// console.log(rest);
+// console.log(rest.size); //: 7
+
+// //> this won't work because those are different objects in the heap
+// rest.set([1, 2], 'test');
+// //> this will work by creating an array with
+// const arr = [1, 2];
+// rest.set(arr, 'test');
+// //: this won't extract data out of the map
+// console.log(rest.get([1, 2])); //: logs: undefinend
+// //: this will because they referr to the same object in memory heap
+// console.log(rest.get(arr)); //: logs: test
+
+// rest.set(document.queryselector('h1'), 'heading');
+
+// console.log(rest);
+// console.log(rest.size);
+//
+
 //
 //
 //
@@ -93,8 +183,9 @@ console.log(rest.get('1'));
 //
 //
 //
-//
-//
+
+//* Sets
+
 // const ordersSet = new Set([
 //   'Pasta',
 //   'Pizza',
