@@ -51,8 +51,8 @@ for (let i = eventTimings.length - 1; i > 0; i--) {
 const eventAvg = dif / eventTimings.length;
 console.log(`An event happened, on average, every ${eventAvg} minutes`);
 
-//! This was tarrebly wrong because you get the everage events happening by dividing
-
+//! This was tarrebly wrong because you get the everage events happening by dividing the duration(90min) by events
+//> output should be 9
 //. 4. Loop over 'gameEvents' and log each element to the console, marking
 // whether it's in the first half or second half (after 45 min) of the game, like this:
 // [FIRST HALF] 17: ⚽ GOAL
@@ -60,14 +60,20 @@ console.log(`An event happened, on average, every ${eventAvg} minutes`);
 
 //: Normal if satement
 // for (const [timing, event] of gameEvents) {
-//   if (timing < 45) {
+//   if (timing <= 45) {
 //     console.log(`[FIRST HALF] ${timing}: ${event}`);
 //   } else console.log(`[SECOND HALF] ${timing}: ${event}`);
 // }
 
 //: Ternary operator
-for (const [timing, event] of gameEvents) {
-  timing < 45
-    ? console.log(`[FIRST HALF] ${timing}: ${event}`)
-    : console.log(`[SECOND HALF] ${timing}: ${event}`);
+// for (const [timing, event] of gameEvents) {
+//   timing <= 45
+//     ? console.log(`[FIRST HALF] ${timing}: ${event}`)
+//     : console.log(`[SECOND HALF] ${timing}: ${event}`);
+// }
+
+//: ternary operator - another version
+for (const [min, event] of gameEvents) {
+  const half = min <= 45 ? 'FIRST' : 'SECOND';
+  console.log(`${half} HALF ${min}: ${event}`);
 }

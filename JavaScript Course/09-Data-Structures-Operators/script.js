@@ -1,70 +1,260 @@
 'use strict';
 
 // Data needed for a later exercise
-const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
-const computingVariables = {
-  openingHours: {
-    //: Before calculating propery names was NOT possible
-    [weekdays[3]]: {
-      open: 12,
-      close: 22,
-    },
-    [weekdays[4]]: {
-      open: 11,
-      close: 23,
-    },
-    [`day-${2 + 4}`]: {
-      open: 0, // Open 24 hours
-      close: 24,
-    },
-  },
-};
+// const weekdays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+// const computingVariables = {
+//   openingHours: {
+//     //: Before calculating propery names was NOT possible
+//     [weekdays[3]]: {
+//       open: 12,
+//       close: 22,
+//     },
+//     [weekdays[4]]: {
+//       open: 11,
+//       close: 23,
+//     },
+//     [`day-${2 + 4}`]: {
+//       open: 0, // Open 24 hours
+//       close: 24,
+//     },
+//   },
+// };
+// const openingHours = {
+//   thu: {
+//     open: 12,
+//     close: 22,
+//   },
+//   fri: {
+//     open: 11,
+//     close: 23,
+//   },
+//   sat: {
+//     open: 0, // Open 24 hours
+//     close: 24,
+//   },
+// };
+// // Data needed for first part of the section
+// const restaurant = {
+//   name: 'Classico Italiano',
+//   location: 'Via Angelo Tavanti 23, Firenze, Italy',
+//   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
+//   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+//   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+
+//   order: function (starterIndex, mainIndex) {
+//     //> returns an array [] based on the given indexes
+//     return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+//   },
+
+//   orderDelivery: function ({ starterIndex, mainIndex, time, address }) {
+//     console.log(
+//       `Order recieved! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
+//     );
+//   },
+//   orderPasta: function (ing1, ing2, ing3) {
+//     console.log(
+//       `Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}`
+//     );
+//   },
+//   //> first argument gets sotered in the mainIngredient, the rest in otherIngredients
+//   orderpizza: function (mainingredient, ...otheringredients) {
+//     console.log(mainingredient);
+//     console.log(otheringredients);
+//   },
+//   openingHours,
+// };
+//& END OF RESTAURANT OBJECTS
+
 const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
-const openingHours = {
-  thu: {
-    open: 12,
-    close: 22,
-  },
-  fri: {
-    open: 11,
-    close: 23,
-  },
-  sat: {
-    open: 0, // Open 24 hours
-    close: 24,
-  },
-};
-// Data needed for first part of the section
-const restaurant = {
-  name: 'Classico Italiano',
-  location: 'Via Angelo Tavanti 23, Firenze, Italy',
-  categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
-  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
-  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
 
-  order: function (starterIndex, mainIndex) {
-    //> returns an array [] based on the given indexes
-    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
-  },
+//* Working with strings - Pt. 3
 
-  orderDelivery: function ({ starterIndex, mainIndex, time, address }) {
-    console.log(
-      `Order recieved! ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered to ${address} at ${time}`
-    );
-  },
-  orderPasta: function (ing1, ing2, ing3) {
-    console.log(
-      `Here is your delicious pasta with ${ing1}, ${ing2} and ${ing3}`
-    );
-  },
-  //> first argument gets sotered in the mainIngredient, the rest in otherIngredients
-  orderpizza: function (mainingredient, ...otheringredients) {
-    console.log(mainingredient);
-    console.log(otheringredients);
-  },
-  openingHours,
+//. split() Method
+//> splits a sting by a divider sting (+) -> into multiple parts, an array
+console.log('a+very+nice+string'.split('+'));
+console.log('Jonas Schmedtmann'.split(' '));
+
+const [firstName, lastName] = 'Jonas Schmedtmann'.split(' ');
+
+//. join() Method
+//> opposite of split()
+const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' ');
+console.log(newName);
+
+//> split(' ') Makes an array
+//> n[0].toUpperCase Makes every first character within the array to upper case and slice(1) returns the rest of the word
+//> uppersCase recieves the converted sting
+function capitalizeName(name) {
+  const nameArr = name.split(' ');
+  const upperCase = [];
+  for (let n of nameArr) {
+    // upperCase.push(n[0].toUpperCase() + n.slice(1));
+    //> 2nd Way of replacing the first charcter of the word
+    upperCase.push(n.replace(n[0], n[0].toUpperCase()));
+  }
+  return console.log(upperCase.join(' '));
+}
+
+capitalizeName('jessica ann smith davis');
+
+//. Padding | padStart(), padEnd()
+//> adding a number of characters to the string until the string has a certain desired length
+
+const message = 'Go to gate 23!';
+//> adds + in fornt of 'message' till the string has 25 char, then adds + at the end of 'message' till it has 35 char
+console.log(message.padStart(25, '+').padEnd(35, '+')); //: log: +++++++++++Go to gate 23!++++++++++
+console.log('Jonas'.padStart(25, '+').padEnd(35, '+')); //: ++++++++++++++++++++Jonas++++++++++
+
+//: first we connvert number to a string
+//> this is an alternative to String(number) -> add a string to a number and it will be converted to str
+const maskCreditCard = function (number) {
+  const str = number + '';
+  const last = str.slice(str.length - 4);
+  return console.log(last.padStart(str.length, '#'));
 };
+
+maskCreditCard(5456902347566);
+
+//. Repeat | .repeat()
+
+const message2 = 'Bad weather... All Departures Delayed... ';
+console.log(message2.repeat(5));
+
+const planesInLine = function (n) {
+  console.log(`There are ${n} planes in line ${'✈️'.repeat(n)}`);
+};
+
+planesInLine(5);
+planesInLine(3);
+planesInLine(12);
+
+//
+
+//& END
+
+// //* Working with strings - Pt. 2
+
+// const airline = 'TAP Air Portugal';
+
+// //. Case changing Methods
+// //> Lower Case
+// console.log(airline.toLowerCase());
+// //> Upper Case
+// console.log(airline.toUpperCase());
+
+// //. Fix capitalization in name
+// const passenger = 'jOnAS'; //: Jonas in wrong capitalizatiuon
+// const passengerLower = passenger.toLowerCase();
+// const passengerCorrect =
+//   passengerLower[0].toUpperCase() + passengerLower.slice(1);
+
+// //. Comparing emails
+// const email = 'hello@jonas.io';
+// const loginEmail = 'Hello@Jonas.Io \n'; //: the '\n' is like whitespace
+// //> .trim() removese the whitespaces
+// const normalizedEmail = loginEmail.toLowerCase().trim();
+// console.log(email === normalizedEmail);
+
+// //. Replacing
+// // const priceGB = '288,97💷';
+// // const priceUS = priceGB.replace('💷', '💵').replace(',', '.');
+// // console.log(priceUS);
+// //^! Turned off for quokka to fuck off
+
+// const announcement =
+//   'All passengers come to bording door 23. Boarding door 23!';
+// //> replace() - raplaces only one occurance
+// //> replaceAll() - replaces all occurance of word 'gate'
+// console.log(announcement.replaceAll('door', 'gate'));
+
+// //: Replacing all with Regular Expression
+// //> g - stands for global
+// console.log(announcement.replace(/door/g, 'gate'));
+
+// //. Booleans
+// const plane = 'Airbus A320neo';
+// console.log(plane.includes('A320'));
+// console.log(plane.includes('Boeing'));
+// //> Doesn't have to start with the whole word
+// console.log(plane.startsWith('Air'));
+
+// //: Using endsWith()
+// if (plane.startsWith('Airbus') && plane.endsWith('neo')) {
+//   console.log('Part of the NEW Airbus family');
+// }
+
+// //: function to check what is a passanger is having in a baggage and preventing from boarding if there is something illegal
+// //> if reciving input from a user we usually have to convert it to lovercase
+// const checkBaggage = function (items) {
+//   const baggage = items.toLowerCase();
+//   if (baggage.includes('knife') || baggage.includes('gun')) {
+//     console.log('You are NOT allowed on board');
+//   } else {
+//     console.log('Welcome aboard!');
+//   }
+// };
+
+// checkBaggage('I have a laptop, some Food and a pocket Knife');
+// checkBaggage('Socks and camera');
+// checkBaggage('Got some snacks and a gun for protection');
+
+//& END
+
+// //* Working with strings - Pt. 1
+
+// const airline = 'TAP Airline Portugal';
+// const plane = 'A320';
+
+// console.log(plane[0]);
+// console.log(plane[1]);
+// console.log(plane[2]);
+// console.log('B737'[0]);
+
+// console.log(airline.length);
+// console.log('B737'.length);
+
+// //. indexOf() and lastIndexOf() Methods
+// console.log(airline.indexOf('r'));
+// //> to get indexOf() the last occurance of a character use: lastIndesOf()
+// console.log(airline.lastIndexOf('r'));
+// //> this is casesensetive, so if 'portugal' -> -1 (not found)
+// console.log(airline.indexOf('Portugal'));
+
+// //. slice() Method
+// //> .slice - starts to extract from postion of index [4] (doesnt change the sting tho, stings are primitives)
+// console.log(airline.slice(4)); //: scipps 'TAP' -> logs: Airline Portugal
+// //> starts at 4 ends at 7
+// console.log(airline.slice(4, 7)); //: output: Air
+// //: Here we want to log the nape of the airline (TAP) without hardcoding it
+// //> logging everything from 0 to the first occurance of ' '
+// console.log(airline.slice(0, airline.indexOf(' '))); //: 'TAP'
+// //> slices from the last accurance of ' ' (+ 1 to go farther and not include the space)
+// console.log(airline.slice(airline.lastIndexOf(' ') + 1)); //: 'TAP'
+// //> slices from the end if negative nubmer is used
+// console.log(airline.slice(-2));
+// //> slices form the second character to the end not including the last 2 charcters
+// console.log(airline.slice(1, -2));
+// console.log(airline.slice(-2));
+
+// const checkMiddleSeat = function (seat) {
+//   // B and E are middle seats [6 sits in a row: A, B, C |<- Aisle ->| D, E, F]
+//   const s = seat.slice(-1);
+//   if (s === 'E' || s === 'B') {
+//     console.log('You got the middle seat 😬');
+//   } else {
+//     console.log('You got lucky 😎');
+//   }
+// };
+
+// checkMiddleSeat('11B');
+// checkMiddleSeat('23C');
+// checkMiddleSeat('3E');
+
+// console.log(new String('jonas'));
+// console.log(typeof new String('jonas'));
+// console.log(typeof new String('jonas').slice(1));
+
 //& END
 
 // //* Maps: Integration
@@ -823,10 +1013,10 @@ const restaurant = {
 // const [p = 1, q = 1, r = 1] = [8, 9];
 // console.log(p, q, r);
 
-// //* Belongs to the 2nd funcion
+// //! Belongs to the 2nd funcion
 // restaurant.orderDelivery({
-//   time: "22:30",
-//   address: "Via del Sole, 21",
+//   time: '22:30',
+//   address: 'Via del Sole, 21',
 //   mainIndex: 2,
 //   starterIndex: 2,
 // });
