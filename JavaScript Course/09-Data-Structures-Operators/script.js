@@ -68,66 +68,85 @@
 const flights =
   '_Delayed_Departure;fao93766109;txl2133758440;11:25+_Arrival;bru0943384722;fao93766109;11:45+_Delayed_Arrival;hel7439299980;fao93766109;12:05+_Departure;fao93766109;lis2323639855;12:30';
 
-//* Working with strings - Pt. 3
+//* Sting Methods practice
 
-//. split() Method
-//> splits a sting by a divider sting (+) -> into multiple parts, an array
-console.log('a+very+nice+string'.split('+'));
-console.log('Jonas Schmedtmann'.split(' '));
-
-const [firstName, lastName] = 'Jonas Schmedtmann'.split(' ');
-
-//. join() Method
-//> opposite of split()
-const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' ');
-console.log(newName);
-
-//> split(' ') Makes an array
-//> n[0].toUpperCase Makes every first character within the array to upper case and slice(1) returns the rest of the word
-//> uppersCase recieves the converted sting
-function capitalizeName(name) {
-  const nameArr = name.split(' ');
-  const upperCase = [];
-  for (let n of nameArr) {
-    // upperCase.push(n[0].toUpperCase() + n.slice(1));
-    //> 2nd Way of replacing the first charcter of the word
-    upperCase.push(n.replace(n[0], n[0].toUpperCase()));
-  }
-  return console.log(upperCase.join(' '));
+//> function to remove all cachcters but the FIRST 3 and makes it Upper Case
+const getCode = str => str.slice(0, 3).toUpperCase();
+for (const flight of flights.split('+')) {
+  const [type, from, to, time] = flight.split(';');
+  const output = `${type.startsWith('_Delayed') ? '🔴' : ''}${type.replaceAll(
+    '_',
+    ' '
+  )} from ${getCode(from)} to ${getCode(to)} (${time.replace(':', 'h')})`
+    .trim()
+    .padStart(50, ' ');
+  console.log(output);
 }
 
-capitalizeName('jessica ann smith davis');
+//&
 
-//. Padding | padStart(), padEnd()
-//> adding a number of characters to the string until the string has a certain desired length
+// console.log(toJadenCase(str));
 
-const message = 'Go to gate 23!';
-//> adds + in fornt of 'message' till the string has 25 char, then adds + at the end of 'message' till it has 35 char
-console.log(message.padStart(25, '+').padEnd(35, '+')); //: log: +++++++++++Go to gate 23!++++++++++
-console.log('Jonas'.padStart(25, '+').padEnd(35, '+')); //: ++++++++++++++++++++Jonas++++++++++
+// //* Working with strings - Pt. 3
 
-//: first we connvert number to a string
-//> this is an alternative to String(number) -> add a string to a number and it will be converted to str
-const maskCreditCard = function (number) {
-  const str = number + '';
-  const last = str.slice(str.length - 4);
-  return console.log(last.padStart(str.length, '#'));
-};
+// //. split() Method
+// //> splits a sting by a divider sting (+) -> into multiple parts, an array
+// console.log('a+very+nice+string'.split('+'));
+// console.log('Jonas Schmedtmann'.split(' '));
 
-maskCreditCard(5456902347566);
+// const [firstName, lastName] = 'Jonas Schmedtmann'.split(' ');
 
-//. Repeat | .repeat()
+// //. join() Method
+// //> opposite of split()
+// const newName = ['Mr.', firstName, lastName.toUpperCase()].join(' ');
+// console.log(newName);
 
-const message2 = 'Bad weather... All Departures Delayed... ';
-console.log(message2.repeat(5));
+// //> split(' ') Makes an array
+// //> n[0].toUpperCase Makes every first character within the array to upper case and slice(1) returns the rest of the word
+// //> uppersCase recieves the converted sting
+// function capitalizeName(name) {
+//   const nameArr = name.split(' ');
+//   const upperCase = [];
+//   for (let n of nameArr) {
+//     // upperCase.push(n[0].toUpperCase() + n.slice(1));
+//     //> 2nd Way of replacing the first charcter of the word
+//     upperCase.push(n.replace(n[0], n[0].toUpperCase()));
+//   }
+//   return console.log(upperCase.join(' '));
+// }
 
-const planesInLine = function (n) {
-  console.log(`There are ${n} planes in line ${'✈️'.repeat(n)}`);
-};
+// capitalizeName('jessica ann smith davis');
 
-planesInLine(5);
-planesInLine(3);
-planesInLine(12);
+// //. Padding | padStart(), padEnd()
+// //> adding a number of characters to the string until the string has a certain desired length
+
+// const message = 'Go to gate 23!';
+// //> adds + in fornt of 'message' till the string has 25 char, then adds + at the end of 'message' till it has 35 char
+// console.log(message.padStart(25, '+').padEnd(35, '+')); //: log: +++++++++++Go to gate 23!++++++++++
+// console.log('Jonas'.padStart(25, '+').padEnd(35, '+')); //: ++++++++++++++++++++Jonas++++++++++
+
+// //: first we connvert number to a string
+// //> this is an alternative to String(number) -> add a string to a number and it will be converted to str
+// const maskCreditCard = function (number) {
+//   const str = number + '';
+//   const last = str.slice(str.length - 4);
+//   return console.log(last.padStart(str.length, '#'));
+// };
+
+// maskCreditCard(5456902347566);
+
+// //. Repeat | .repeat()
+
+// const message2 = 'Bad weather... All Departures Delayed... ';
+// console.log(message2.repeat(5));
+
+// const planesInLine = function (n) {
+//   console.log(`There are ${n} planes in line ${'✈️'.repeat(n)}`);
+// };
+
+// planesInLine(5);
+// planesInLine(3);
+// planesInLine(12);
 
 //
 

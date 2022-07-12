@@ -175,3 +175,24 @@ const cc = '5132571359235';
 // for (i in test) {
 //   console.log(typeof i, i);
 // }
+
+// //- To Jaden Smith Case:
+// const str = "How can mirrors be real if our eyes aren't real";
+// //. My Solution
+// String.prototype.toJadenCase = function () {
+//   const arr = this.toLowerCase().split(' ');
+//   let converted = [];
+//   for (const word of arr) {
+//     // converted.push(word.replace(word[0], word[0].toUpperCase()));
+//     converted.push(word[0].toUpperCase() + word.slice(1));
+//   }
+//   return converted.join(' ');
+// };
+
+// //. Alternative solution from CodeWars
+// String.prototype.toJadenCase = function () {
+//   return this.replace(/(^|\s)[a-z]/g, function (x) {
+//     return x.toUpperCase();
+//   });
+// };
+// console.log(str.toJadenCase());
