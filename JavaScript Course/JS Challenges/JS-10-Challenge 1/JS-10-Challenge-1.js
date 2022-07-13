@@ -19,14 +19,19 @@ Your tasks:
 *. 1. Make sure to check if the input is a number and if the number makes 
 *. sense (e.g. answer 52 wouldn't make sense, right?)
 *- 2. Call this method whenever the user clicks the "Answer poll" button.
-3. Create a method 'displayResults' which displays the poll results. The 
-method takes a string as an input (called 'type'), which can be either 'string'
-or 'array'. If type is 'array', simply display the results array as it is, using 
-console.log(). This should be the default option. If type is 'string', display a 
-string like "Poll results are 13, 2, 4, 1".
-4. Run the 'displayResults' method at the end of each 
-'registerNewAnswer' method call.
-5. Bonus: Use the 'displayResults' method to display the 2 arrays in the test 
+*- 3. Create a method 'displayResults' which displays the poll results. The 
+*- method takes a string as an input (called 'type'), which can be either 'string'
+*- or 'array'. If type is 'array', simply display the results array as it is, using 
+*- console.log(). This should be the default option. If type is 'string', display a 
+*- string like "Poll results are 13, 2, 4, 1".
+//& displayResults() {
+  type
+  array: display result c.l()
+  string: [else] 'Poll results are 13, 2, 4, 1'
+//&}
+*- 4. Run the 'displayResults' method at the end of each 
+*- 'registerNewAnswer' method call.
+*- 5. Bonus: Use the 'displayResults' method to display the 2 arrays in the test 
 data. Use both the 'array' and the 'string' option. Do not put the arrays in the poll 
 object! So what should the this keyword look like in this situation?
 The Complete JavaScript Course 21
@@ -49,15 +54,24 @@ const poll = {
     const options = this.options;
     const answers = this.answers;
     //: prompt message and value
-    const answer = Number(prompt(`${questoin}\n${options.join('\n')}`));
-    if (answer <= 3) {
+    const answer = Number(
+      prompt(`${questoin}\n${options.join('\n')}\n(Wirte option number)`)
+    );
+    if (answer < answers.length) {
       for (let i = 0; i < answers.length; i++) {
         answer === i ? answers[i]++ : '';
       }
-      console.log(answer);
-      console.log(answers);
+      this.displayResults();
+      this.displayResults('string');
     } else {
-      console.log('Fuck off');
+      console.log('Pick a number from the list');
+    }
+  },
+  displayResults(type = 'array') {
+    if (type === 'array') {
+      console.log(this.answers);
+    } else if (type === 'string') {
+      console.log(`Poll results are ${this.answers}`);
     }
   },
 };
@@ -66,3 +80,15 @@ const poll = {
 document
   .querySelector('.poll')
   .addEventListener('click', poll.registerNewAnswer.bind(poll));
+
+//& Bonus:
+//§ Data 1:
+const data1 = [5, 2, 3];
+//§ Data 2:
+const data2 = [1, 5, 3, 9, 6, 1];
+//&}
+
+//. Solution
+//> we create a new object 'answers' and add this data to it (data1, data2), 'string' is the argument for intiation of (c.l())
+poll.displayResults.call({ answers: data1 }, 'string');
+poll.displayResults.call({ answers: data2 }, 'array');

@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 //* WORDLE //
 
@@ -64,21 +64,25 @@
 // isInDB();
 
 // //* This code should merge characters into one sting
-// let c1 = "s";
-// let c2 = "w";
-// let c3 = "a";
-// let c4 = "c";
-// let c5 = "k";
-// let guess2 = "";
+let c1 = 's';
+let c2 = 'w';
+let c3 = 'a';
+let c4 = 'c';
+let c5 = 'k';
+let guess2 = '';
 // guess2 = c1 + c2 + c3 + c4 + c5;
+//: aternative:
+// guess2 = [c1, c2, c3, c4, c5].join('');
 // console.log(typeof guess2, guess2);
 
-// //* This should changes text to UPPERCASE on input
-// const charInput = document.querySelectorAll(".char");
-// for (let i = 0; i < charInput.length; i++) {
-//   charInput[i].addEventListener("input", function () {
-//     //todo: Need to make a function that changes color on selection MAYBE?
-//     this.style.backgroundColor = "#deaede";
-//     this.value = this.value.toUpperCase();
-//   });
-// }
+// //* This changes text to UPPERCASE on input
+const charInput = document.querySelectorAll('.char');
+for (let i = 0; i < charInput.length; i++) {
+  charInput[i].addEventListener('input', function () {
+    //todo 1: Need to make a function that changes color on selection MAYBE?
+    //todo 2: need to make a funcion that goes to the next input box
+    this.style.backgroundColor = '#deaede';
+    this.value = this.value.toUpperCase();
+    console.log(this.value);
+  });
+}
