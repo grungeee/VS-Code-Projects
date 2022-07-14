@@ -85,4 +85,10 @@ for (let i = 0; i < charInput.length; i++) {
     this.value = this.value.toUpperCase();
     console.log(this.value);
   });
+  //: this listens to all keydown events but NOT on the inputfields
+  charInput.forEach(el => {
+    el.addEventListener('keydown', event => {
+      console.log('press');
+    });
+  });
 }

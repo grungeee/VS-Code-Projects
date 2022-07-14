@@ -77,7 +77,7 @@ function displayMovements(movements) {
           <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-          <div class="movements__value">${mov}</div>
+          <div class="movements__value">${mov}€</div>
     </div>
     `;
     //> insertAdjacentHTML(after[-begin/-end] or before[-begin/-end])
@@ -85,14 +85,13 @@ function displayMovements(movements) {
     //: function call to calcBalance + display
   });
 }
-displayMovements(account1.movements);
 
-//. Calculates the balnace + sets the balnce textContent
-function calcDisplayBalance(movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${balance}€`;
+//. Calculates the balnace + sets the balance textContent to €
+function calcDisplayBalance(acc) {
+  //> Creates a new property in acc -> balance
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${acc.balance}€`;
 }
-calcDisplayBalance(account1.movements);
 
 //. Create usernames
 function createUsernames(accs) {
@@ -106,6 +105,148 @@ function createUsernames(accs) {
 }
 createUsernames(accounts); //: js, stw, etc...
 console.log(accounts);
+
+//. Calculate movements + interest
+function calcDisplaySummary(acc) {
+  const incomes = acc.movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes}€`;
+
+  const out = acc.movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(out)}€`;
+
+  const interest = acc.movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * acc.interestRate) / 100)
+    .filter((int, i, arr) => {
+      console.log(arr);
+      return int >= 1;
+    })
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${interest}€`;
+}
+//. Update UI
+function updateUi(acc) {
+  //: Display movements
+  displayMovements(acc.movements);
+  //: Display balance
+  calcDisplayBalance(acc);
+  //: Display summary
+  calcDisplaySummary(acc);
+}
+
+//-Event Listeners
+
+//. Login
+//: Defining an acount outside of the function to access it later
+let currentAccount;
+
+btnLogin.addEventListener('click', function (e) {
+  //: prevents form submitting
+  e.preventDefault();
+
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+  //> optional chaining executs this if current account does exist
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    //todo : Display UI and a message
+    labelWelcome.textContent = `Welcome back, ${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    //: Show UI
+    containerApp.style.opacity = 100;
+    //: Update UI
+    updateUi(currentAccount);
+    //: Clear input field
+    inputLoginUsername.value = inputLoginPin.value = '';
+    //: Remove focus from input fields
+    inputLoginUsername.blur();
+    inputLoginPin.blur();
+    console.log('SUCCESS');
+  } else {
+    console.log('try again');
+  }
+  console.log(currentAccount);
+});
+
+//. Transfering money
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  console.log(receiverAcc, amount);
+  //todo : Send money (-) -> Rceive money (+) [positive only] [account has enough money]
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc?.username !== currentAccount.username
+  ) {
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+    //: Update UI after succesful operation
+    updateUi(currentAccount);
+    console.log('Transfer Valid');
+  }
+  //: clearing the input fields succes or not
+  inputTransferAmount.value = inputTransferTo.value = '';
+  //: Removeing cursor from input fields
+  //: not really neaded i think -> could use in log-in
+  // inputTransferAmount.blur();
+  // inputTransferTo.blur();
+});
+
+//. Delete Account
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+  if (
+    currentAccount.username === inputCloseUsername.value &&
+    currentAccount.pin === Number(inputClosePin.value)
+  ) {
+    //> findIndex method
+    const index = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+
+    //: Delete Accout
+    accounts.splice(index, 1);
+    console.log(index);
+    console.log('Account Deleted');
+    console.log(accounts);
+
+    //: Hide UI
+    containerApp.style.opacity = 0;
+
+    //: clearing the input fields succes or not
+    inputCloseUsername.value = inputClosePin.value = '';
+  } else {
+    console.log('Wrong Credentials');
+  }
+});
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputLoanAmount.value);
+
+  //: if deposited amount is bigger then 10% of requested Loan ->
+  if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
+    //: Add funds to acc
+    currentAccount.movmements.push(amount);
+
+    //: Update IU
+    updateUi(currentAccount);
+    console.log('you can get a loan');
+
+    //: Clear input field
+    inputLoanAmount.value = '';
+  }
+});
 
 //&
 //
@@ -320,35 +461,140 @@ console.log(accounts);
 
 // console.log(withdrowals);
 
-//* The reduce() Method
+// //* The reduce() Method
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-//> the first parameter: is accumulator -> snawball
-//> the second parameter is the initial value, where the accumulator starts
-const balance = movements.reduce(function (acc, cur, i, arr) {
-  console.log(`Iteration ${i}: ${acc}`);
-  return acc + cur;
-}, 0);
-//. reduce() with arrow function =>
-const balance = movements.reduce((acc, cur) => acc + cur, 0);
+// //> the first parameter: is accumulator -> snawball
+// //> the second parameter is the initial value, where the accumulator starts
+// const balance = movements.reduce(function (acc, cur, i, arr) {
+//   console.log(`Iteration ${i}: ${acc}`);
+//   return acc + cur;
+// }, 0);
+// //. reduce() with arrow function =>
+// const balance = movements.reduce((acc, cur) => acc + cur, 0);
 
-console.log(balance); //: 3840
+// console.log(balance); //: 3840
 
-//. Same with a for loop
-let balanceFor = 0;
-for (const mov of movements) balanceFor += mov;
-console.log(balanceFor);
+// //. Same with a for loop
+// let balanceFor = 0;
+// for (const mov of movements) balanceFor += mov;
+// console.log(balanceFor);
 
-//- Maximum value
+// //- Maximum value
 
-console.log(movements);
+// console.log(movements);
 
-// const max = movements.reduce((acc, mov) => maxNum < cur &&  );
+// // const max = movements.reduce((acc, mov) => maxNum < cur &&  );
 
-const max = movements.reduce((acc, mov) => {
-  if (acc > mov) return acc;
-  else return mov;
-}, movements[0]);
+// const max = movements.reduce((acc, mov) => {
+//   if (acc > mov) return acc;
+//   else return mov;
+// }, movements[0]);
 
-console.log(max);
+// console.log(max);
+
+// //* Chaining Methods
+// //> works as long as the previous method returns an array
+
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// const eurToUsd = 1.1;
+// const totalDepositsUSD = movements
+//   .filter(mov => mov > 0)
+//   .map(mov => mov * eurToUsd)
+//   .reduce((acc, mov) => acc + mov, 0);
+// console.log(totalDepositsUSD);
+
+// //* The find() method
+// //> find() is similar to fiter()
+// //> filter() returns all the element that match the condition -> returns na ARRAY
+// //> find() returns the first one -> returns the ELEMENT itself
+
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// const firstWithdrawal = movements.find(mov => mov < 0);
+
+// console.log(movements);
+// console.log(firstWithdrawal);
+
+// //: we  want to return the account where the owner is "Jessica Davis"
+// const account = accounts.find(acc => acc.owner === 'Jessica Davis');
+
+// //: the same but with for of loop
+// let account;
+// for (account of accounts) {
+//   account === 'Jessica Davis' ? account : '';
+// }
+
+// console.log(account);
+
+// //* some() and every()
+
+// //- some()
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// console.log(movements);
+// //> includes() test for equality -> true/false
+// console.log(movements.includes(-130));
+
+// //> some() test for condition -> true/false
+
+// //: the same as includes()
+// console.log(movements.some(mov => mov === -130));
+
+// const anyDeposits = movements.some(mov => mov > 0);
+// console.log(anyDeposits);
+
+// //- every()
+// //> if very condition is setisfyed -> true
+
+// //: true if all values are > 0
+// console.log(movements.every(mov => mov > 0)); //: false
+// console.log(account4.movements.every(mov => mov > 0)); //: true
+
+// //. Seperate callback
+// const deposit = mov => mov > 0;
+// console.log(movements.some(deposit));
+// console.log(movements.every(deposit));
+// console.log(movements.filter(deposit));
+
+// //* flat() and flatMap()
+
+// //- flat()
+// //> returns an array with values from sub arrays
+// //! goes only one level deep if not specifyed
+
+// const arr = [[1, 2, 3], [4, 5, 6], 7, 8, 9];
+// console.log(arr.flat());
+
+// //. more levels
+// const arrDeep = [
+//   [
+//     [6, 5],
+//     [
+//       [1, 2, 3],
+//       [4, [5, 6]],
+//     ],
+//     7,
+//     8,
+//     9,
+//   ],
+// ];
+// console.log(arrDeep.flat(4));
+
+// //: calc all movements of all accounts
+// const overalBalance = accounts
+//   .map(acc => acc.movements)
+//   .flat()
+//   .reduce((acc, mov) => acc + mov, 0);
+// console.log(overalBalance);
+
+// //-flatMap()
+// //> flatMap combines map() + flat()
+// //! goes only 1 lever deep, if has to go deeper go with flat()
+
+// const overalBalanceFlatMap = accounts
+//   .flatMap(acc => acc.movements)
+//   .reduce((acc, mov) => acc + mov, 0);
+// console.log(overalBalanceFlatMap);
