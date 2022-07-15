@@ -65,12 +65,17 @@ const inputClosePin = document.querySelector('.form__input--pin');
 //> Writing code in the global context is a BAD PRACTICE
 
 //. Movements (plce where deposits/withdrowals are shown)
-function displayMovements(movements) {
+function displayMovements(movements, sort = false) {
+  //. Sorting
+  //: Condition of sort ->  false = movements(same) -> true = sort ascending
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
   //: empties the container
   containerMovements.innerHTML = '';
 
+  //> takes the sorted element form the sorting function
   //: inserts elements in the container and renames them based on value
-  movements.forEach(function (mov, i) {
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `
         <div class="movements__row">
@@ -237,7 +242,7 @@ btnLoan.addEventListener('click', function (e) {
   //: if deposited amount is bigger then 10% of requested Loan ->
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     //: Add funds to acc
-    currentAccount.movmements.push(amount);
+    currentAccount.movements.push(amount);
 
     //: Update IU
     updateUi(currentAccount);
@@ -246,6 +251,14 @@ btnLoan.addEventListener('click', function (e) {
     //: Clear input field
     inputLoanAmount.value = '';
   }
+});
+//: State Capturing
+let sorted = false;
+//: Sorting function call
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted); //> oposite of sorted
+  sorted = !sorted; //> overrides soted when flipped
 });
 
 //&
@@ -598,3 +611,174 @@ btnLoan.addEventListener('click', function (e) {
 //   .flatMap(acc => acc.movements)
 //   .reduce((acc, mov) => acc + mov, 0);
 // console.log(overalBalanceFlatMap);
+
+// //* sort() Method
+// //> mutates the original array
+
+// //- Strings
+// const owners = ['Jonas', 'Zach', 'Adam', 'Martha'];
+// console.log(owners.sort());
+// //> sort alphabetically
+// console.log(owners);
+
+// //- Numbers
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// console.log(movements);
+// //! Sorts based on strings
+// //> converts everything to strings, then it does sorting (starts from the end [-])
+// // console.log(movements.sort()); //: [-130, -400, -650, 1300, 200, 3000, 450, 70]
+
+// //. Ascending
+// //: return < 0, A, B (keep order)
+// //: return > 0, B, A (switch order)
+// movements.sort((a, b) => {
+//   if (a > b) return 1;
+//   if (b > a) return -1;
+// });
+// console.log(movements);
+
+// //. Descending
+// movements.sort((a, b) => {
+//   if (a > b) return -1;
+//   if (b > a) return 1;
+// });
+// console.log(movements);
+
+// //. Improving
+// //> Asc
+// movements.sort((a, b) => a - b);
+// console.log(movements);
+// //> Dis
+// movements.sort((a, b) => b - a);
+// console.log(movements);
+
+// //* More Ways of Creating and Filling Arrays
+
+// const arr = [1, 2, 3, 4, 5, 6, 7];
+// console.log(new Array(1, 2, 3, 4, 5, 6, 7));
+
+// //- new Array()
+// //. Empty arrays + fill() method
+// //> one number inside creates multiple empty placeholders
+// const x = new Array(7);
+// console.log(x);
+// //> doesent do anything
+// console.log(x.map(() => 5));
+
+// //- fill() method
+// //> mutates the array
+
+// // console.log(x.fill(1)); //: fills the whole array with 1
+// //> specify where to start [-, 3, -] 2nd argument
+// //> specify where to end [-, 3, 5] 3rd argument
+// x.fill(1, 3, 5);
+// console.log(x);
+
+// //> passes now elements into the arr
+// arr.fill(23, 2, 6);
+// console.log(arr);
+
+// //- Array.from()
+// //! Using it not an array but on array constructor
+// const y = Array.from({ length: 7 }, () => 1);
+// console.log(y); //: returns 1 on every postion
+
+// //> exactly like  map() method [cur, i] -> in this case [_, i]
+// const z = Array.from({ length: 7 }, (_, i) => i + 1);
+// console.log(z);
+
+// //. Challenge create 10 random dice rolls
+
+// const diceRoll = Array.from(
+//   { length: 100 },
+//   (_, i) => (i = Math.trunc(Math.random() * 10) + 1)
+// );
+// console.log(diceRoll);
+
+// labelBalance.addEventListener('click', function () {
+//   const movementsUI = Array.from(
+//     document.querySelectorAll('.movements__value'),
+//     el => Number(el.textContent.replace('€', ''))
+//   );
+//   console.log(movementsUI);
+
+//   //> alternative
+//   // const movementsUI2 = [...document.querySelectorAll('.movements__value')];
+// });
+
+//& /////////////////////////////
+//* Array Methods Practice
+
+//- 1
+// const bankDepositSum = accounts
+//   .flatMap(acc => acc.movements)
+//   .filter(val => val > 0)
+//   .reduce((sum, cur) => sum + cur);
+// console.log(bankDepositSum);
+
+//- 2
+//! with reduce it is even possible to count
+const numDeposits1000 = accounts
+  .flatMap(acc => acc.movements)
+  // .reduce((count, cur) => (cur >= 1000 ? count + 1 : count), 0);
+  .reduce((count, cur) => (cur >= 1000 ? ++count : count), 0);
+console.log(numDeposits1000);
+
+//. Prefixed ++ operator
+//> this won't work becuase it returns 0 every iteration
+// .reduce((count, cur) => (cur >= 1000 ? count++ : count), 0);
+//! ++ does increment a value but it still returns a previous value
+
+let a = 10;
+console.log(a++); //: returns 10
+console.log(++a); //: returns 11
+console.log(a);
+
+//- 3 more reduce
+//todo create an object with -> a sum of deposits and withdrawals
+const { deposits, withdrawals } = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sums, cur) => {
+      // cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
+      //: Alternative Way:
+      sums[cur > 0 ? 'deposits' : 'withdrawals'] += cur; //? Find out how it works
+      //! Return the accumulator in the end!! if function body -> {}
+      return sums;
+    },
+    { deposits: 0, withdrawals: 0 }
+  );
+
+//. Challenge reduce() instead of map(), filter(), reduce()
+//! Gotta do it 😠
+// const bankDepositSum = accounts
+// .flatMap(acc => acc.movements)
+// .filter(val => val > 0)
+// .reduce((sum, cur) => sum + cur);
+// console.log(bankDepositSum);
+
+//- 4.
+//. Title Case
+//: this is a nice title -> This Is a Nice title
+
+const convertTitleCase = function (title) {
+  //: My solution without extra functions
+  // || title[0][0].includes(title[0][0].toUpperCase)
+  const capitalize = str => str[0].toUpperCase() + str.slice(1);
+  const exceptions = ['a', 'an', 'the', 'but', 'or', 'on', 'in', 'with'];
+
+  const titleCase = title
+    .toLowerCase()
+    .split(' ')
+    .map(word =>
+      exceptions.includes(word) ? word : word[0].toUpperCase() + word.slice(1)
+    )
+    .join(' ');
+  return capitalize(titleCase);
+};
+
+console.log(convertTitleCase('this is a nice title'));
+console.log(convertTitleCase('this is a LONG title but not too long'));
+console.log(
+  convertTitleCase('this is a long title but not too long with an EXAMPLE')
+);
