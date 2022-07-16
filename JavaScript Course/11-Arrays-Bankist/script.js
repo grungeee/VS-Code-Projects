@@ -707,78 +707,78 @@ btnSort.addEventListener('click', function (e) {
 // });
 
 //& /////////////////////////////
-//* Array Methods Practice
+// //* Array Methods Practice
 
-//- 1
-// const bankDepositSum = accounts
+// //- 1
+// // const bankDepositSum = accounts
+// //   .flatMap(acc => acc.movements)
+// //   .filter(val => val > 0)
+// //   .reduce((sum, cur) => sum + cur);
+// // console.log(bankDepositSum);
+
+// //- 2
+// //! with reduce it is even possible to count
+// const numDeposits1000 = accounts
 //   .flatMap(acc => acc.movements)
-//   .filter(val => val > 0)
-//   .reduce((sum, cur) => sum + cur);
-// console.log(bankDepositSum);
+//   // .reduce((count, cur) => (cur >= 1000 ? count + 1 : count), 0);
+//   .reduce((count, cur) => (cur >= 1000 ? ++count : count), 0);
+// console.log(numDeposits1000);
 
-//- 2
-//! with reduce it is even possible to count
-const numDeposits1000 = accounts
-  .flatMap(acc => acc.movements)
-  // .reduce((count, cur) => (cur >= 1000 ? count + 1 : count), 0);
-  .reduce((count, cur) => (cur >= 1000 ? ++count : count), 0);
-console.log(numDeposits1000);
+// //. Prefixed ++ operator
+// //> this won't work becuase it returns 0 every iteration
+// // .reduce((count, cur) => (cur >= 1000 ? count++ : count), 0);
+// //! ++ does increment a value but it still returns a previous value
 
-//. Prefixed ++ operator
-//> this won't work becuase it returns 0 every iteration
-// .reduce((count, cur) => (cur >= 1000 ? count++ : count), 0);
-//! ++ does increment a value but it still returns a previous value
+// let a = 10;
+// console.log(a++); //: returns 10
+// console.log(++a); //: returns 11
+// console.log(a);
 
-let a = 10;
-console.log(a++); //: returns 10
-console.log(++a); //: returns 11
-console.log(a);
+// //- 3 more reduce
+// //todo create an object with -> a sum of deposits and withdrawals
+// const { deposits, withdrawals } = accounts
+//   .flatMap(acc => acc.movements)
+//   .reduce(
+//     (sums, cur) => {
+//       // cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
+//       //: Alternative Way:
+//       sums[cur > 0 ? 'deposits' : 'withdrawals'] += cur; //? Find out how it works
+//       //! Return the accumulator in the end!! if function body -> {}
+//       return sums;
+//     },
+//     { deposits: 0, withdrawals: 0 }
+//   );
 
-//- 3 more reduce
-//todo create an object with -> a sum of deposits and withdrawals
-const { deposits, withdrawals } = accounts
-  .flatMap(acc => acc.movements)
-  .reduce(
-    (sums, cur) => {
-      // cur > 0 ? (sums.deposits += cur) : (sums.withdrawals += cur);
-      //: Alternative Way:
-      sums[cur > 0 ? 'deposits' : 'withdrawals'] += cur; //? Find out how it works
-      //! Return the accumulator in the end!! if function body -> {}
-      return sums;
-    },
-    { deposits: 0, withdrawals: 0 }
-  );
+// //. Challenge reduce() instead of map(), filter(), reduce()
+// //! Gotta do it 😠
+// // const bankDepositSum = accounts
+// // .flatMap(acc => acc.movements)
+// // .filter(val => val > 0)
+// // .reduce((sum, cur) => sum + cur);
+// // console.log(bankDepositSum);
 
-//. Challenge reduce() instead of map(), filter(), reduce()
-//! Gotta do it 😠
-// const bankDepositSum = accounts
-// .flatMap(acc => acc.movements)
-// .filter(val => val > 0)
-// .reduce((sum, cur) => sum + cur);
-// console.log(bankDepositSum);
+// //- 4.
+// //. Title Case
+// //: this is a nice title -> This Is a Nice title
 
-//- 4.
-//. Title Case
-//: this is a nice title -> This Is a Nice title
+// const convertTitleCase = function (title) {
+//   //: My solution without extra functions
+//   // || title[0][0].includes(title[0][0].toUpperCase)
+//   const capitalize = str => str[0].toUpperCase() + str.slice(1);
+//   const exceptions = ['a', 'an', 'the', 'but', 'or', 'on', 'in', 'with'];
 
-const convertTitleCase = function (title) {
-  //: My solution without extra functions
-  // || title[0][0].includes(title[0][0].toUpperCase)
-  const capitalize = str => str[0].toUpperCase() + str.slice(1);
-  const exceptions = ['a', 'an', 'the', 'but', 'or', 'on', 'in', 'with'];
+//   const titleCase = title
+//     .toLowerCase()
+//     .split(' ')
+//     .map(word =>
+//       exceptions.includes(word) ? word : word[0].toUpperCase() + word.slice(1)
+//     )
+//     .join(' ');
+//   return capitalize(titleCase);
+// };
 
-  const titleCase = title
-    .toLowerCase()
-    .split(' ')
-    .map(word =>
-      exceptions.includes(word) ? word : word[0].toUpperCase() + word.slice(1)
-    )
-    .join(' ');
-  return capitalize(titleCase);
-};
-
-console.log(convertTitleCase('this is a nice title'));
-console.log(convertTitleCase('this is a LONG title but not too long'));
-console.log(
-  convertTitleCase('this is a long title but not too long with an EXAMPLE')
-);
+// console.log(convertTitleCase('this is a nice title'));
+// console.log(convertTitleCase('this is a LONG title but not too long'));
+// console.log(
+//   convertTitleCase('this is a long title but not too long with an EXAMPLE')
+// );
