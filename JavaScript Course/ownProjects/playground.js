@@ -196,3 +196,38 @@ const cc = '5132571359235';
 //   });
 // };
 // console.log(str.toJadenCase());
+
+//& ////////////////////////////////////////////////////////
+//* Udemy Transcript Converter
+
+function udemyConverter(str) {
+  console.log(
+    str
+      .replaceAll('\n', ' ')
+      .replaceAll('?', '? ')
+      .replaceAll('!', '! ')
+      .replaceAll('.', '. ')
+      .replaceAll(',', ', ')
+      .replaceAll('  ', ' ')
+  );
+}
+
+udemyConverter(`
+//! /// INSERT HERE ///
+
+//! ///////////////////
+`);
+//& ////////////////////////////////////////////////////////
+
+//* Fun Introduction 🛸
+let me = {
+  name: 'Nikita Sharapa',
+  job: '-',
+  dob: new Date('1999, 08, 18'),
+  country: 'Austria',
+  url: '',
+  languages: ['English', 'German', 'Ukrainian', 'Russian'],
+  learningNewSklills: true,
+  hobbies: ['DIY', 'Leaning', 'Skiing'],
+};
+console.log(me);
