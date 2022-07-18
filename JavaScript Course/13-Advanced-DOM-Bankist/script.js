@@ -7,6 +7,8 @@ const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.querySelector('#section--1');
 
 const openModal = function (e) {
   e.preventDefault();
@@ -30,6 +32,50 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
+//& ////////////////// FUNTIONALITY ///////////////////
+
+//* Button scrolling
+
+//> Getting the CURRENT coordiantes of the element top in relation to the top of the VP
+//> they will change depending where we are on the page -> distance from the
+btnScrollTo.addEventListener('click', function (e) {
+  const s1coords = section1.getBoundingClientRect();
+  console.log(s1coords);
+
+  //> getts coordinates of the element relative to the top of the page
+  console.log(e.target.getBoundingClientRect());
+
+  //> Getting current coordiantes of the element's VP top relative to the top of the page
+  console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset);
+
+  //> Gets the current VP size of the client
+  console.log(
+    'height/width viewport',
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
+
+  // - Modern Scrolling (smooth)
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+//* Page navigation
+
+document.querySelectorAll('.nav__link').forEach(function (el) {
+  el.addEventListener('click', function (e) {
+    e.preventDefault();
+    const id = this.getAttribute('href'); //: #section--1
+    console.log(id);
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+
+//- Event Delegation: Implementing Page Navigation
+//. 1. Add event listener to common parent element
+//. 2. Determine what element originated the event
+
+//& ///////////////////////////////////////////
+//& ///////////////////////////////////////////
 //& ///////////////////////////////////////////
 
 // //* Selecting, Creating and Deleting Elements
@@ -147,28 +193,114 @@ document
 // //! do not use this -> will override all classes and add ONLY one
 // logo.clasName = 'jonas';
 
-//* Implementing Smooth Scrolling
+// //* Implementing Smooth Scrolling
 
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.querySelector('#section--1');
+// const btnScrollTo = document.querySelector('.btn--scroll-to');
+// const section1 = document.querySelector('#section--1');
 
-//> Getting the CURRENT cordiantes of the element in relation to the top of a viewport
-//> they will change depending where we are on the page
-btnScrollTo.addEventListener('click', function (e) {
-  const s1coords = section1.getBoundingClientRect();
-  console.log(s1coords);
+// //> Getting the CURRENT coordiantes of the element top in relation to the top of the VP
+// //> they will change depending where we are on the page -> distance from the
+// btnScrollTo.addEventListener('click', function (e) {
+//   const s1coords = section1.getBoundingClientRect();
+//   console.log(s1coords);
 
-  console.log(e.target.getBoundingClientRect());
+//   //> getts coordinates of the element relative to the top of the page
+//   console.log(e.target.getBoundingClientRect());
 
-  //> Getting current cordiantes of the top of the VP in relation to the top of the page
-  console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset);
+//   //> Getting current coordiantes of the element's VP top relative to the top of the page
+//   console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset);
 
-  //> Gets the current VP size of the client
-  console.log(
-    'height/width viewport',
-    document.documentElement.clientHeight,
-    document.documentElement.clientWidth
-  );
+//   //> Gets the current VP size of the client
+//   console.log(
+//     'height/width viewport',
+//     document.documentElement.clientHeight,
+//     document.documentElement.clientWidth
+//   );
 
-  //- Scrolling
-});
+//   //- Scrolling
+
+//   //. Absolute Position
+//   //> this will not work properly, becuse it is relative to the VP not top of the page
+//   //! Solution: adding the current elment pos relative to vp + the posistion of of the page scroll -> current position + current scroll -> getBoundingClientRect + page[]Offset
+
+//   // window.scrollTo(
+//   //   s1coords.left + window.pageXOffset,
+//   //   s1coords.top + window.pageYOffset
+//   // );
+
+//   //- Smooth Scrolling
+
+//   //> old way
+//   // window.scrollTo({
+//   //   left: s1coords.left + window.pageXOffset,
+//   //   top: s1coords.top + window.pageYOffset,
+//   //   behavior: 'smooth',
+//   // });
+
+//   // - Modern Scrolling
+//   section1.scrollIntoView({ behavior: 'smooth' });
+// });
+
+// //* Types of Events and Event Handlers
+
+// const h1 = document.querySelector('h1');
+
+// //. Regular Way
+
+// //> With AEL we can add multiple ELs to the same event
+// const alertH1 = function (element) {
+//   alert('addEventListener: Great! You are reading teh heading 👽');
+
+//   //> we can remove an event too
+//   //> insid
+//   // h1.removeEventListener('mouseenter', alertH1); //: removes it after it was done once
+// };
+// h1.addEventListener('mouseenter', alertH1);
+
+// //> and outside
+// setTimeout(() => {
+//   h1.removeEventListener('mouseenter', alertH1); //: removes it after it was done once
+// }, 5000);
+
+// //. old way
+// // h1.onmouseenter = function (e) {
+// //   alert('addEventListener: Great! You are reading teh heading 👽');
+// // };
+
+// //. possible to use inside the html attribute
+// //> shuld not be used tho
+// //: <h1 onclick="alert('HTML alert')">
+
+// //* Event Propagation in Practice
+
+// //rgb(255,255,255)
+// const randomInt = (min, max) =>
+//   Math.floor(Math.random() * (max - min + 1) + min);
+// const randomColor = () =>
+//   `rgb(${randomInt(0, 255)},${randomInt(0, 255)},${randomInt(0, 255)})`;
+
+// document
+//   .querySelector('.nav__link')
+//   .addEventListener('click', function (element) {
+//     console.log('LINK', element.target, element.currentTarget);
+//     this.style.backgroundColor = randomColor();
+
+//     //. Stop propagation
+//     element.stopPropagation();
+//   });
+// document
+//   .querySelector('.nav__links')
+//   .addEventListener('click', function (element) {
+//     console.log('CONTAINER', element.target, element.currentTarget);
+//     this.style.backgroundColor = randomColor();
+//   });
+// document.querySelector('.nav').addEventListener(
+//   'click',
+//   function (element) {
+//     console.log('NAV', element.target, element.currentTarget);
+//     this.style.backgroundColor = randomColor();
+
+//     //. Listens for Capturing Event instead of Bubbling events
+//   },
+//   true
+// );
