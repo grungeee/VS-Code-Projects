@@ -229,8 +229,8 @@ const allSections = document.querySelectorAll('.section');
 
 const revealSection = function (entries, observer) {
   const [entry] = entries;
-  console.log(entry);
-  console.log(entry.target);
+  // console.log(entry);
+  // console.log(entry.target);
 
   //> this is like an if else statement
   if (!entry.isIntersecting) return;
@@ -248,7 +248,74 @@ const sectionObserver = new IntersectionObserver(revealSection, {
 
 allSections.forEach(function (section) {
   sectionObserver.observe(section);
-  section.classList.add('section--hidden');
+  // section.classList.add('section--hidden');
+  // ^! BRING BACK TO ADD REVEAL ANIMATON
+});
+
+//* Lazy Loading Images
+
+const imgTargets = document.querySelectorAll('img[data-src]');
+
+const loadImg = function (entries, observer) {
+  const [entry] = entries;
+  // console.log(entry);
+
+  if (!entry.isIntersecting) return;
+
+  //. Replace src with data-src
+  //: takes the source from the data sheet
+  entry.target.src = entry.target.dataset.src;
+
+  //> when loading event is detected unblures the images
+  //: this is needed to prevent the images staying blured with slow internet
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+};
+
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+
+  //> it is better to make the images to load earlier, so the user doesent notice the "lazy loading"
+  rootMargin: '200px', //: loading them before we reach them
+});
+
+imgTargets.forEach(img => imgObserver.observe(img));
+
+//* Building a slider component: Part 1
+
+// //- My attempt
+// //: All Slides
+// const slides = document.querySelectorAll('.slide');
+// //: Left button
+// const sliderBtnLeft = document.querySelector('.slider__btn--left');
+// sliderBtnLeft.addEventListener('click', function (e) {
+//   console.log('click', sliderBtnLeft);
+
+// const slide = slides.forEach(slide => slide.target.classList);
+//   console.log(slide);
+// });
+// const sliderBtnLeft = document.querySelector('.slider__btn--left');
+//-
+
+//* Slider
+
+const slides = document.querySelectorAll('.slide');
+
+const slider = document.querySelector('.slider');
+slider.style.transform = 'scale(0.4) translateX(-800px)';
+slider.style.overflow = 'visible';
+
+//! Very important where you place the %
+slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`)); //:0%, 100%, 200%, 300%
+console.log(...slides);
+
+const btnLeft = document.querySelector('.slider__btn--left');
+
+btnLeft.addEventListener('click', function () {
+  const [slide] = slides;
+  slide.style.transform = `translateX(-100%)`;
 });
 
 //& ///////////////////////////////////////////
