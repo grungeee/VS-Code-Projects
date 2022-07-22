@@ -214,7 +214,47 @@ function udemyConverter(str) {
 
 udemyConverter(`
 //! /// INSERT HERE ///
+So, first each and every function in JavaScript
 
+automatically has a property called prototype.
+
+And that includes, of course, constructor functions.
+
+Now every object that's created
+
+by a certain constructor function
+
+will get access to all the methods and properties
+
+that we define on the constructors prototype property.
+
+So just to visualize
+
+in our case,
+
+this would be person dot prototype.
+
+So the prototype property
+
+of the constructor function.
+
+So again, as I was just saying,
+
+all the objects that are created
+
+through this constructor function here
+
+will inherit,
+
+so they will get access
+
+to all the methods and properties
+
+that are defined on this prototype property.
+
+And so let's no actually add a method
+
+to this prototype property.
 //! ///////////////////
 `);
 //& ////////////////////////////////////////////////////////

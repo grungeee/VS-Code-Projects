@@ -248,7 +248,7 @@ const sectionObserver = new IntersectionObserver(revealSection, {
 
 allSections.forEach(function (section) {
   sectionObserver.observe(section);
-  // section.classList.add('section--hidden');
+  section.classList.add('section--hidden');
   // ^! BRING BACK TO ADD REVEAL ANIMATON
 });
 
@@ -283,44 +283,143 @@ const imgObserver = new IntersectionObserver(loadImg, {
 
 imgTargets.forEach(img => imgObserver.observe(img));
 
-//* Building a slider component: Part 1
-
-// //- My attempt
-// //: All Slides
-// const slides = document.querySelectorAll('.slide');
-// //: Left button
-// const sliderBtnLeft = document.querySelector('.slider__btn--left');
-// sliderBtnLeft.addEventListener('click', function (e) {
-//   console.log('click', sliderBtnLeft);
-
-// const slide = slides.forEach(slide => slide.target.classList);
-//   console.log(slide);
-// });
-// const sliderBtnLeft = document.querySelector('.slider__btn--left');
-//-
-
 //* Slider
+//: Building a slider component: Part 1
 
-const slides = document.querySelectorAll('.slide');
+//: putting this whole funcionality so we do not polute "the globa namespace"
+function slider() {
+  const slides = document.querySelectorAll('.slide');
+  const btnLeft = document.querySelector('.slider__btn--left');
+  const btnRight = document.querySelector('.slider__btn--right');
+  const dotContainer = document.querySelector('.dots');
 
-const slider = document.querySelector('.slider');
-slider.style.transform = 'scale(0.4) translateX(-800px)';
-slider.style.overflow = 'visible';
+  //: those are here to make it easier to work on the slider
+  // const slider = document.querySelector('.slider');
+  // slider.style.transform = 'scale(0.4) translateX(-800px)';
+  // slider.style.overflow = 'visible';
+  //! Very important where you place the %
+  //: creates translateX in all images
+  // slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`)); //:0%, 100%, 200%, 300%
 
-//! Very important where you place the %
-slides.forEach((s, i) => (s.style.transform = `translateX(${100 * i}%)`)); //:0%, 100%, 200%, 300%
-console.log(...slides);
+  //: starting slide
+  let curSlide = 0;
+  //: max slide -> maximal slide we can reach
+  const MaxSlide = slides.length - 1;
 
-const btnLeft = document.querySelector('.slider__btn--left');
+  //- Functions
 
-btnLeft.addEventListener('click', function () {
-  const [slide] = slides;
-  slide.style.transform = `translateX(-100%)`;
-});
+  //. Create dots
+  const createDots = function () {
+    slides.forEach(function (_, i) {
+      //: creating html elements
+      dotContainer.insertAdjacentHTML(
+        'beforeend',
+        `<button class="dots__dot" data-slide="${i}"></button>`
+      );
+    });
+  };
+  //: calls the function and creates dots
+  // createDots();
 
-//& ///////////////////////////////////////////
-//& ///////////////////////////////////////////
-//& ///////////////////////////////////////////
+  //. Change slides
+  //: funtion to change the slide based on the slide (number)
+  const goToSlide = function (slide) {
+    slides.forEach(
+      (s, i) => (s.style.transform = `translateX(${100 * (i - slide)}%)`)
+    );
+  };
+
+  //: goes to the first slide on start
+  // goToSlide(0);
+
+  //. Activate dot
+  //: acivetes the dot coresponding to slide #2
+  const activateDot = function (slide) {
+    document
+      .querySelectorAll('.dots__dot')
+      .forEach(dot => dot.classList.remove('dots__dot--active'));
+
+    document
+      .querySelector(`.dots__dot[data-slide="${slide}"]`)
+      .classList.add('dots__dot--active');
+  };
+
+  //: acitivates the current dot (on reload)
+  // activateDot(curSlide);
+
+  //. Next slide
+  const nextSlide = function () {
+    if (curSlide === MaxSlide) {
+      curSlide = 0;
+    } else {
+      curSlide++;
+    }
+
+    //: goes the current slide
+    goToSlide(curSlide);
+    //: activates the dot
+    activateDot(curSlide);
+  };
+
+  //. Previous slide
+  const prevSlide = function () {
+    if (curSlide === 0) {
+      curSlide = MaxSlide;
+    } else {
+      curSlide--;
+    }
+    goToSlide(curSlide);
+    //: activates the dot
+    activateDot(curSlide);
+  };
+
+  //. Initilization
+  //: refactoring the code
+  const init = function () {
+    goToSlide(0);
+    createDots();
+    activateDot(curSlide);
+  };
+  //: calls init
+  init();
+
+  //- Event handlers
+
+  btnRight.addEventListener('click', nextSlide);
+  btnLeft.addEventListener('click', prevSlide);
+
+  //- =======<  Slider with keybord presses >=======
+  //: Building a slider component: Part 2
+
+  //. Next/Prev slide on key  <- / ->
+  document.addEventListener('keydown', function (e) {
+    console.log(e);
+    //. On keypress go to next/previous slide
+    if (e.key === 'ArrowLeft') prevSlide();
+    //: bouth if or shortcircuti work fine
+    e.key === 'ArrowRight' && nextSlide();
+  });
+
+  //. Going to the slide based on the dot press corespoding to it
+  dotContainer.addEventListener('click', function (e) {
+    if (e.target.classList.contains('dots__dot')) {
+      console.log(e);
+      //> the .slide is an object -> we can use destructuring for 'slide' var
+      // const slide = e.target.dataset.slide;
+      //: saving the data set value of the element [0,1,2,3...]
+      const { slide } = e.target.dataset;
+      goToSlide(slide);
+
+      //: activates the dot
+      activateDot(slide);
+    }
+  });
+}
+slider();
+
+//& <==============<<===|X|===>>==============>>
+//& <==============<<===|X|===>>==============>>
+//& <==============<<===|X|===>>==============>>
 
 // //* Selecting, Creating and Deleting Elements
 
@@ -583,3 +682,28 @@ btnLeft.addEventListener('click', function () {
 // [...h1.parentElement.children].forEach(function (el) {
 //   if (el !== h1) el.style.transform = 'scale(0.5)';
 // });
+
+//* Lifecycle DOM Events
+
+//- DOMContentloaded
+//? lifecycle -> form moment the user acesses the page, untill he leaves
+//> This event is fired as soon as HTML is completely parced, which means that the HTML has been downloaded and been converted to the dom tree
+//> does not wait for images and other external recources to load
+document.addEventListener('DOMContentLoaded', function (e) {
+  console.log('HTML parsed and DOM  tree built!');
+});
+
+//- load
+//> fires as soon as everything has loaded, html, js, css, imgaes, external resources
+window.addEventListener('load', function (e) {
+  console.log('Page fully loaded', e);
+});
+
+//- before unload
+window.addEventListener('beforeunload', function (e) {
+  e.preventDefault(); //> some broweser might require
+  console.log(e);
+  // e.returnValue = '';
+  //> returns a pop up with a question if we really want to leave
+  //> empty string is for historical reasons -> earier it was possible to customise the message (befor poeple started to obuse this)
+});
