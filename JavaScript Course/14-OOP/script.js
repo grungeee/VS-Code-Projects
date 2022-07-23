@@ -1,12 +1,12 @@
 'use strict';
 
-// //* Constructor function and teh new Opwerator
+// //* Constructor function and the new Operator
 
 // const Person = function (firstName, birthYear) {
 //   this.firstName = firstName;
 //   this.birthYear = birthYear;
 
-//   //! Never creat e a method inside of a consutrucion function -> bad for performance
+//   //! Never create a method inside of a consutrucion function -> bad for performance
 //   // this.calcAge = function () {
 //   // console.log(2037 - this.birthYear);
 //   // };
@@ -140,70 +140,222 @@
 // //: 2. Classes are first-class citizens (can pass into functions and return form them)
 // //: 3. Classes are executed in strict mode
 
-//* Setters and Getters
+// //* Setters and Getters
 
-//> Every object in JS can have Setter and Getter properties
-//> special properties -> Assesor properties
-//> normal properties -> Data properties
-//> Setter and Getter look like regular properties but -> are funcions that set and get vlues
+// //> Every object in JS can have Setter and Getter properties
+// //> special properties -> Assesor properties
+// //> normal properties -> Data properties
+// //> Setter and Getter look like regular properties but -> are funcions that set and get vlues
 
-class PersonCl {
-  constructor(fullName, birthYear) {
-    this.fullName = fullName;
-    this.birthYear = birthYear;
-  }
+// class PersonCl {
+//   constructor(fullName, birthYear) {
+//     this.fullName = fullName;
+//     this.birthYear = birthYear;
+//   }
 
-  //> methods that are set outside of constructor -> will be on the prototype of the objects
-  calcAge() {
-    console.log(2037 - this.birthYear);
-  }
+//   //> methods that are set outside of constructor -> will be on the prototype of the objects
+//   calcAge() {
+//     console.log(2037 - this.birthYear);
+//   }
 
-  greet() {
-    console.log(`Hey ${this.firstName}`);
-  }
+//   greet() {
+//     console.log(`Hey ${this.firstName}`);
+//   }
 
-  get age() {
-    return 2037 - this.birthYear;
-  }
+//   get age() {
+//     return 2037 - this.birthYear;
+//   }
 
-  set fullName(name) {
-    console.log(name);
-    //> the fullName has to be changed in order to avid a conflict with the constructor fullName -> _fullName
-    if (name.includes(' ')) this._fullName = name;
-    else alert(`${name} is not a full name`);
-  }
-  //> now it is impossible to access the fullName variable becasue it was overwitten by -> _fullName
-  //> solution: now we need to set getter for the fullName property which ruturns _fullName
-  get fullName() {
-    return this._fullName; //: returns _fullName if called for fullName
-  }
-}
+//   set fullName(name) {
+//     console.log(name);
+//     //> the fullName has to be changed in order to avid a conflict with the constructor fullName -> _fullName
+//     if (name.includes(' ')) this._fullName = name;
+//     else alert(`${name} is not a full name`);
+//   }
+//   //> now it is impossible to access the fullName variable becasue it was overwitten by -> _fullName
+//   //> solution: now we need to set getter for the fullName property which ruturns _fullName
+//   get fullName() {
+//     return this._fullName; //: returns _fullName if called for fullName
+//   }
+// }
 
-const jessica = new PersonCl('Jessica Davis', 1996);
-console.log(jessica);
-jessica.calcAge();
+// const jessica = new PersonCl('Jessica Davis', 1996);
+// console.log(jessica);
+// jessica.calcAge();
 
-const walter = new PersonCl('Walter', 1);
+// const walter = new PersonCl('Walter', 1); //: alert in the browser
 
-const account = {
-  owner: 'jonas',
-  movement: [200, 530, 120, 300],
-  get latest() {
-    //: gets the last value of movement into a new array -> pop() takes it out
-    return this.movement.slice(-1).pop();
-  },
-  //> setter has to have at least 1 parameter
-  set latest(mov) {
-    this.movement.push(mov);
-  },
+// const account = {
+//   owner: 'jonas',
+//   movement: [200, 530, 120, 300],
+//   get latest() {
+//     //: gets the last value of movement into a new array -> pop() takes it out
+//     return this.movement.slice(-1).pop();
+//   },
+//   //> setter has to have at least 1 parameter
+//   set latest(mov) {
+//     this.movement.push(mov);
+//   },
+// };
+
+// //> without get -> latest() -> account.latest()
+// console.log(account.latest);
+
+// account.latest = 50;
+
+// console.log(account.movement);
+
+// console.log(jessica.age);
+// console.log(jessica.fullName);
+
+// //* Static Constructor
+
+// class PersonCl {
+//   constructor(fullName, birthYear) {
+//     this.fullName = fullName;
+//     this.birthYear = birthYear;
+//   }
+
+//   //. Instance Methds
+//   //> will be added to .prototype property -> all instances can access them
+//   calcAge() {
+//     console.log(2037 - this.birthYear);
+//   }
+
+//   greet() {
+//     console.log(`Hey ${this.firstName}`);
+//   }
+
+//   get age() {
+//     return 2037 - this.birthYear;
+//   }
+
+//   set fullName(name) {
+//     console.log(name);
+//     if (name.includes(' ')) this._fullName = name;
+//     else alert(`${name} is not a full name`);
+//   }
+//   get fullName() {
+//     return this._fullName; //: returns _fullName if called for fullName
+//   }
+
+//   //. Static Method
+//   //> adds this method to the consturctor
+//   static hey() {
+//     console.log('Hey there 👋');
+//   }
+// }
+
+// //> from() is a method which is attached to the Array constructor
+// //: form() creates an array from iterable objects
+// Array.from(document.querySelectorAll('h1'));
+
+// //
+// const Person = function (firstName, birthYear) {
+//   this.firstName = firstName;
+//   this.birthYear = birthYear;
+// };
+
+// const jonas = new Person('Jonas', 1991);
+
+// Person.hey = function () {
+//   console.log('Hey there 👋');
+//   console.log(this);
+// };
+// //> whichever object is calling the method will be the key word inside the function
+// Person.hey(); //: here is 'this' keyword pointing to the entire consturction funtion
+
+// // jonas.hey(); //: ERROR -> it isn't inharited the method -> not in the constructor
+
+// const jessica = new PersonCl('Jessica Davis', 1996);
+// console.log(jessica);
+// jessica.calcAge();
+
+// //> this time 'this' keyword points to the entire class
+// PersonCl.hey(); //: Hey there 👋
+
+// //* Object.create
+
+// //> this object will be the prototype of all Person objects
+// const PersonProto = {
+//   calcAge() {
+//     console.log(2037 - this.birthYear);
+//   },
+//   //> a function to create new
+//   init(firstName, birthYear) {
+//     this.firstName = firstName;
+//     this.birthYear = birthYear;
+//   },
+// };
+
+// const steven = Object.create(PersonProto);
+// console.log(steven);
+// //: just an example shouldn't be created this way
+// steven.name = 'Steven';
+// steven.birthYear = '2002';
+// steven.calcAge();
+
+// console.log(steven.__proto__ === PersonProto); //: true
+
+// const sarah = Object.create(PersonProto);
+
+// //> becuase we explicitly called init on sarah -> 'this' will point at sarah
+// sarah.init('Sarah', 1979);
+// sarah.calcAge();
+
+//* Inheritance Between "Classes": Constructor Functions
+
+//- Parent Class
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
 };
 
-//> without get -> latest() -> account.latest()
-console.log(account.latest);
+Person.prototype.calcAge = function () {
+  console.log(2037 - this.birthYear);
+};
 
-account.latest = 50;
+//- Creating a Child Class
+const Student = function (firstName, birthYear, course) {
+  //> call() -> calls a funcion but sets 'this' KW to another function
+  //: 'this' KW is set to Person
+  Person.call(this, firstName, birthYear);
+  this.course = course;
+};
 
-console.log(account.movement);
+//- Linking Prototypes
+//> Defining prototypes manually  === Object.create
+Student.prototype = Object.create(Person.prototype);
 
-console.log(jessica.age);
-console.log(jessica.fullName);
+//& Notes:
+//: We have to create this connection here before we add any more methods the prototype object of student.
+//: And that's because object dot create, will return an empty object.
+//> Student.prtotype = Person.prototype -> will not make a prototype chain that we need
+//: Object[mike], Constructor function[Sudent()], Constructor function[Person()] will all point at -> Prototype[Person.prototype]
+//: basically that Students proto and Personons proto will be the same object
+//& ~~~~~
+
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName} and I sutdy ${this.course}`);
+};
+
+const mike = new Student('Mike', 2020, 'Computer Science');
+console.log(mike);
+mike.introduce();
+
+//> now mike has acces to the Paret class method
+mike.calcAge();
+
+//. Inspecting all in the console
+console.log(mike.__proto__);
+console.log(mike.__proto__.__proto__);
+
+console.log(mike instanceof Student); //: true
+console.log(mike instanceof Person); //: true
+console.log(mike instanceof Object); //: true
+
+//! this point at Person, becasue we set the prototype property of the student using Object.create()
+console.dir(Student.prototype.constructor); //: Person(firstName, birthYear)
+//> Fixing
+Student.prototype.constructor = Student;
+console.dir(Student.prototype.constructor); //: Student(firstName, birthYear)

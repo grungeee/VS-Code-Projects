@@ -214,47 +214,47 @@ function udemyConverter(str) {
 
 udemyConverter(`
 //! /// INSERT HERE ///
-So, first each and every function in JavaScript
+So when we use the new operator
 
-automatically has a property called prototype.
+in constructor functions or classes,
 
-And that includes, of course, constructor functions.
+it automatically sets the prototype
 
-Now every object that's created
+of the instances to the constructors,
 
-by a certain constructor function
+prototype property.
 
-will get access to all the methods and properties
+So this happens automatically. ---
+Now, on the other hand, with Object.create,
 
-that we define on the constructors prototype property.
+we can set the prototype of objects manually
 
-So just to visualize
+to any object that we want.
 
-in our case,
+And in this case,
 
-this would be person dot prototype.
+we manually set the prototype
 
-So the prototype property
+of the Steven object to the person proto object.
 
-of the constructor function.
+And that's it.
 
-So again, as I was just saying,
+Now the two objects
 
-all the objects that are created
+are effectively linked through the proto property,
 
-through this constructor function here
+just like before. ---
+The big difference is
 
-will inherit,
+that we didn't need any constructor function,
 
-so they will get access
+and also no prototype property at all,
 
-to all the methods and properties
+to achieve the exact same thing.
 
-that are defined on this prototype property.
+So this is actually a bit more straightforward,
 
-And so let's no actually add a method
-
-to this prototype property.
+and a bit more natural.
 //! ///////////////////
 `);
 //& ////////////////////////////////////////////////////////
