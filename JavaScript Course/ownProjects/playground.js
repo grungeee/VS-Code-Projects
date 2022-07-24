@@ -214,47 +214,52 @@ function udemyConverter(str) {
 
 udemyConverter(`
 //! /// INSERT HERE ///
-So when we use the new operator
+encapsulation basically means
 
-in constructor functions or classes,
+to keep some properties and methods private inside the class
 
-it automatically sets the prototype
+so that they are not accessible from outside of the class.
 
-of the instances to the constructors,
+Then the rest of the methods are basically exposed
 
-prototype property.
+as a public interface, which we can also call API.
 
-So this happens automatically. ---
-Now, on the other hand, with Object.create,
+So this is essential to do in anything
 
-we can set the prototype of objects manually
+more than a toy application.
 
-to any object that we want.
+Now, there are two big reasons why we need encapsulation
 
-And in this case,
+and data privacy.
 
-we manually set the prototype
+So first it is to prevent code
 
-of the Steven object to the person proto object.
+from outside of a class to accidentally manipulate
 
-And that's it.
+or data inside the class.
 
-Now the two objects
+//--/< >/--//
+he second reason is
 
-are effectively linked through the proto property,
+that when we expose only a small interface
 
-just like before. ---
-The big difference is
+so a small API consisting only of a few public methods
 
-that we didn't need any constructor function,
+then we can change all the other internal methods
 
-and also no prototype property at all,
+with more confidence.
 
-to achieve the exact same thing.
+Because in this case, we can be sure
 
-So this is actually a bit more straightforward,
+that external code does not rely on these private methods.
 
-and a bit more natural.
+And so therefore our code will not break
+
+when we do internal changes.
+
+So that's what encapsulation
+
+and data privacy are and the reasons for it.
 //! ///////////////////
 `);
 //& ////////////////////////////////////////////////////////

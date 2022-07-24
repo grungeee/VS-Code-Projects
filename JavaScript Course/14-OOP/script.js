@@ -303,59 +303,402 @@
 // sarah.init('Sarah', 1979);
 // sarah.calcAge();
 
-//* Inheritance Between "Classes": Constructor Functions
+// //* Inheritance Between "Classes": Constructor Functions
 
-//- Parent Class
-const Person = function (firstName, birthYear) {
-  this.firstName = firstName;
-  this.birthYear = birthYear;
-};
+// //- Parent Class
+// const Person = function (firstName, birthYear) {
+//   this.firstName = firstName;
+//   this.birthYear = birthYear;
+// };
 
-Person.prototype.calcAge = function () {
-  console.log(2037 - this.birthYear);
-};
+// Person.prototype.calcAge = function () {
+//   console.log(2037 - this.birthYear);
+// };
 
-//- Creating a Child Class
-const Student = function (firstName, birthYear, course) {
-  //> call() -> calls a funcion but sets 'this' KW to another function
-  //: 'this' KW is set to Person
-  Person.call(this, firstName, birthYear);
-  this.course = course;
-};
+// //- Creating a Child Class
+// const Student = function (firstName, birthYear, course) {
+//   //> call() -> calls a funcion but sets 'this' KW to another function
+//   //: 'this' KW is set to Person
+//   Person.call(this, firstName, birthYear);
+//   this.course = course;
+// };
 
-//- Linking Prototypes
-//> Defining prototypes manually  === Object.create
-Student.prototype = Object.create(Person.prototype);
+// //- Linking Prototypes
+// //> Defining prototypes manually  === Object.create
+// Student.prototype = Object.create(Person.prototype);
 
-//& Notes:
-//: We have to create this connection here before we add any more methods the prototype object of student.
-//: And that's because object dot create, will return an empty object.
-//> Student.prtotype = Person.prototype -> will not make a prototype chain that we need
-//: Object[mike], Constructor function[Sudent()], Constructor function[Person()] will all point at -> Prototype[Person.prototype]
-//: basically that Students proto and Personons proto will be the same object
-//& ~~~~~
+// //& Notes:
+// //: We have to create this connection here before we add any more methods to the prototype object of student.
+// //: And that's because object .create(), will return an empty object.
+// //> Student.prtotype = Person.prototype -> will not make a prototype chain that we need
+// //: Object[mike], Constructor function[Sudent()], Constructor function[Person()] will all point at -> Prototype[Person.prototype]
+// //: basically that Students proto and Personons proto will be the same object
+// //& ~~~~~
 
-Student.prototype.introduce = function () {
-  console.log(`My name is ${this.firstName} and I sutdy ${this.course}`);
-};
+// Student.prototype.introduce = function () {
+//   console.log(`My name is ${this.firstName} and I sutdy ${this.course}`);
+// };
 
-const mike = new Student('Mike', 2020, 'Computer Science');
-console.log(mike);
-mike.introduce();
+// const mike = new Student('Mike', 2020, 'Computer Science');
+// console.log(mike);
+// mike.introduce();
 
-//> now mike has acces to the Paret class method
-mike.calcAge();
+// //> now mike has acces to the Parent class method
+// mike.calcAge();
 
-//. Inspecting all in the console
-console.log(mike.__proto__);
-console.log(mike.__proto__.__proto__);
+// //. Inspecting all in the console
+// console.log(mike.__proto__);
+// console.log(mike.__proto__.__proto__);
 
-console.log(mike instanceof Student); //: true
-console.log(mike instanceof Person); //: true
-console.log(mike instanceof Object); //: true
+// console.log(mike instanceof Student); //: true
+// console.log(mike instanceof Person); //: true
+// console.log(mike instanceof Object); //: true
 
-//! this point at Person, becasue we set the prototype property of the student using Object.create()
-console.dir(Student.prototype.constructor); //: Person(firstName, birthYear)
-//> Fixing
-Student.prototype.constructor = Student;
-console.dir(Student.prototype.constructor); //: Student(firstName, birthYear)
+// //! this points at Person, becasue we set the prototype property of the student using Object.create()
+// console.dir(Student.prototype.constructor); //: Person(firstName, birthYear)
+// //> Fixing
+// Student.prototype.constructor = Student;
+// console.dir(Student.prototype.constructor); //: Student(firstName, birthYear)
+
+// //* Inheritance Between "Classes": ES6 Classes
+
+// //- class declaration
+// class PersonCl {
+//   constructor(fullName, birthYear) {
+//     this.fullName = fullName;
+//     this.birthYear = birthYear;
+//   }
+
+//   //> methods that are set outside of constructor -> will be on the prototype of the objects
+//   calcAge() {
+//     console.log(2037 - this.birthYear);
+//   }
+
+//   greet() {
+//     console.log(`Hey ${this.fullName}`);
+//   }
+
+//   //- Static Method
+//   static hey() {
+//     console.log('Hey there 👋');
+//   }
+// }
+
+// //- Chilid Class
+
+// class StudentCl extends PersonCl {
+//   constructor(fullName, birthYear, course) {
+//     //> Doesn't need the .call() method to connect the 'this' KW
+//     //! intead super() -> needs to happen first!
+//     super(fullName, birthYear);
+//     this.course = course;
+//   }
+
+//   introduce() {
+//     console.log(`My name is ${this.fullName} and I study ${this.course}`);
+//   }
+
+//   //. Overriding the Par meth -> polymorfing?
+
+//   calcAge() {
+//     console.log(
+//       `I'm ${
+//         2037 - this.birthYear
+//       } years old, but as a sutdent I feel more like ${
+//         2037 - this.birthYear + 10
+//       }`
+//     );
+//   }
+// }
+
+// //> If no new properties are needed then this would as well:
+// // class StudentCl extends PersonCl {
+// // }
+// // const martha = new StudentCl('Martha Jones', 1996);
+
+// const martha = new StudentCl('Martha Jones', 1996, 'Computer Science');
+// console.log(martha);
+// martha.introduce(); //: My name is Martha Jones...
+// martha.calcAge(); //: 41
+// martha.calcAge(); //: 51 -> after overriding the meth in the child component
+
+// //* Inheritance Between "Classes": Object.create
+
+// //- Parent Class
+// const PersonProto = {
+//   calcAge() {
+//     console.log(2037 - this.birthYear);
+//   },
+
+//   init(firstName, birthYear) {
+//     this.firstName = firstName;
+//     this.birthYear = birthYear;
+//   },
+// };
+
+// const steven = Object.create(PersonProto);
+
+// //- Child Class
+// const StudentProto = Object.create(PersonProto);
+// StudentProto.init = function (firstName, birthYear, course) {
+//   PersonProto.init.call(this, firstName, birthYear);
+//   this.course = course;
+// };
+
+// //. Setting a new method in the child class
+// StudentProto.introduce = function () {
+//   console.log(`My name is ${this.firstName} and I study ${this.course}`);
+// };
+
+// //. Creating a new object
+// const jay = Object.create(StudentProto);
+// jay.init('Jay', 2010, 'Computer Science');
+
+// jay.introduce();
+// jay.calcAge();
+
+//* Another Class Example
+
+// class Account {
+//   constructor(owner, currency, pin) {
+//     this.owner = owner;
+//     this.currency = currency;
+//     this.pin = pin;
+//     //> better way
+//     this.movements = [];
+//     this.locale = navigator.language;
+
+//     //> can execute code too
+//     console.log(`Thanks for opening an account, ${owner}`);
+//   }
+//   //. Public Interface (API???)
+//   //> these methods are a Public Interface to our Objects
+//   deposit(val) {
+//     this.movements.push(val);
+//   }
+//   withdraw(val) {
+//     this.deposit(-val);
+//   }
+// }
+
+// // & Note
+// /*
+// > impracitcal way
+// class Account {
+//   constructor(owner, currency, pin, movement) {
+// this.movements = movements
+//   }
+// }
+// const acc1 = new Account('Jonas', 'EUR', '1111', []);
+// */
+
+// const acc1 = new Account('Jonas', 'EUR', '1111');
+
+// // & Note
+// //! Not a good idea -> make methods instead!
+// //: deposit to the acc
+// // acc1.movements.push(250); //: movements: (1) [250]
+// //: withdraw from the acc
+// // acc1.movements.push(-140); //: movements: (2) [250, -140]
+
+// //. The right way <-
+// acc1.deposit(250);
+// acc1.withdraw(140);
+
+// console.log(acc1);
+// console.log(acc1.pin); //! <- pin shuld not be accassible, needs to be incapsulated
+
+// //* Encapsulation: Protected Properties and Methods
+
+// class Account {
+//   constructor(owner, currency, pin) {
+//     this.owner = owner;
+//     this.currency = currency;
+//     this._pin = pin; //: protected too
+//     //> protected property -> still accessible, but agreed on not touching it
+//     this._movements = [];
+//     this.locale = navigator.language;
+
+//     console.log(`Thanks for opening an account, ${owner}`);
+//   }
+//   //. Public Interface (API???)
+//   //> these methods are a Public Interface to our Objects
+
+//   //> returns the value -> doesn't allow to override the _movements
+//   getMovements() {
+//     return this._movements;
+//   }
+
+//   deposit(val) {
+//     this._movements.push(val);
+//   }
+//   withdraw(val) {
+//     this.deposit(-val);
+//   }
+//   //> shouldn't be a part of public API -> use _name
+//   _approveLoan(val) {
+//     return true;
+//   }
+
+//   requestLoan(val) {
+//     if (this._approveLoan(val)) {
+//       this.deposit(val);
+//       console.log(`Loan approved`);
+//     }
+//   }
+// }
+
+// const acc1 = new Account('Jonas', 'EUR', '1111');
+
+// //. The right way <-
+// acc1.deposit(250);
+// acc1.withdraw(140);
+
+// console.log(acc1.getMovements());
+
+// //* Encapsulation: Private Class Fields and Methods
+
+// //& Note
+// /*
+// In traditional OOP languages like Java and C++ properties are called fields
+// In the new JS proposal there is 8 different kinds of fields
+//  Public fields
+//  Private fields
+//  Public mehtods
+//  Private methods
+//  (ther is also static versions of these)
+
+// A fied is like a property that will be on all instances -> called also: public instance field
+
+// */
+
+// class Account {
+//   //- Public fields (instances)
+//   locale = navigator.language;
+//   //- Private fields (instances)
+//   #movements = [];
+//   #pin;
+
+//   constructor(owner, currency, pin) {
+//     this.owner = owner;
+//     this.currency = currency;
+//     this.#pin = pin; //: protected too
+//     //> protected property -> still accessible, but agreed on not touching it
+//     // this._movements = [];
+//     // this.locale = navigator.language
+
+//     console.log(`Thanks for opening an account, ${owner}`);
+//   }
+//   //- Public methods
+//   //. Public Interface (API?)
+//   //> these methods are a Public Interface to our Objects
+//   getMovements() {
+//     return this.#movements;
+//   }
+//   deposit(val) {
+//     this.#movements.push(val);
+//   }
+//   withdraw(val) {
+//     this.deposit(-val);
+//   }
+//   _approveLoan(val) {
+//     return true;
+//   }
+//   requestLoan(val) {
+//     if (this._approveLoan(val)) {
+//       this.deposit(val);
+//       console.log(`Loan approved`);
+//     }
+//   }
+//   //> static methods work on the class itself -> Account.helper()
+//   static helper() {
+//     console.log('Helper');
+//   }
+
+//   //- Private methods
+//   //> doesn't work yet
+//   // #approveLoan(val) {
+//   // return true;
+//   // }
+// }
+
+// const acc1 = new Account('Jonas', 'EUR', '1111');
+
+// acc1.deposit(250);
+// acc1.withdraw(140);
+// acc1.requestLoan(1000);
+
+// console.log(acc1);
+
+// console.log(acc1.getMovements()); //: (2) [250, -140]
+// // console.log(acc1.#movements); //: protected -> syntax error
+
+// // console.log(acc1.#approveLoan(100)); //> not implemented yet -> syntax error
+
+// //: Using a static method
+// Account.helper(); //: helper
+
+// * Chaining Methods
+
+class Account {
+  //- Public fields (instances)
+  locale = navigator.language;
+  //- Private fields (instances)
+  #movements = [];
+  #pin;
+
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.#pin = pin; //: protected too
+
+    console.log(`Thanks for opening an account, ${owner}`);
+  }
+  //- Public methods
+  //. Public Interface (API?)
+  //> these methods are a Public Interface to our Objects
+  getMovements() {
+    return this.#movements;
+  }
+  deposit(val) {
+    this.#movements.push(val);
+    return this;
+  }
+  withdraw(val) {
+    this.deposit(-val);
+
+    return this;
+  }
+  _approveLoan(val) {
+    return true;
+  }
+  requestLoan(val) {
+    if (this._approveLoan(val)) {
+      this.deposit(val);
+      console.log(`Loan approved`);
+      return this;
+    }
+  }
+  //> static methods work on the class itself -> Account.helper()
+  static helper() {
+    console.log('Helper');
+  }
+}
+
+const acc1 = new Account('Jonas', 'EUR', '1111');
+
+acc1.deposit(250);
+acc1.withdraw(140);
+acc1.requestLoan(1000);
+
+console.log(acc1);
+
+console.log(acc1.getMovements()); //: (2) [250, -140]
+
+//: Using a static method
+Account.helper(); //: helper
+
+//- Chaining
+//> just use -> return this; -> to return the value
+acc1.deposit(300).deposit(500).withdraw(35).requestLoan(25000).withdraw(4000); //: Loan approved
+console.log(acc1.getMovements()); //: (8) [250, -140, 1000, 300, 500, -35, 25000, -4000]

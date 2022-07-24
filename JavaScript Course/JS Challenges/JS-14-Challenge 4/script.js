@@ -15,6 +15,7 @@
 // § Data car 2: 'Mercedes' going at 95 km/h
 
 //& <===/ /===>
+
 // Coding Challenge #2
 // Your tasks:
 // 1. Re-create Challenge #1, but this time using an ES6 class (call it 'CarCl')
@@ -28,6 +29,7 @@
 // § Data car 1: 'Ford' going at 120 km/
 
 //& <===/ /===>
+
 // Coding Challenge #3
 // Your tasks:
 // 1. Use a constructor function to implement an Electric Car (called 'EV') as a child
@@ -45,63 +47,90 @@
 // § Data car 1: 'Tesla' going at 120 km/h, with a charge of 23%
 // GOOD LUCK �
 
+//& <===/ /===>
+
+// Coding Challenge #4
+// Your tasks:
+// 1. Re-create Challenge #3, but this time using ES6 classes: create an 'EVCl'
+// child class of the 'CarCl' class
+// 2. Make the 'charge' property private
+// 3. Implement the ability to chain the 'accelerate' and 'chargeBattery'
+// methods of this class, and also update the 'brake' method in the 'CarCl'
+// class. Then experiment with chaining!
+// Test data:
+// § Data car 1: 'Rivian' going at 120 km/h, with a charge of 23%
+// GOOD LUCK
+
 //- Parent
-function Car(make, speed) {
-  this.make = make;
-  this.speed = speed;
+class CarCl {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+  //: Methods
+  accelerate() {
+    console.log(`${this.make} is going at ${(this.speed += 10)} km/h`);
+    return this;
+  }
+
+  brake() {
+    console.log(`${this.make} is going at ${(this.speed -= 5)} km/h`);
+    return this;
+  }
+  get speedUS() {
+    return this.speed / 1.6;
+  }
+
+  set speedUS(altSpeed) {
+    this.speed = altSpeed * 1.6;
+  }
 }
-
-//: Methods
-Car.prototype.accelerate = function () {
-  console.log(`${this.make} is going at ${(this.speed += 10)} km/h`);
-};
-
-Car.prototype.brake = function () {
-  console.log(`${this.make} is going at ${(this.speed -= 5)} km/h`);
-};
-
-Car.prototype.test = function () {
-  console.log(`${this.make} has access to the parent method`);
-};
-
-/*
-We want the prototype property of EV to inherit from the prototype property of Car -> Object.create, which will create a new object.
-It will set EV.prototype to the new object, which has as a prototype Car.prototype.
-*/
-
-//- Linking Parent and Child
-EV.prototype = Object.create(Car.prototype);
-//: Fixing the wrong consutructor name
-EV.prototype.constructor = EV;
 
 //- Child
-function EV(make, speed, charge) {
-  Car.call(this, make, speed);
-  this.charge = charge;
+class EVCl extends CarCl {
+  #charge; //: hidden property
+  constructor(make, speed, charge) {
+    super(make, speed);
+    this.#charge = charge;
+  }
+
+  //: Methods
+  chargeBattery(chargeTo) {
+    this.#charge = chargeTo;
+    return this;
+  }
+
+  accelerate() {
+    console.log(
+      `${
+        this.make
+      } is going at ${(this.speed += 20)} km/h with a charge of ${this
+        .#charge--}%`
+    );
+    return this;
+  }
 }
 
-//: Methods
-EV.prototype.chargeBattery = function (chargeTo) {
-  this.charge = chargeTo;
-};
+// § Data car 1: 'Rivian' going at 120 km/h, with a charge of 23%
+const rivian = new EVCl('Rivian', 120, 23);
 
-EV.prototype.accelerate = function () {
-  console.log(
-    `Tesla going at ${(this.speed += 20)} km/h with a charge of ${(this.charge -= 1)}%`
-  ); //: this.charge-- would work too
-};
+console.log(rivian);
+// rivian.accelerate();
+// rivian.accelerate();
+// rivian.accelerate();
+// rivian.accelerate();
+// rivian.accelerate();
+// rivian.accelerate();
+// rivian.brake();
 
-const tesla = new EV('Tesla', 120, 23);
+rivian
+  .accelerate()
+  .accelerate()
+  .accelerate()
+  .chargeBattery(50)
+  .accelerate()
+  .accelerate()
+  .brake()
+  .brake();
 
-const testCar = new Car('Tester', 420);
-
-console.log(tesla);
-tesla.chargeBattery(90);
-console.log(tesla);
-tesla.accelerate();
-tesla.accelerate();
-tesla.accelerate();
-tesla.accelerate();
-tesla.accelerate();
-tesla.accelerate();
-tesla.brake();
+console.log(rivian.speedUS);
