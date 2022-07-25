@@ -30,7 +30,7 @@ navigator.geolocation.getCurrentPosition(
     // const map = L.map('map').setView([51.505, -0.09], 13);
     //> 1: parameter is coordinates array, 2: Zoom level
     const map = L.map('map').setView(coords, 13);
-
+    // console.log(map);
     //> it is possible to use another map f.a.: Goggle maps
     //> also you can change the appearance of the map tiles (map squares)
     // L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -38,11 +38,26 @@ navigator.geolocation.getCurrentPosition(
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
-
-    L.marker(coords)
-      .addTo(map)
-      .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
-      .openPopup();
+    //*
+    //> leaflet object
+    map.on('click', function (mapEvent) {
+      console.log(mapEvent);
+      const { lat, lng } = mapEvent.latlng;
+      console.log(lat, lng);
+      L.marker([lat, lng])
+        .addTo(map)
+        .bindPopup(
+          L.popup({
+            maxWidth: 250,
+            minWidth: 100,
+            autoClose: false,
+            closeOnClick: false,
+            className: 'running-popup',
+          })
+        )
+        .setPopupContent('Workout')
+        .openPopup();
+    });
   },
   //. Error funtion
   function () {
