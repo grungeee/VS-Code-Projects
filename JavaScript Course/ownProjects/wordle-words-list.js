@@ -1,3 +1,4 @@
+const list = `
 women
 nikau
 swack
@@ -12945,3 +12946,7 @@ geums
 grits
 kames
 death
+`;
+
+const wordsList = list.replaceAll('\n', ' ').trim().split(' ');
+// console.log(result);

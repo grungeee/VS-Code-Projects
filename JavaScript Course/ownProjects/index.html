@@ -26,7 +26,9 @@ body {
   margin: 0 auto;
 }
 
-.game-box {
+.rows-container {
+padding-top: 3rem;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -46,33 +48,36 @@ body {
   text-align: center;
        
 }
-
-     /* End of Styles */
     </style>
+    <!-- . JS . -->
+    <script defer src="wordle-words-list.js"></script>
+    <script defer src="wordleJS.js"></script>
+    <script defer src="playground.js"></script>
   </head>
   <body>
     <main>
       <div class="container">
-        <div class="game-box">
+        <div class="rows-container">
           <div class="row">
-            <input class="c1 char"></input>
-            <input class="c2 char"></input>
-            <input class="c3 char"></input>
-            <input class="c5 char"></input>
-            <input class="c5 char"></input>
+            <input maxlength="1" class="c-1 char"></input>
+            <input maxlength="1" class="c-2 char"></input>
+            <input maxlength="1" class="c-3 char"></input>
+            <input maxlength="1" class="c-4 char"></input>
+            <input maxlength="1" class="c-5 char"></input>
           </div>
           <div class="row">
-            <input class="c1 char"></input>
-            <input class="c2 char"></input>
-            <input class="c3 char"></input>
-            <input class="c5 char"></input>
-            <input class="c5 char"></input>
+            <!--! TEMPORAR CHANGE -->
+
+            <input maxlength="1" class="c-6 char"></input>
+            <input maxlength="1" class="c-7 char"></input>
+            <input maxlength="1" class="c-8 char"></input>
+            <input maxlength="1" class="c-9 char"></input>
+            <input maxlength="1" class="c-10 char"></input>
           </div>
         </div>
         </div>
       </div>
       </main>
-    <script src="wordleJS.js"></script>
-    <script src="playground.js"></script>
+    
   </body>
 </html>
