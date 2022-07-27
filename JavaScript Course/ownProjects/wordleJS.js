@@ -160,13 +160,22 @@ const rows = document.querySelectorAll('.row');
 const charInput = document.querySelectorAll('.char');
 console.log(charInput);
 
+const body = document.querySelector('body');
+const c8 = document.querySelector('.c-8');
+console.log(c8);
+
+//. Allowed Charcters
+//! add this before passing the input value to the input field
+const allowedLC = `a b c d e f g h i j k l m n o p q r s t u v w x y z`.split(
+  ' '
+);
+const allowedUC = allowedLC.join(' ').toUpperCase().split(' ');
+const allowedAll = allowedLC.concat(allowedUC);
+console.log(allowedLC, allowedUC, allowedAll);
+
 function charInputEvents() {
-  // charInput.forEach(char => {
   charInput.forEach(function (char) {
     char.addEventListener('input', function () {
-      console.log(this);
-      console.log(this.value);
-      console.log(this.value.length);
       //: set input to upper case
       this.value = this.value.toUpperCase();
       //: on input go to next field (if not last)
@@ -179,6 +188,7 @@ function charInputEvents() {
 
       //todo : start filling the fields from the whole body
       //todo : start only at c1 or the one that is not full
+      //todo : event propagainon needed ->  catch/capture the key press form child
     });
 
     char.addEventListener('keydown', function (e) {
@@ -200,14 +210,72 @@ function charInputEvents() {
     });
   });
 }
-
 charInputEvents();
 
-// rowsContainer.addEventListener('keydown', function (e) {
-//   rows.forEach(row => {
-//     let curRow = row;
-//     if (e.key === 'Enter') {
-//       console.log(this.childNode);
+// let inputGlobal;
+// body.addEventListener('keydown', function (e) {
+//   inputGlobal = e.key;
+//   // console.log(e.key);
+//   console.log(inputGlobal);
+// });
+
+//& <====================/ /====================>
+
+// function inputGlobal() {}
+// body.addEventListener('keydown', function (e) {
+//   if (allowedAll.includes(e.key)) {
+//     console.log(this);
+//     this.value = e.key.toUpperCase();
+//   }
+// });
+
+// function inputEvList() {
+//   console.log(this);
+//   console.log(this.value);
+//   console.log(this.value.length);
+//   //: set input to upper case
+//   this.value = this.value.toUpperCase();
+//   //: on input go to next field (if not last)
+//   if (
+//     this.value.length >= this.maxLength &&
+//     this !== this.parentElement.lastElementChild
+//   ) {
+//     this.nextElementSibling.focus();
+//   }
+
+//   //todo : start filling the fields from the whole body
+//   //todo : start only at c1 or the one that is not full
+// }
+
+// function keydownEvList(e) {
+//   console.log(e);
+//   //: enter -> going to the next row (if the last one)
+//   if (
+//     e.key === 'Enter' &&
+//     e.target === e.target.parentElement.lastElementChild
+//   ) {
+//     e.target.parentElement.nextElementSibling.firstElementChild.focus();
+//     //: go to previous field on delete (if maxlength = 0)
+//   } else if (
+//     e.key === 'Backspace' &&
+//     e.target !== e.target.parentElement.firstElementChild &&
+//     e.target.value.length < e.target.maxLength
+//   ) {
+//     e.target.previousElementSibling.focus();
+//   }
+// }
+
+// //> 2
+// function charCallback(char) {
+//   char.addEventListener('input', inputEvList);
+//   char.addEventListener('keydown', keydownEvList);
+//   body.addEventListener('keydown', function (e) {
+//     if (allowedAll.includes(e.key)) {
+//       console.log(this);
+//       // this.value = e.key.toUpperCase();
 //     }
 //   });
-// });
+// }
+
+// //> 1
+// charInput.forEach(charCallback);
