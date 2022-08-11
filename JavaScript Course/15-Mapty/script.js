@@ -16,13 +16,18 @@ const inputElevation = document.querySelector('.form__input--elevation');
 let map, mapEvent;
 
 class App {
-  constructor() {}
+  #map;
+  #mapEvent;
+  constructor() {
+    this._getPosition();
+  }
 
   _getPosition() {
     //> Takes 2 callback functions -> 1: on success, 2: error
     //. Success function
     if (navigator.geolocation)
       navigator.geolocation.getCurrentPosition(
+        //: Call back
         this._loadMap,
 
         //. Error funtion
@@ -34,7 +39,6 @@ class App {
 
   _loadMap(position) {
     console.log(position); //: gets pretty accurate coordinates 🗺️
-    // const latitude = position.coords
     const { latitude } = position.coords;
     const { longitude } = position.coords;
     console.log(latitude, longitude);
@@ -45,19 +49,20 @@ class App {
     //- "Leaflet" library integration
     //> 1: parameter is coordinates array, 2: Zoom level
     // const map = L.map('map').setView([51.505, -0.09], 13);
-    map = L.map('map').setView(coords, 13);
+    console.log(this);
+    this.#map = L.map('map').setView(coords, 13);
 
     //> it is possible to use another map f.a.: Goggle maps
     //> also you can change the appearance of the map tiles (map squares)
     L.tileLayer('https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(map);
+    }).addTo(this.#map);
 
     //- Handling clicks on map
     //> leaflet object
-    map.on('click', function (mapE) {
-      mapEvent = mapE;
+    this.#map.on('click', function (mapE) {
+      this.#mapEvent = mapE;
       form.classList.remove('hidden');
       inputDistance.focus();
     });
@@ -69,6 +74,8 @@ class App {
 
   _newWorkout() {}
 }
+
+const app = new App();
 
 //- Form Events
 

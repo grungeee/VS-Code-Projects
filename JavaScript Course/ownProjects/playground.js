@@ -278,3 +278,31 @@
 // console.log(me);
 
 //^! All is uncommented
+
+// //* FizzBuzz
+
+// for (let i = 1; i <= 100; i++) {
+//   if (i % 3 === 0 && i % 5 === 0) {
+//     console.log(i, 'fizzbuzz');
+//   } else if (i % 3 === 0) {
+//     console.log(i, 'fizz');
+//   } else if (i % 5 === 0) {
+//     console.log(i, 'buzz');
+//   }
+// }
+
+function highAndLow(numbers) {
+  console.log(numbers.split(' '));
+  let max = 0;
+  let min = 0;
+
+  numbers.split(' ').forEach(n => {
+    n = Number(n);
+    n > max ? (max = n) : max;
+    n < min ? (min = n) : min;
+    //. need an array -> 1 is max 2 is min
+  });
+  return max + ' ' + min;
+}
+const chai = '8 3 -5 42 -1 0 0 -9 4 7 4 -4';
+console.log(highAndLow(chai));
