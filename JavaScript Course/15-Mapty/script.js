@@ -131,11 +131,11 @@ class App {
   }
 
   _loadMap(position) {
-    console.log(position); //: gets pretty accurate coordinates 🗺️
+    // console.log(position); //: gets pretty accurate coordinates 🗺️
     const { latitude } = position.coords;
     const { longitude } = position.coords;
     console.log(latitude, longitude);
-    console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
+    // console.log(`https://www.google.com/maps/@${latitude},${longitude}`);
 
     const coords = [latitude, longitude];
 
@@ -154,6 +154,10 @@ class App {
     //- Handling clicks on map
     //> leaflet object
     this.#map.on('click', this._showForm.bind(this));
+
+    this.#workouts.forEach(work => {
+      this._renderWorkoutMarker(work);
+    });
   }
 
   _showForm(mapE) {
@@ -235,7 +239,7 @@ class App {
 
     // Add new object to workout array
     this.#workouts.push(workout);
-    console.log(workout);
+    // console.log(workout);
     // Render workout on map as marker
     this._renderWorkoutMarker(workout);
 
@@ -327,13 +331,13 @@ class App {
 
   _moveToPopup(e) {
     const workoutEl = e.target.closest('.workout');
-    console.log(workoutEl);
+    // console.log(workoutEl);
 
     if (!workoutEl) return;
     const workout = this.#workouts.find(
       work => work.id === workoutEl.dataset.id
     );
-    console.log(workout);
+    // console.log(workout);
 
     this.#map.setView(workout.coords, this.#mapZoomLevel, {
       animate: true,
@@ -343,7 +347,8 @@ class App {
     });
 
     //- Using the public interface
-    workout.click();
+    //> won't work anymore because the object was converted to a string and back to object -> lost prototype chain
+    // workout.click();
   }
 
   //- Writing to local storage
@@ -355,7 +360,7 @@ class App {
   _getLocalStorage() {
     //> JSON.parse() turns a string into an array with objects in it
     const data = JSON.parse(localStorage.getItem('workouts'));
-    console.log(data);
+    // console.log(data);
 
     if (!data) return;
 
@@ -364,8 +369,14 @@ class App {
     this.#workouts.forEach(work => {
       this._renderWorkout(work);
     });
+  }
 
-    this._renderWorkoutMarker(work);
+  reset() {
+    localStorage.removeItem('workouts');
+    location.reload();
   }
 }
 const app = new App();
+
+//& Notes:
+//could add some more things but for the most part complete 🥳
