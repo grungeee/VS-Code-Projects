@@ -701,7 +701,7 @@ window.addEventListener('load', function (e) {
 
 //- before unload
 window.addEventListener('beforeunload', function (e) {
-  e.preventDefault(); //> some broweser might require
+  e.preventDefault(); //> some browesers might require
   console.log(e);
   // e.returnValue = '';
   //> returns a pop up with a question if we really want to leave
