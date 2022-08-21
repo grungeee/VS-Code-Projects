@@ -89,18 +89,19 @@ function newRNG(min, max) {
 
 //* This picks a random word for 'wordle' from database
 
-const wordle = testDB[newRNG(0, testDB.length)];
-console.log(wordle);
-const guess = 'swack';
-console.log(guess);
+// const wordle = testDB[newRNG(0, testDB.length)];
+// const wordle = 'aabbb';
+// console.log(wordle);
+// const guess = 'swack';
+// console.log(guess);
 
 //* This code looks for the matching word in the database
-function isInDB() {
-  return console.log(testDB.includes(guess));
-  //! change to this to use bool
-  // return testDB.includes(guess);
-}
-isInDB();
+// function isInDB() {
+// return console.log(testDB.includes(guess));
+//! change to this to use bool
+// return testDB.includes(guess);
+// }
+// isInDB();
 
 //* This merges chars into a string
 const c1 = 's';
@@ -120,23 +121,26 @@ todo: probably needs another solution
 */
 //&
 
-// //* Compare guess to wordle
-// //> needs a rework
-// //! before comparing set to lovercase
-// console.log('--- LOGIC TEST ---');
-// console.log(`Input length: ${guess.length} letters `);
-// for (let i = 0; i < guess.length; i++) {
-//   if (guess.length > 5) {
-//     console.log('The word you are looking for has exactly 5 letters!');
-//     break;
-//   } else if (wordle[i] === guess[i]) {
-//     console.log(`${guess[i]} - green`);
-//   } else if (wordle.includes(guess[i])) {
-//     console.log(`${guess[i]} - yellow`);
-//   } else if (!wordle.includes(guess[i])) {
-//     console.log(`${guess[i]} - gray`);
-//   }
-// }
+//* Compare guess to wordle
+
+const wordle = 'treat';
+console.log(wordle);
+const guess = 'areal';
+console.log(guess);
+
+//> needs a rework
+//! before comparing set to lowercase
+console.log('--- LOGIC TEST ---');
+console.log(`Input length: ${guess.length} letters `);
+for (let i = 0; i < guess.length; i++) {
+  if (wordle[i] === guess[i]) {
+    console.log(`${guess[i]} - green`);
+  } else if (wordle.includes(guess[i]) && wordle[i] !== guess[i]) {
+    console.log(`${guess[i]} - yellow`);
+  } else {
+    console.log(`${guess[i]} - x`);
+  }
+}
 
 //* This changes text to UPPERCASE on input (DOM)
 // const charInput = document.querySelectorAll('.char');
