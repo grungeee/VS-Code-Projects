@@ -149,7 +149,7 @@ function keydown(e) {
 
         // for (l of guess) {
         guess.split('').forEach((l, guessIndex) => {
-          console.log(l, guessIndex);
+          console.log(l, guessIndex, c.value);
           // [...r.children].forEach(
           // child => console.log(child.value)
           // child.value === l && child.classList.contains('char--green')
@@ -169,15 +169,17 @@ function keydown(e) {
         c.value !== '' &&
         !testDB.includes(guess.toLowerCase())
       ) {
-        r.classList.toggle('row--false');
-        console.log(c.classList);
+        //: done with a css trick -> look into offsetWidth
+        r.classList.remove('row--false');
+        r.offsetWidth; //> returns read-only property of layout width of element
+        r.classList.add('row--false');
       }
 
       //> testing
       //. result test:
       if (e.key === 'Enter') {
-        console.log(guess ?? 'not set yet');
-        console.log(testDB.includes(guess.toLowerCase()) ?? 'not set');
+        console.log(guess ?? 'no value');
+        console.log(testDB.includes(guess.toLowerCase()) ?? 'no value');
       }
     });
 
@@ -206,7 +208,7 @@ function keydown(e) {
 //   }, 0);
 // });
 
-const wordleTest = 'treat';
+const wordleTest = 'aaabb';
 const guessTest = 'woops';
 //* Compare guess to wordle
 //> needs a rework
