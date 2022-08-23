@@ -102,7 +102,6 @@ class App {
 
   _loadMap(position) {
     console.log(position); //: gets pretty accurate coordinates 🗺️
-    // const latitude = position.coords
     const { latitude } = position.coords;
     const { longitude } = position.coords;
     console.log(latitude, longitude);
