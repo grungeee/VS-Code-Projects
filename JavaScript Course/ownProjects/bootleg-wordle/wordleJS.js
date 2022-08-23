@@ -167,6 +167,7 @@ console.log(charInput);
 const body = document.querySelector('body');
 const c8 = document.querySelector('.c-8');
 console.log(c8);
+let currentKey;
 
 //. Allowed Charcters
 //! add this before passing the input value to the input field
@@ -215,3 +216,71 @@ function charInputEvents() {
   });
 }
 charInputEvents();
+
+body.addEventListener('keydown', function (e) {
+  currentKey = e.key;
+  console.log(currentKey);
+});
+
+console.log(charInput.children);
+// charInput.firstElementChild.value = currentKey;
+//& <====================/ /====================>
+
+// function inputGlobal() {}
+// body.addEventListener('keydown', function (e) {
+//   if (allowedAll.includes(e.key)) {
+//     console.log(this);
+//     this.value = e.key.toUpperCase();
+//   }
+// });
+
+// function inputEvList() {
+//   console.log(this);
+//   console.log(this.value);
+//   console.log(this.value.length);
+//   //: set input to upper case
+//   this.value = this.value.toUpperCase();
+//   //: on input go to next field (if not last)
+//   if (
+//     this.value.length >= this.maxLength &&
+//     this !== this.parentElement.lastElementChild
+//   ) {
+//     this.nextElementSibling.focus();
+//   }
+
+//   //todo : start filling the fields from the whole body
+//   //todo : start only at c1 or the one that is not full
+// }
+
+// function keydownEvList(e) {
+//   console.log(e);
+//   //: enter -> going to the next row (if the last one)
+//   if (
+//     e.key === 'Enter' &&
+//     e.target === e.target.parentElement.lastElementChild
+//   ) {
+//     e.target.parentElement.nextElementSibling.firstElementChild.focus();
+//     //: go to previous field on delete (if maxlength = 0)
+//   } else if (
+//     e.key === 'Backspace' &&
+//     e.target !== e.target.parentElement.firstElementChild &&
+//     e.target.value.length < e.target.maxLength
+//   ) {
+//     e.target.previousElementSibling.focus();
+//   }
+// }
+
+// //> 2
+// function charCallback(char) {
+//   char.addEventListener('input', inputEvList);
+//   char.addEventListener('keydown', keydownEvList);
+//   body.addEventListener('keydown', function (e) {
+//     if (allowedAll.includes(e.key)) {
+//       console.log(this);
+//       // this.value = e.key.toUpperCase();
+//     }
+//   });
+// }
+
+// //> 1
+// charInput.forEach(charCallback);
