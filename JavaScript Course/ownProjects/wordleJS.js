@@ -163,6 +163,7 @@ console.log(charInput);
 const body = document.querySelector('body');
 const c8 = document.querySelector('.c-8');
 console.log(c8);
+let currentKey;
 
 //. Allowed Charcters
 //! add this before passing the input value to the input field
@@ -212,13 +213,13 @@ function charInputEvents() {
 }
 charInputEvents();
 
-// let inputGlobal;
-// body.addEventListener('keydown', function (e) {
-//   inputGlobal = e.key;
-//   // console.log(e.key);
-//   console.log(inputGlobal);
-// });
+body.addEventListener('keydown', function (e) {
+  currentKey = e.key;
+  console.log(currentKey);
+});
 
+console.log(charInput.children);
+// charInput.firstElementChild.value = currentKey;
 //& <====================/ /====================>
 
 // function inputGlobal() {}
