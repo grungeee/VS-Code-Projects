@@ -70,13 +70,13 @@ const allowedLetters = allowedLC.concat(allowedUC);
 const allowedAll = allowedLC.concat(allowedUC, allowedSys);
 
 let guess;
-const testGuess = 'hello';
 
 let count = 0;
 let currentRow = 0;
 let testCount = 0;
 let currentCharacter = 1;
 
+let testUpdated = [];
 const curChar = rows.querySelector('.r-1').querySelector(`.c-${count}`);
 
 //- prevent paste event
@@ -118,10 +118,37 @@ function keydown(e) {
       if (c.maxLength !== c.value.length && key !== '') {
         (c.value = key), c.focus();
 
+        //- game logic (on input)
+
+        // console.log([...r.children]);
         //> maybe going to make it here
-        // console.log(c.value.toLowerCase(), wordleTest[i]);
-        // if (wordleTest[i] === c.value.toLowerCase()) console.log('green');
-        // if (wordleTest.includes(c.value.toLowerCase())) console.log('yellow');
+        //: immediately adds classes to the value
+
+        if (wordleTest[i] === c.value.toLowerCase()) console.log('green');
+        else if (
+          wordleTest.includes(c.value.toLowerCase())
+          //& if updated child of [...r.children] with same value contains a class 'char--green' do not add 'yellow'
+
+          //  &&   !testUpdated.some(
+          //       (l, letterIndex) =>
+          //         letterIndex === i && !l.classList.contains('char--green')
+          //     )
+
+          //&
+        )
+          console.log('yellow');
+        //> & testing
+        // testUpdated.push(c);
+        // // console.log(testUpdated);
+        // testUpdated.some((l, letterIndex) =>
+        //   console.log(
+        //     letterIndex === i && l.classList.contains('char--green'),
+        //     l.value,
+        //     c.dataset.char,
+        //     l.classList
+        //   )
+        // );
+        //> &
       }
 
       //- clearing field
@@ -135,7 +162,8 @@ function keydown(e) {
       if (c.value !== '') c.classList.add('char-transition');
       if (c.value === '') c.classList.remove('char-transition');
 
-      //- next row + game logic
+      //- next row + game logic (on enter)
+      //. if true
       if (
         e.key === 'Enter' &&
         c.value !== '' &&
@@ -144,22 +172,27 @@ function keydown(e) {
         currentRow++;
         count = 0;
         //&  ////////////////// start //////////////////////////
-
+        /* 
+: if inputField.value === letter.value -> input.bg-color = 'green'
+: else if (any inputField of word).value === letter.value (!== index) ->  'yellow'
+: else if (any inputField of word).classList has 'green' -> 
+ */
         //. comparing guess and wordle
+        //? maybe splice the final value of 'testUpdated' to the last 4 or even 1 values?
 
-        // for (l of guess) {
-        guess.split('').forEach((l, guessIndex) => {
-          console.log(l, guessIndex, c.value);
-          // [...r.children].forEach(
-          // child => console.log(child.value)
-          // child.value === l && child.classList.contains('char--green')
-          // );
-          // [...r.children][4].classList
-          if (wordleTest[guessIndex] === l.toLowerCase()) {
-            r.children[guessIndex].classList.add('char--green');
-          } else if (wordleTest.includes(l.toLowerCase()))
-            r.children[guessIndex].classList.add('char--yellow');
-        });
+        // // for (l of guess) {
+        // guess.split('').forEach((l, guessIndex) => {
+        //   console.log(l, guessIndex, c.value);
+        //   // [...r.children].forEach(
+        //   // child => console.log(child.value)
+        //   // child.value === l && child.classList.contains('char--green')
+        //   // );
+        //   // [...r.children][4].classList
+        //   if (wordleTest[guessIndex] === l.toLowerCase()) {
+        //     r.children[guessIndex].classList.add('char--green');
+        //   } else if (wordleTest.includes(l.toLowerCase()))
+        //     r.children[guessIndex].classList.add('char--yellow');
+        // });
 
         //&  ////////////////// end //////////////////////////
 
@@ -183,13 +216,13 @@ function keydown(e) {
       }
     });
 
-    //. sets a 'guess' word form characters
+    //- sets a 'guess' word form characters
     guess = Array.from([...r.children]).reduce((acc, cur, i, arr) => {
       return acc + cur.value;
     }, Array.from([...r.children][0]));
   });
 
-  //- next char
+  //- next/previous char
   if (!allowedSys.includes(e.key) && count !== 4) count++;
   if (e.key === 'Backspace' && count !== 0) count--;
 
@@ -208,7 +241,7 @@ function keydown(e) {
 //   }, 0);
 // });
 
-const wordleTest = 'aaabb';
+const wordleTest = 'treat';
 const guessTest = 'woops';
 //* Compare guess to wordle
 //> needs a rework
