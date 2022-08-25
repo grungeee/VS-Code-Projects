@@ -74,15 +74,15 @@ console.log(wordle);
 //* This code looks for the matching word in the database
 const guessTest = 'jasps';
 
-console.log(entries.length);
-const isInDBTEST = entries.forEach(entry => {
-  const [key, value] = entry;
-  if (guessTest[0] === key && value.includes(guessTest)) {
-    return true;
-  }
-});
+console.log('object test: ');
+// const isInDBTEST = entries.forEach(entry => {
+//   const [key, value] = entry;
+//   if (guessTest[0] === key && value.includes(guessTest)) {
+//     return true;
+//   }
+// });
 
-console.log(guessTest, isInDBTEST);
+// console.log(guessTest, isInDBTEST);
 
 String.prototype.isInDB = function () {
   entries.forEach(function (entry) {
