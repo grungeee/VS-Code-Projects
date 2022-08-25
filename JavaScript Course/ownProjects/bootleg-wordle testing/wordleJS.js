@@ -32,6 +32,9 @@ const testDB = [
   'areal',
   'great',
   'treat',
+  'waste',
+  'react',
+  'tears',
 ];
 // console.log(testDB);
 //* <=====< xxx end xxx >=====>
@@ -73,10 +76,9 @@ let guess;
 
 let count = 0;
 let currentRow = 0;
-let testCount = 0;
-let currentCharacter = 1;
 
-let testUpdated = [];
+let testCount = 0;
+
 const curChar = rows.querySelector('.r-1').querySelector(`.c-${count}`);
 
 //- prevent paste event
@@ -87,75 +89,84 @@ document.addEventListener('keydown', keydown);
 
 function keydown(e) {
   //! tests:
-  // console.log(e);
+
   // console.log('count-before: ', count);
 
-  //.presettings
-  //: if a key is not a sys key -> remove it if non latin char -> if lat char to uppercase
+  //-presettings
+  //: works fine but umlauts still going through
+  // if (!allowedAll.includes(e.key)) return;
+  //. setting key to uppercase & removing non latin charcters
+  //: if a key is not a sys key -> remove it if non latin char -> if lat char -> to uppercase
   const key = !allowedSys.includes(e.key)
     ? e.key.toUpperCase().replace(/[\W\d]/g, '')
     : '';
 
+  //> try to add preventDefoult for not needed keys
+  // ? e.key.toUpperCase().replace(/[\W\d]/g, '')
+  // : '';
+  //. preventDefault()
+
+  // if (allowedSys.includes(e.key)) e.preventDefault();
+
+  //: need a solution for deleting with one tap
+  // if (!allowedSys.includes(e.key) && count < 4) count++;
+
   //- rows
   // [...rows.children].forEach((r, index) => {
-  rowsAllArr.forEach((r, index) => {
-    // console.log(r.children[0]);
-    // console.log(r.children);
+  rowsAllArr.forEach((r, index, rowArr) => {
+    //! js dataset test
+    r.dataset.index = index;
+    let rowIndex = r.dataset.index;
+    // console.log(r.dataset);
 
     //- one row per event
+    // rowArr[0].firstElementChild.focus();
+
     if (currentRow !== index) return;
-    // if (r.dataset.row !== index) return;
 
     //- chars
-    Array.from([...r.children]).forEach((c, i) => {
+    Array.from([...r.children]).forEach((c, i, charArr) => {
+      //! js dataset test
+      c.dataset.index = i;
+      let fieldIndex = c.dataset.index;
+
       // [...r.children].forEach((c, i) => {
       // charAll.forEach((c, i) => {
-
-      //. one char per event
+      //- one char per event
       if (count !== i) return;
 
-      //- input values + game logic?
+      //- input values + next char?
       if (c.maxLength !== c.value.length && key !== '') {
         (c.value = key), c.focus();
 
-        //- game logic (on input)
-
-        // console.log([...r.children]);
-        //> maybe going to make it here
-        //: immediately adds classes to the value
-
-        if (wordleTest[i] === c.value.toLowerCase()) console.log('green');
-        else if (
-          wordleTest.includes(c.value.toLowerCase())
-          //& if updated child of [...r.children] with same value contains a class 'char--green' do not add 'yellow'
-
-          //  &&   !testUpdated.some(
-          //       (l, letterIndex) =>
-          //         letterIndex === i && !l.classList.contains('char--green')
-          //     )
-
-          //&
-        )
-          console.log('yellow');
-        //> & testing
-        // testUpdated.push(c);
-        // // console.log(testUpdated);
-        // testUpdated.some((l, letterIndex) =>
-        //   console.log(
-        //     letterIndex === i && l.classList.contains('char--green'),
-        //     l.value,
-        //     c.dataset.char,
-        //     l.classList
-        //   )
-        // );
-        //> &
+        //! troubleshooting
+        console.log(`+ [character: ${c.value}][index: ${i}][count: ${count}]`);
+        console.log(fieldIndex);
       }
 
       //- clearing field
-      if (e.key === 'Backspace') {
+      // console.log(charArr[4]);
+      if (
+        e.key === 'Backspace' &&
+        c.dataset.char === charArr[4].dataset.char &&
+        charArr[4].value !== ''
+
+        // c.dataset.char === r.lastElementChild.dataset.char
+      ) {
+        console.log('yass');
         e.preventDefault();
-        c.value = '';
+        r.lastElementChild.value = '';
+      } else if (e.key === 'Backspace' && c.dataset.char > 0) {
+        // e.preventDefault();
+        // c.value = '';
+        // c.previousElementSibling?.focus();
+        // count--;
+
+        //! troubleshooting
+        console.log(`- [character: ${c.value}][index: ${i}][count: ${count}]`);
+        // c.value = '';
         c.previousElementSibling?.focus();
+        count--;
       }
 
       //- animation on field change
@@ -171,30 +182,15 @@ function keydown(e) {
       ) {
         currentRow++;
         count = 0;
-        //&  ////////////////// start //////////////////////////
-        /* 
-: if inputField.value === letter.value -> input.bg-color = 'green'
-: else if (any inputField of word).value === letter.value (!== index) ->  'yellow'
-: else if (any inputField of word).classList has 'green' -> 
- */
-        //. comparing guess and wordle
-        //? maybe splice the final value of 'testUpdated' to the last 4 or even 1 values?
 
-        // // for (l of guess) {
-        // guess.split('').forEach((l, guessIndex) => {
-        //   console.log(l, guessIndex, c.value);
-        //   // [...r.children].forEach(
-        //   // child => console.log(child.value)
-        //   // child.value === l && child.classList.contains('char--green')
-        //   // );
-        //   // [...r.children][4].classList
-        //   if (wordleTest[guessIndex] === l.toLowerCase()) {
-        //     r.children[guessIndex].classList.add('char--green');
-        //   } else if (wordleTest.includes(l.toLowerCase()))
-        //     r.children[guessIndex].classList.add('char--yellow');
-        // });
-
-        //&  ////////////////// end //////////////////////////
+        guess.split('').forEach((l, letterIndex) => {
+          if (wordleTest[letterIndex] === l.toLowerCase())
+            charArr[letterIndex].classList.add('char--green');
+          else if (wordleTest.includes(l.toLowerCase())) {
+            const firstIndex = guess.split('').findIndex(char => char === l);
+            charArr[firstIndex].classList.add('char--yellow');
+          }
+        });
 
         //. if false
       } else if (
@@ -208,7 +204,7 @@ function keydown(e) {
         r.classList.add('row--false');
       }
 
-      //> testing
+      //! testing
       //. result test:
       if (e.key === 'Enter') {
         console.log(guess ?? 'no value');
@@ -223,25 +219,19 @@ function keydown(e) {
   });
 
   //- next/previous char
-  if (!allowedSys.includes(e.key) && count !== 4) count++;
-  if (e.key === 'Backspace' && count !== 0) count--;
 
-  // if (e.key === 'Enter') console.log(guess);
+  if (!allowedSys.includes(e.key) && count !== 4) count++;
+  // if (e.key === 'Backspace' && count !== 0) count--;
+
+  console.log(count);
   //: just in case
   // if (e.key === 'Enter' && count === 4) currentRow++, (count = 0);
   // console.log(currentRow);
 }
 
-// [...rows.children].forEach((r, index) => {
-//   if (currentRow !== index) return;
-
-//   guess = [...r.children].reduce((acc, cur, i, arr) => {
-//     console.log(i, acc);
-//     return acc + cur.value;
-//   }, 0);
-// });
-
-const wordleTest = 'treat';
+//&  ////////////////// start //////////////////////////
+//&  ////////////////// end //////////////////////////
+const wordleTest = 'waste';
 const guessTest = 'woops';
 //* Compare guess to wordle
 //> needs a rework
@@ -260,3 +250,290 @@ const guessTest = 'woops';
 //     console.log(`${guessTest[i]} - gray`);
 //   }
 // }
+
+//&  ////////////////// OLD CODE //////////////////////////
+
+// 'use strict';
+
+// //* >==========================< WORDLE >==========================< //
+
+// //* Part of the code which picks a random word from the database
+// const testDB = [
+//   'agama',
+//   'banty',
+//   'chert',
+//   'dewar',
+//   'emmys',
+//   'feens',
+//   'gouch',
+//   'homey',
+//   'idola',
+//   'jowed',
+//   'kisan',
+//   'lurex',
+//   'moony',
+//   'nikau',
+//   'oxbow',
+//   'poled',
+//   'query',
+//   'redox',
+//   'swack',
+//   'tased',
+//   'umiak',
+//   'verve',
+//   'woops',
+//   'xylan',
+//   'yanks',
+//   'zoril',
+// ];
+// console.log(testDB.length); //: 26
+
+// //* Creates a sorted DB
+// const alphabeticStructure = {
+//   a: [],
+//   b: [],
+//   c: [],
+//   d: [],
+//   e: [],
+//   f: [],
+//   g: [],
+//   h: [],
+//   i: [],
+//   j: [],
+//   k: [],
+//   l: [],
+//   m: [],
+//   n: [],
+//   o: [],
+//   p: [],
+//   q: [],
+//   r: [],
+//   s: [],
+//   t: [],
+//   u: [],
+//   v: [],
+//   w: [],
+//   x: [],
+//   y: [],
+//   z: [],
+// };
+
+// const entries = Object.entries(alphabeticStructure);
+
+// //- Sortred DB
+// //. Safe -> short list
+// const wordleDB = testDB.forEach(word => {
+//   //! Unsafe -> long list
+//   // const wordleDB = wordsList.forEach(word => {
+//   entries.forEach(entry => {
+//     const [key, value] = entry;
+//     if (word[0] === key) {
+//       value.push(word);
+//     }
+//   });
+// });
+// //todo : create a funtion
+// console.log(entries);
+
+// //* RNG funcion: generates number -> strings(index) in the array
+// //: Better random init generator (min, max)
+// function newRNG(min, max) {
+//   return Math.floor(Math.random() * (max - min + 1) + min);
+// }
+// // console.log(newRNG(0, testDB.length));
+
+// //* This picks a random word for 'wordle' from database
+
+// // const wordle = testDB[newRNG(0, testDB.length)];
+// // const wordle = 'aabbb';
+// // console.log(wordle);
+// // const guess = 'swack';
+// // console.log(guess);
+
+// //* This code looks for the matching word in the database
+// // function isInDB() {
+// // return console.log(testDB.includes(guess));
+// //! change to this to use bool
+// // return testDB.includes(guess);
+// // }
+// // isInDB();
+
+// //* This merges chars into a string
+// const c1 = 's';
+// const c2 = 'w';
+// const c3 = 'a';
+// const c4 = 'c';
+// const c5 = 'k';
+// let guess2 = '';
+// // guess2 = c1 + c2 + c3 + c4 + c5;
+// //: aternative:
+// // guess2 = [c1, c2, c3, c4, c5].join('');
+// // console.log(typeof guess2, guess2);
+
+// //& Notes
+// /*
+// todo: probably needs another solution
+// */
+// //&
+
+// //* Compare guess to wordle
+
+// const wordle = 'treat';
+// console.log(wordle);
+// const guess = 'areal';
+// console.log(guess);
+
+// //> needs a rework
+// //! before comparing set to lowercase
+// console.log('--- LOGIC TEST ---');
+// console.log(`Input length: ${guess.length} letters `);
+// for (let i = 0; i < guess.length; i++) {
+//   if (wordle[i] === guess[i]) {
+//     console.log(`${guess[i]} - green`);
+//   } else if (wordle.includes(guess[i]) && wordle[i] !== guess[i]) {
+//     console.log(`${guess[i]} - yellow`);
+//   } else {
+//     console.log(`${guess[i]} - x`);
+//   }
+// }
+
+// //* This changes text to UPPERCASE on input (DOM)
+// // const charInput = document.querySelectorAll('.char');
+// // for (let i = 0; i < charInput.length; i++) {
+// //   charInput[i].addEventListener('input', function () {
+// //     //todo 1: Need to make a function that changes color on selection MAYBE?
+// //     //todo 2: need to make a funcion that goes to the next input box
+// //     this.style.backgroundColor = '#deaede';
+// //     this.value = this.value.toUpperCase();
+// //     console.log(this.value);
+// //   });
+// //   //: this listens to all keydown events but NOT on the inputfields
+// //   charInput.forEach(el => {
+// //     el.addEventListener('keydown', event => {
+// //       console.log('press');
+// //     });
+// //   });
+// // }
+// const rowsContainer = document.querySelector('.rows-container');
+// const rows = document.querySelectorAll('.row');
+// const charInput = document.querySelectorAll('.char');
+// console.log(charInput);
+
+// const body = document.querySelector('body');
+// let currentKey;
+
+// //. Allowed Charcters
+// //! add this before passing the input value to the input field
+// const allowedLC = `a b c d e f g h i j k l m n o p q r s t u v w x y z`.split(
+//   ' '
+// );
+// const allowedUC = allowedLC.join(' ').toUpperCase().split(' ');
+// const allowedAll = allowedLC.concat(allowedUC);
+// // console.log(allowedLC, allowedUC, allowedAll);
+
+// function charInputEvents() {
+//   charInput.forEach(function (char) {
+//     char.addEventListener('input', function () {
+//       //: set input to upper case
+//       this.value = this.value.toUpperCase();
+//       //: on input go to next field (if not last)
+//       if (
+//         this.value.length >= this.maxLength &&
+//         this !== this.parentElement.lastElementChild
+//       ) {
+//         this.nextElementSibling.focus();
+//       }
+
+//       //todo : start filling the fields from the whole body
+//       //todo : start only at c1 or the one that is not full
+//       //todo : event propagainon needed ->  catch/capture the key press form child
+//     });
+
+//     char.addEventListener('keydown', function (e) {
+//       console.log(e);
+//       //: enter -> going to the next row (if the last one)
+//       if (
+//         e.key === 'Enter' &&
+//         e.target === e.target.parentElement.lastElementChild
+//       ) {
+//         e.target.parentElement.nextElementSibling.firstElementChild.focus();
+//         //: go to previous field on delete (if maxlength = 0)
+//       } else if (
+//         e.key === 'Backspace' &&
+//         e.target !== e.target.parentElement.firstElementChild &&
+//         e.target.value.length < e.target.maxLength
+//       ) {
+//         e.target.previousElementSibling.focus();
+//       }
+//     });
+//   });
+// }
+// charInputEvents();
+
+// body.addEventListener('keydown', function (e) {
+//   currentKey = e.key;
+//   console.log(currentKey);
+// });
+
+// // console.log(charInput.children);
+// // charInput.firstElementChild.value = currentKey;
+// //& <====================/ /====================>
+
+// // function inputGlobal() {}
+// // body.addEventListener('keydown', function (e) {
+// //   if (allowedAll.includes(e.key)) {
+// //     console.log(this);
+// //     this.value = e.key.toUpperCase();
+// //   }
+// // });
+
+// // function inputEvList() {
+// //   console.log(this);
+// //   console.log(this.value);
+// //   console.log(this.value.length);
+// //   //: set input to upper case
+// //   this.value = this.value.toUpperCase();
+// //   //: on input go to next field (if not last)
+// //   if (
+// //     this.value.length >= this.maxLength &&
+// //     this !== this.parentElement.lastElementChild
+// //   ) {
+// //     this.nextElementSibling.focus();
+// //   }
+
+// //   //todo : start filling the fields from the whole body
+// //   //todo : start only at c1 or the one that is not full
+// // }
+
+// // function keydownEvList(e) {
+// //   console.log(e);
+// //   //: enter -> going to the next row (if the last one)
+// //   if (
+// //     e.key === 'Enter' &&
+// //     e.target === e.target.parentElement.lastElementChild
+// //   ) {
+// //     e.target.parentElement.nextElementSibling.firstElementChild.focus();
+// //     //: go to previous field on delete (if maxlength = 0)
+// //   } else if (
+// //     e.key === 'Backspace' &&
+// //     e.target !== e.target.parentElement.firstElementChild &&
+// //     e.target.value.length < e.target.maxLength
+// //   ) {
+// //     e.target.previousElementSibling.focus();
+// //   }
+// // }
+
+// // //> 2
+// // function charCallback(char) {
+// //   char.addEventListener('input', inputEvList);
+// //   char.addEventListener('keydown', keydownEvList);
+// //   body.addEventListener('keydown', function (e) {
+// //     if (allowedAll.includes(e.key)) {
+// //       console.log(this);
+// //       // this.value = e.key.toUpperCase();
+// //     }
+// //   });
+// // }
+
+// // //> 1
+// // charInput.forEach(charCallback);

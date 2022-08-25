@@ -291,18 +291,43 @@
 //   }
 // }
 
-function highAndLow(numbers) {
-  console.log(numbers.split(' '));
-  let max = 0;
-  let min = 0;
+// function highAndLow(numbers) {
+//   console.log(numbers.split(' '));
+//   let max = 0;
+//   let min = 0;
 
-  numbers.split(' ').forEach(n => {
-    n = Number(n);
-    n > max ? (max = n) : max;
-    n < min ? (min = n) : min;
-    //. need an array -> 1 is max 2 is min
-  });
-  return max + ' ' + min;
-}
-const chai = '8 3 -5 42 -1 0 0 -9 4 7 4 -4';
-console.log(highAndLow(chai));
+//   numbers.split(' ').forEach(n => {
+//     n = Number(n);
+//     n > max ? (max = n) : max;
+//     n < min ? (min = n) : min;
+//     //. need an array -> 1 is max 2 is min
+//   });
+//   return max + ' ' + min;
+// }
+// const chai = '8 3 -5 42 -1 0 0 -9 4 7 4 -4';
+// console.log(highAndLow(chai));
+
+//* Tests for the wordle app
+const wordle1 = 'waste'.split('');
+const guess1 = 'treat'.split('');
+
+console.log('wordle: ', wordle1);
+console.log('guess: ', guess1);
+
+const include = guess1.forEach((letter, i) => {
+  console.log(
+    wordle1[i],
+    wordle1.includes(letter) ? '[ ✅ ]' : '[ ❌ ]',
+    letter
+  );
+  //:
+  // console.log(guess1.filter((letter, _, arr) => letter === guess1[i]));
+  //>
+  // console.log(guess1.filter(letter => letter === guess1[i]).length);
+  //:
+  // guess1.find(l => console.log(l );)
+  //:
+  console.log(guess1.findIndex(char => char === letter));
+
+  const doesInclude = guess1.some(letter => wordle1.includes(letter));
+});
