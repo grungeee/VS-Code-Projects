@@ -1,4 +1,4 @@
-// 'use strickt';
+'use strickt';
 
 // // var str = "How can mirrors be real if our eyes aren't real";
 
@@ -308,8 +308,8 @@
 // console.log(highAndLow(chai));
 
 //* Tests for the wordle app
-const wordle1 = 'waste'.split('');
-const guess1 = 'treat'.split('');
+const wordle1 = 'fluff'.split('');
+const guess1 = 'hello'.split('');
 
 console.log('wordle: ', wordle1);
 console.log('guess: ', guess1);

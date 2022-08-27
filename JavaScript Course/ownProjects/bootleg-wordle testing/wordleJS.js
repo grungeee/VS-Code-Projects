@@ -1,3 +1,4 @@
+'use strict';
 //* <=====< test DB >=====>
 const testDB = [
   'agama',
@@ -35,8 +36,26 @@ const testDB = [
   'waste',
   'react',
   'tears',
+  'viler',
+  'volta',
+  'vardy',
+  'verve',
+  'renos',
+  'roton',
+  'ratio',
+  'ruder',
+  'rider',
+  'dryer',
+  'paper',
+  'hello',
+  'jotty',
+  'treat',
 ];
 // console.log(testDB);
+
+//! /////////////////////// tests  ////////////////////////
+const wordleTest = 'jotty';
+// const guessTest = 'volta';
 //* <=====< xxx end xxx >=====>
 
 const body = document.querySelector('body');
@@ -140,8 +159,8 @@ function keydown(e) {
         (c.value = key), c.focus();
 
         //! troubleshooting
-        console.log(`+ [character: ${c.value}][index: ${i}][count: ${count}]`);
-        console.log(fieldIndex);
+        // console.log(`+ [character: ${c.value}][index: ${i}][count: ${count}]`);
+        // console.log(fieldIndex);
       }
 
       //- clearing field
@@ -163,7 +182,7 @@ function keydown(e) {
         // count--;
 
         //! troubleshooting
-        console.log(`- [character: ${c.value}][index: ${i}][count: ${count}]`);
+        // console.log(`- [character: ${c.value}][index: ${i}][count: ${count}]`);
         // c.value = '';
         c.previousElementSibling?.focus();
         count--;
@@ -186,12 +205,61 @@ function keydown(e) {
         guess.split('').forEach((l, letterIndex) => {
           if (wordleTest[letterIndex] === l.toLowerCase())
             charArr[letterIndex].classList.add('char--green');
-          else if (wordleTest.includes(l.toLowerCase())) {
-            const firstIndex = guess.split('').findIndex(char => char === l);
-            charArr[firstIndex].classList.add('char--yellow');
+          // else if (wordleTest.includes(l.toLowerCase())) {
+          //   const firstIndex = guess.split('').findIndex(char => char === l);
+          //   charArr[firstIndex].classList.add('char--yellow');
+          // }
+          else if (
+            wordleTest.includes(l.toLowerCase()) &&
+            //: only adds a value to one of same characters
+            guess.split('').findIndex(char => char === l) === letterIndex
+          ) {
+            charArr[letterIndex].classList.add('char--yellow');
           }
         });
 
+        //* class regulation
+        //! berfore
+
+        // wordleTest.split('').forEach((d, wordleIndexs, wordleArr) => {
+        //   console.log(wordleArr.filter(item => item === d));
+        // });
+
+        const duplicate = wordleTest.split('').filter(item => item === item);
+
+        console.log('duplicate: ', duplicate);
+        //! /// /// ///
+
+        charArr.forEach((updated, idx) => {
+          console.log(
+            wordleTest.split('').filter(item => item === wordleTest[idx])
+          );
+
+          // console.log('duplicate-final: ', duplicate);
+          // const duplicate = new Set(
+          // wordleTest.split('').filter(item => item === wordleTest[idx])
+          //     .length > 1
+          //     ? wordleTest[idx]
+          //     : ''
+          // );
+          // console.log('duplicate: ', duplicate);
+
+          if (
+            // countInArray(wordleTest.split(''), duplicate) === 1 &&
+            // duplicate &&
+            countInArray(guess.split(''), updated.value) > 1
+          ) {
+            // console.log(updated.classList, updated.value);
+            const first = charArr[guess.split('').indexOf(updated.value)];
+            const last = charArr[guess.split('').lastIndexOf(updated.value)];
+            // console.log(first, last);
+            first.classList.contains('char--green')
+              ? last.classList.remove('char--yellow')
+              : last.classList.contains('char--green')
+              ? first.classList.remove('char--yellow')
+              : '';
+          }
+        });
         //. if false
       } else if (
         e.key === 'Enter' &&
@@ -223,16 +291,18 @@ function keydown(e) {
   if (!allowedSys.includes(e.key) && count !== 4) count++;
   // if (e.key === 'Backspace' && count !== 0) count--;
 
-  console.log(count);
+  // console.log(count);
   //: just in case
   // if (e.key === 'Enter' && count === 4) currentRow++, (count = 0);
   // console.log(currentRow);
 }
 
+function countInArray(array, what) {
+  return array.filter(item => item === what).length;
+}
 //&  ////////////////// start //////////////////////////
 //&  ////////////////// end //////////////////////////
-const wordleTest = 'waste';
-const guessTest = 'woops';
+
 //* Compare guess to wordle
 //> needs a rework
 //! before comparing set to lowercase

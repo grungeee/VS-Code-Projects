@@ -1,101 +1,14 @@
-//* Creates a sorted DB
-const alphabeticStructure = {
-  a: [],
-  b: [],
-  c: [],
-  d: [],
-  e: [],
-  f: [],
-  g: [],
-  h: [],
-  i: [],
-  j: [],
-  k: [],
-  l: [],
-  m: [],
-  n: [],
-  o: [],
-  p: [],
-  q: [],
-  r: [],
-  s: [],
-  t: [],
-  u: [],
-  v: [],
-  w: [],
-  x: [],
-  y: [],
-  z: [],
-};
+/*
+ * __          ______  _____  _____  _      ______
+ * \ \        / / __ \|  __ \|  __ \| |    |  ____|
+ *  \ \  /\  / / |  | | |__) | |  | | |    | |__
+ *   \ \/  \/ /| |  | |  _  /| |  | | |    |  __|
+ *    \  /\  / | |__| | | \ \| |__| | |____| |____
+ *     \/  \/   \____/|_|  \_\_____/|______|______|
+ *
+ */
 
-const entries = Object.entries(alphabeticStructure);
-
-//* Sortred DB
-
-//- Safe -> short list
-// const wordleDB = testDB.forEach(word => {
-
-//! Unsafe -> long list
-const wordleDB = wordsList.forEach(word => {
-  entries.forEach(entry => {
-    const [key, value] = entry;
-    if (word[0] === key) {
-      value.push(word);
-    }
-  });
-});
-//todo : create a funtion
-
-console.log(alphabeticStructure);
-console.log(entries);
-const values = Object.values(alphabeticStructure);
-// console.log(Object.values(alphabeticStructure).length);
-// console.log(Object.values(alphabeticStructure)[0][1]);
-
-//* RNG funcion: generates number -> strings(index) in the array
-//: Better random init generator (min, max)
-function newRNG(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-//* This picks a random word for 'wordle' from database
-const valuesLengthRNG = newRNG(0, values.length);
-console.log(valuesLengthRNG);
-
-const valuesWordsArr = Object.values(alphabeticStructure)[valuesLengthRNG];
-console.log(valuesWordsArr);
-
-const valuesArrayLengthRNG = newRNG(0, valuesWordsArr.length);
-console.log(valuesArrayLengthRNG);
-
-const wordle = valuesWordsArr[valuesArrayLengthRNG];
-console.log(wordle);
-
-//* This code looks for the matching word in the database
-const guessTest = 'jasps';
-
-console.log('object test: ');
-// const isInDBTEST = entries.forEach(entry => {
-//   const [key, value] = entry;
-//   if (guessTest[0] === key && value.includes(guessTest)) {
-//     return true;
-//   }
-// });
-
-// console.log(guessTest, isInDBTEST);
-
-String.prototype.isInDB = function () {
-  entries.forEach(function (entry) {
-    const [key, value] = entry;
-    if (this[0] === key && value.includes(this)) {
-      console.log('true');
-      return true;
-    }
-  });
-};
-
-guessTest.isInDB();
-
+'use strict';
 //* <=====< test DB >=====>
 const testDB = [
   'agama',
@@ -137,6 +50,97 @@ const testDB = [
 // console.log(testDB);
 //* <=====< xxx end xxx >=====>
 
+//* Sortred DB
+const wordleDB = {
+  a: [],
+  b: [],
+  c: [],
+  d: [],
+  e: [],
+  f: [],
+  g: [],
+  h: [],
+  i: [],
+  j: [],
+  k: [],
+  l: [],
+  m: [],
+  n: [],
+  o: [],
+  p: [],
+  q: [],
+  r: [],
+  s: [],
+  t: [],
+  u: [],
+  v: [],
+  w: [],
+  x: [],
+  y: [],
+  z: [],
+};
+
+//- Sorting Algorithm
+const entries = Object.entries(wordleDB);
+const keys = Object.keys(wordleDB);
+const values = Object.values(wordleDB);
+
+//. Safe -> short list
+// const wordleDB = testDB.forEach(word => {
+
+//> Unsafe -> long list
+wordsList.forEach(word => {
+  entries.forEach(entry => {
+    const [key, value] = entry;
+    if (word[0] === key) {
+      value.push(word);
+    }
+  });
+});
+//todo : create a funtion
+
+// console.log(wordleDB, entries, keys, values);
+// console.log(Object.values(wordleDB).length);
+// console.log(Object.values(wordleDB)[0][1]);
+
+//* RNG funcion: generates number -> strings(index) in the array
+//: Better random init generator (min, max)
+function newRNG(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+//* This picks a random word for 'wordle' from database
+
+let wordle;
+
+function pickWordle() {
+  const valuesLengthRNG = newRNG(0, values.length);
+  const valuesWordsArr = values[valuesLengthRNG];
+  const valuesArrayLengthRNG = newRNG(0, valuesWordsArr.length);
+  wordle = valuesWordsArr[valuesArrayLengthRNG];
+
+  //> console logs
+  console.log('letterNR: ', valuesLengthRNG, 'wordNR: ', valuesArrayLengthRNG);
+  console.log('little help: ', valuesWordsArr);
+  console.log(
+    `this is the word you need to guess: [ ${wordle.toUpperCase()} ]`
+  );
+}
+pickWordle();
+//* Matching word in the database
+const guessTest = 'hants';
+
+String.prototype.isInDB = function () {
+  const that = this.split('').join('');
+  return values[keys.indexOf(that[0])].includes(that);
+};
+
+//* Count items in array
+function countInArray(array, what) {
+  return array.filter(item => item === what).length;
+}
+
+//* Variables
 const body = document.querySelector('body');
 const rows = document.querySelector('.rows-container');
 const row = rows.querySelector('.row'); //: r-1
@@ -150,27 +154,10 @@ const charAll = rows.querySelectorAll('.char');
 const charAllArr = [...row.querySelectorAll('.char')];
 // console.log(charAll, charAllArr);
 
-//. Allowed Charcters
-//! add this before passing the input value to the input field
-const allowedSys = [
-  'Backspace',
-  'Enter',
-  'Escape',
-  'OS',
-  'Tab',
-  'Alt',
-  'Control',
-  'Shift',
-  'CapsLock',
-];
-const allowedLC = `a b c d e f g h i j k l m n o p q r s t u v w x y z`.split(
-  ' '
-);
-const allowedUC = allowedLC.join(' ').toUpperCase().split(' ');
-const allowedLetters = allowedLC.concat(allowedUC);
-const allowedAll = allowedLC.concat(allowedUC, allowedSys);
+const alphabet = `abcdefghijklmnopqrstuvwxyz`.split('');
 
 let guess;
+let classesUpdated = [];
 
 let count = 0;
 let currentRow = 0;
@@ -183,32 +170,23 @@ const curChar = rows.querySelector('.r-1').querySelector(`.c-${count}`);
 //- prevent paste event
 document.onpaste = e => e.preventDefault();
 
-//- keydown event
+//* Keydown Event
 document.addEventListener('keydown', keydown);
 
 function keydown(e) {
-  //! tests:
+  //- disabling keys
+  function disableKey(e) {
+    return ['Tab', 'Shift', 'Alt'].includes(e.key) ? e.preventDefault() : '';
+  }
+  disableKey(e);
 
-  // console.log('count-before: ', count);
-
-  //-presettings
-  //: works fine but umlauts still going through
-  // if (!allowedAll.includes(e.key)) return;
-  //. setting key to uppercase & removing non latin charcters
-  //: if a key is not a sys key -> remove it if non latin char -> if lat char -> to uppercase
-  const key = !allowedSys.includes(e.key)
-    ? e.key.toUpperCase().replace(/[\W\d]/g, '')
-    : '';
-
-  //> try to add preventDefoult for not needed keys
-  // ? e.key.toUpperCase().replace(/[\W\d]/g, '')
-  // : '';
-  //. preventDefault()
-
-  // if (allowedSys.includes(e.key)) e.preventDefault();
-
-  //: need a solution for deleting with one tap
-  // if (!allowedSys.includes(e.key) && count < 4) count++;
+  //- permitting keys
+  function isPermitted(e) {
+    return /[a-zA-Z]+$/g.test(e.key) && e.key.length === 1
+      ? e.key.toUpperCase()
+      : '';
+  }
+  const key = isPermitted(e);
 
   //- rows
   // [...rows.children].forEach((r, index) => {
@@ -219,8 +197,6 @@ function keydown(e) {
     // console.log(r.dataset);
 
     //- one row per event
-    // rowArr[0].firstElementChild.focus();
-
     if (currentRow !== index) return;
 
     //- chars
@@ -234,36 +210,21 @@ function keydown(e) {
       //- one char per event
       if (count !== i) return;
 
-      //- input values + next char?
+      //- input values
       if (c.maxLength !== c.value.length && key !== '') {
         (c.value = key), c.focus();
-
-        //! troubleshooting
-        console.log(`+ [character: ${c.value}][index: ${i}][count: ${count}]`);
-        console.log(fieldIndex);
       }
 
       //- clearing field
-      // console.log(charArr[4]);
       if (
         e.key === 'Backspace' &&
         c.dataset.char === charArr[4].dataset.char &&
         charArr[4].value !== ''
-
-        // c.dataset.char === r.lastElementChild.dataset.char
       ) {
-        console.log('yass');
+        console.log('last letter');
         e.preventDefault();
         r.lastElementChild.value = '';
       } else if (e.key === 'Backspace' && c.dataset.char > 0) {
-        // e.preventDefault();
-        // c.value = '';
-        // c.previousElementSibling?.focus();
-        // count--;
-
-        //! troubleshooting
-        console.log(`- [character: ${c.value}][index: ${i}][count: ${count}]`);
-        // c.value = '';
         c.previousElementSibling?.focus();
         count--;
       }
@@ -277,25 +238,59 @@ function keydown(e) {
       if (
         e.key === 'Enter' &&
         c.value !== '' &&
-        testDB.includes(guess.toLowerCase())
+        guess.toLowerCase().isInDB()
+        // testDB.includes(guess.toLowerCase())
       ) {
         currentRow++;
         count = 0;
 
+        // & <==========< Game Logic >==========>
+
+        //. adding colors to right letters
         guess.split('').forEach((l, letterIndex) => {
           if (wordle[letterIndex] === l.toLowerCase())
             charArr[letterIndex].classList.add('char--green');
-          else if (wordle.includes(l.toLowerCase())) {
-            const firstIndex = guess.split('').findIndex(char => char === l);
-            charArr[firstIndex].classList.add('char--yellow');
+          else if (
+            wordle.includes(l.toLowerCase()) &&
+            guess.split('').findIndex(char => char === l) === letterIndex //: only 1 yellow of same char
+          ) {
+            charArr[letterIndex].classList.add('char--yellow');
           }
         });
 
+        //. removing yellow if char with same value is green
+        charArr.forEach((updated, idx) => {
+          //: finds the letter that is duplicate
+          const duplicate = new Set(
+            wordle.split('').filter(item => item === wordle[idx]).length > 1
+              ? wordle[idx]
+              : ''
+          );
+
+          if (
+            countInArray(wordle.split(''), duplicate) === 1 &&
+            countInArray(guess.split(''), updated.value) > 1
+          ) {
+            console.log(updated.classList, updated.value);
+            const first = charArr[guess.split('').indexOf(updated.value)];
+            const last = charArr[guess.split('').lastIndexOf(updated.value)];
+            console.log(first, last);
+            first.classList.contains('char--green')
+              ? last.classList.remove('char--yellow')
+              : last.classList.contains('char--green')
+              ? first.classList.remove('char--yellow')
+              : '';
+          }
+        });
+
+        // & <==========< end of game logic >==========>
+        //- animation
         //. if false
       } else if (
         e.key === 'Enter' &&
         c.value !== '' &&
-        !testDB.includes(guess.toLowerCase())
+        !guess.isInDB()
+        // !guess.toLowerCase().isInDB()
       ) {
         //: done with a css trick -> look into offsetWidth
         r.classList.remove('row--false');
@@ -303,29 +298,26 @@ function keydown(e) {
         r.classList.add('row--false');
       }
 
-      //! testing
+      //! /// testing /// //
       //. result test:
       if (e.key === 'Enter') {
-        console.log(guess ?? 'no value');
-        console.log(testDB.includes(guess.toLowerCase()) ?? 'no value');
+        console.log(
+          `this is the input value: [ ${guess.toUpperCase() || 'no value'} ]`,
+          guess.isInDB() || 'no value'
+        );
       }
+      //! /// /// /// ///
     });
 
     //- sets a 'guess' word form characters
     guess = Array.from([...r.children]).reduce((acc, cur, i, arr) => {
-      return acc + cur.value;
+      return acc + cur.value.toLowerCase();
     }, Array.from([...r.children][0]));
   });
 
   //- next/previous char
-
-  if (!allowedSys.includes(e.key) && count !== 4) count++;
+  if (count !== 4 && key !== '') count++;
   // if (e.key === 'Backspace' && count !== 0) count--;
-
-  console.log(count);
-  //: just in case
-  // if (e.key === 'Enter' && count === 4) currentRow++, (count = 0);
-  // console.log(currentRow);
 }
 
 //&  ////////////////// start //////////////////////////

@@ -1,5 +1,5 @@
 'use strict';
-//^! Add the cooky message in the end!
+//^! Add a cooky message in the end!
 ///////////////////////////////////////
 // Modal window
 
