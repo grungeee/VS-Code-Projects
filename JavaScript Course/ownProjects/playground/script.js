@@ -54,14 +54,14 @@ const green = '[ 🟩 ]';
 const yellow = '[ 🟨 ]';
 const none = '[ 🔳 ]';
 //: |=========================|
-const wordle = 'jorty'; //: previous: 'jotty'
-const guess = 'trert';
+const wordle = 'oorrx'; //: previous: 'jotty'
+const guess = 'yooor';
 //. cl logs
 const wordleSplit = wordle.split('');
 const guessSplit = guess.split('');
 //: |=========================|
-console.log(wordleSplit);
-console.log(guessSplit);
+console.log('w: ', wordleSplit);
+console.log('g: ', guessSplit);
 //: |=========================|
 //: |====/ Adding Colors /====|
 
@@ -69,12 +69,16 @@ console.log(guessSplit);
 //? maybe an array with all duplicates and no '' stings
 const gArr = [];
 const wArr = [];
+const wArrTwo = [];
 for (g of guess) {
   wordle.includes(g) && gArr.push(g);
 }
 for (w of wordle) {
   guess.includes(w) && wArr.push(w);
 }
+
+wArrTwo.push(wordleSplit.filter((item, index) => guess.includes(item)));
+// console.log(wArrTwo);
 
 console.log('g in wordle: ', gArr, 'w in guess: ', wArr);
 // console.log('shallow copy', gArr.slice());
@@ -89,20 +93,18 @@ wordleSplit.forEach((w, index) => {
 
   //> ----| Pushing to Arr |----
   // gArr.push(wordle.includes(g) ? g : guess.includes(w) ? w : '');
-
   //> ------| cl logs |-------
-  console
-    .log
-    // '-------------'
-    // gInWordle,
-    // wInGuess /* gInWordle === wInGuess */,
-    // gArr
-    ();
+
   //> ------------------------
   if (w === g) {
     console.log(w.toUpperCase(), green, g.toUpperCase());
-  } else if (wordleIncludesG && gArr[index] === wArr[index]) {
+    wArr.pop(g);
+    console.log('green: ', wArr);
+    // } else if (wordleIncludesG && wArr.includes(g)) {
+  } else if (wArr.includes(g)) {
     console.log(w.toUpperCase(), yellow, g.toUpperCase());
+    wArr.pop(g);
+    console.log('yellow: ', wArr);
   } else {
     console.log(w.toUpperCase(), none, g.toUpperCase());
   }
