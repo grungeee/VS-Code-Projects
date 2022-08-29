@@ -55,8 +55,8 @@ const yellow = '[ 🟨 ]';
 const none = '[ 🔳 ]';
 //: |=========================|
 const wordle = 'oorrx'; //: previous: 'jotty'
-const guess = 'yooor';
-//. cl logs
+const guess = 'yooro';
+//> ------| cl logs |-------
 const wordleSplit = wordle.split('');
 const guessSplit = guess.split('');
 //: |=========================|
@@ -77,11 +77,14 @@ for (w of wordle) {
   guess.includes(w) && wArr.push(w);
 }
 
+//
 wArrTwo.push(wordleSplit.filter((item, index) => guess.includes(item)));
 // console.log(wArrTwo);
 
+//> ------| cl logs |-------
 console.log('g in wordle: ', gArr, 'w in guess: ', wArr);
 // console.log('shallow copy', gArr.slice());
+//> ------------------------
 
 wordleSplit.forEach((w, index) => {
   //> ------| Variables |-------
@@ -93,23 +96,41 @@ wordleSplit.forEach((w, index) => {
 
   //> ----| Pushing to Arr |----
   // gArr.push(wordle.includes(g) ? g : guess.includes(w) ? w : '');
-  //> ------| cl logs |-------
-
-  //> ------------------------
   if (w === g) {
     console.log(w.toUpperCase(), green, g.toUpperCase());
     wArr.pop(g);
-    console.log('green: ', wArr);
+    // console.log('green: ', wArr);
     // } else if (wordleIncludesG && wArr.includes(g)) {
   } else if (wArr.includes(g)) {
     console.log(w.toUpperCase(), yellow, g.toUpperCase());
     wArr.pop(g);
-    console.log('yellow: ', wArr);
+    // console.log('yellow: ', wArr);
   } else {
     console.log(w.toUpperCase(), none, g.toUpperCase());
   }
-  //> w === a = value if wordleSplit.contains(value) !== guessSplit.contains(value) ? remove last yellow
-  //> add as many yellow as there is value in wordleSplit
-  //> add as many yellow if wordleSplit.contains(value).length === guessSplit.contains(value).length
+
+  /**
+   *Notes:
+   *~ w === a = value if wordleSplit.contains(value) !== guessSplit.contains(value) ? remove last yellow
+   *~ add as many yellow as there is value in wordleSplit
+   *~ add as many yellow if wordleSplit.contains(value).length === guessSplit.contains(value).length
+   */
 });
+
+//: |=========================|
+//: |======/Remove test/======|
+const test = 'abcabc';
+const testArr = test.split('');
+
+//> ---------------------------
+//: removes duplicates -> return an array with unique values
+const testFiltered = testArr.filter(
+  (item, index) => index !== testArr.indexOf(item)
+);
+// console.log(testArr, testFiltered);
+//> ---------------------------
+const testRemoved = testArr.slice().splice(0);
+
+console.log('array: ', testArr);
+console.log('remove: ', testRemoved);
 //: |=========================|
