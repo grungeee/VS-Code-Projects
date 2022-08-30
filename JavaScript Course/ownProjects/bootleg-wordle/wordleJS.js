@@ -179,7 +179,7 @@ const rows = document.querySelector('.rows-container');
 const row = rows.querySelector('.row'); //: r-1
 const char = row.querySelector('.char'); //: c-1
 
-//: |=================================|
+//r |=================================|
 
 //. keyboard fields
 const keysKB = Array.from(document.querySelectorAll('.key'));
@@ -188,6 +188,8 @@ const keysKB = Array.from(document.querySelectorAll('.key'));
 //   key => key.classList.contains('k--q') && key.classList.add('char--green')
 // );
 // console.log(keysKB[0]);
+
+// console.log(document.querySelector('.k--q').classList);
 
 //: |=================================|
 //- not sure all of these
@@ -213,8 +215,6 @@ let testCount = 0;
 
 const alphabet = `abcdefghijklmnopqrstuvwxyz`.split('');
 
-const curChar = rows.querySelector('.r-1').querySelector(`.c-${count}`);
-
 //- prevent paste event
 document.onpaste = e => e.preventDefault();
 
@@ -224,16 +224,19 @@ document.addEventListener('keydown', keydown);
 function keydown(e) {
   //- disabling keys
   function disableKey(e) {
-    return ['Tab', 'Shift', 'Alt'].includes(e.key) ? e.preventDefault() : '';
+    // return ['Tab', 'Shift', 'Alt'].includes(e.key) ? e.preventDefault():  '';
+    //: this should be better
+    return ['Tab', 'Shift', 'Alt'].includes(e.key) && e.preventDefault();
   }
   disableKey(e);
 
-  //- permitting keys
+  //- permitting keys + toUpperCase
   function isPermitted(e) {
     return /[a-zA-Z]+$/g.test(e.key) && e.key.length === 1
       ? e.key.toUpperCase()
       : '';
   }
+  //. -------------------------------------------------- key var
   const key = isPermitted(e);
 
   //- rows
@@ -294,39 +297,37 @@ function keydown(e) {
 
         // & <============< Game Logic >============>
         //: |==============/ Keyboard /===============|
-        keysKB.forEach(k => {
-          // key.classList.contains(`k--${w}`) && key.classList.add('char--green')
-          //: |=========================================|
+        // keysKB.forEach(k => {
+        // key.classList.contains(`k--${w}`) && key.classList.add('char--green')
+        //: |=========================================|
 
-          //. adding colors to right letters
-          //: chars included in both wordle and guess
-          const wordleArrFilterd = wordleArr.filter(w => guess.includes(w));
+        //. adding colors to right letters
+        //: chars included in both wordle and guess
+        const wordleArrFilterd = wordleArr.filter(w => guess.includes(w));
 
-          wordleArr.forEach((w, wIndex) => {
-            const g = guess[wIndex];
+        wordleArr.forEach((w, wIndex) => {
+          const g = guess[wIndex];
 
-            if (w === g) {
-              charArr[wIndex].classList.add('char--green'); //: input fields
+          if (w === g) {
+            charArr[wIndex].classList.add('char--green'); //: input fields
 
-              k.classList.contains(`k--${g}`) && k.classList.add('char--green'),
-                k.classList.remove('char--yellow'); //: keyboad
-              wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
-            } //-
-            else if (wordleArrFilterd.includes(g)) {
-              charArr[wIndex].classList.add('char--yellow'); //: input fields
+            document.querySelector(`.k--${g}`).classList.remove('char--yellow');
+            document.querySelector(`.k--${g}`).classList.add('char--green'); //: keyboad
+            wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
+          } //-
+          else if (wordleArrFilterd.includes(g)) {
+            charArr[wIndex].classList.add('char--yellow'); //: input fields
 
-              k.classList.contains(`k--${g}`) &&
-                !k.classList.contains('char--green') &&
-                k.classList.add('char--yellow'); //: keyboad
-
-              wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
-            }
-
-            //: ----- end of kb
-          });
-          //: -----
+            !document
+              .querySelector(`.k--${g}`)
+              .classList.contains('char--green') &&
+              document.querySelector(`.k--${g}`).classList.add('char--yellow');
+            wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
+          } //-
+          else {
+            document.querySelector(`.k--${g}`).classList.add('char--none');
+          }
         });
-
         // & <==========< end of game logic >==========>
 
         //- animation
@@ -363,6 +364,15 @@ function keydown(e) {
   //- next/previous char
   if (count !== 4 && key !== '') count++;
   // if (e.key === 'Backspace' && count !== 0) count--;
+}
+
+//* Click event
+
+document.addEventListener('click', click);
+
+function click(ev) {
+  console.log(ev);
+  console.log(this);
 }
 
 //&  ////////////////// start //////////////////////////
