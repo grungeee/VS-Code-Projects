@@ -51,6 +51,7 @@ const testDB = [
 //* <=====< xxx end xxx >=====>
 
 //* Sortred DB
+//- Database Object
 const wordleDB = {
   a: [],
   b: [],
@@ -80,6 +81,34 @@ const wordleDB = {
   z: [],
 };
 
+//: -------------------------------------------------
+//TODO:
+//o create a funtion
+// //- Sorting Algorithm
+// function sortWordsInAlphabeticalOrder(list, object) {
+//   const entries = Object.entries(object);
+//   const keys = Object.keys(object);
+//   const values = Object.values(object);
+
+//   // return function () {
+//   //. Safe -> short list
+//   // const wordleDB = testDB.forEach(word => {
+
+//   //> Unsafe -> long list
+//   list.forEach(word => {
+//     entries.forEach(entry => {
+//       const [key, value] = entry;
+//       if (word[0] === key) {
+//         value.push(word);
+//       }
+//     });
+//   });
+//   // };
+// }
+
+// sortWordsInAlphabeticalOrder(wordsList, wordleDB);
+//: -------------------------------------------------
+
 //- Sorting Algorithm
 const entries = Object.entries(wordleDB);
 const keys = Object.keys(wordleDB);
@@ -97,7 +126,6 @@ wordsList.forEach(word => {
     }
   });
 });
-//todo : create a funtion
 
 // console.log(wordleDB, entries, keys, values);
 // console.log(Object.values(wordleDB).length);
@@ -112,12 +140,14 @@ function newRNG(min, max) {
 //* This picks a random word for 'wordle' from database
 
 let wordle;
+let wordleArr;
 
 function pickWordle() {
   const valuesLengthRNG = newRNG(0, values.length);
   const valuesWordsArr = values[valuesLengthRNG];
   const valuesArrayLengthRNG = newRNG(0, valuesWordsArr.length);
   wordle = valuesWordsArr[valuesArrayLengthRNG];
+  wordleArr = wordle.split('');
 
   //> console logs
   console.log('letterNR: ', valuesLengthRNG, 'wordNR: ', valuesArrayLengthRNG);
@@ -127,6 +157,7 @@ function pickWordle() {
   );
 }
 pickWordle();
+
 //* Matching word in the database
 const guessTest = 'hants';
 
@@ -141,11 +172,26 @@ function countInArray(array, what) {
 }
 
 //* Variables
+//-  DOM elements
+//. game fields
 const body = document.querySelector('body');
 const rows = document.querySelector('.rows-container');
 const row = rows.querySelector('.row'); //: r-1
 const char = row.querySelector('.char'); //: c-1
 
+//: |=================================|
+
+//. keyboard fields
+const keysKB = Array.from(document.querySelectorAll('.key'));
+
+// keysKB.forEach(
+//   key => key.classList.contains('k--q') && key.classList.add('char--green')
+// );
+// console.log(keysKB[0]);
+
+//: |=================================|
+//- not sure all of these
+//~ row & char are not really needed too
 const rowsAll = rows.querySelectorAll('.row');
 // const rowsAllArr = [...rows.querySelectorAll('.row')];
 const rowsAllArr = Array.from(rows.querySelectorAll('.row'));
@@ -154,16 +200,18 @@ const charAll = rows.querySelectorAll('.char');
 const charAllArr = [...row.querySelectorAll('.char')];
 // console.log(charAll, charAllArr);
 
-const alphabet = `abcdefghijklmnopqrstuvwxyz`.split('');
-
+//- Program elements
 let guess;
-let classesUpdated = [];
 
+//. char and row counts
 let count = 0;
 let currentRow = 0;
 
+//>
 const wordleTest = 'waste';
 let testCount = 0;
+
+const alphabet = `abcdefghijklmnopqrstuvwxyz`.split('');
 
 const curChar = rows.querySelector('.r-1').querySelector(`.c-${count}`);
 
@@ -244,46 +292,43 @@ function keydown(e) {
         currentRow++;
         count = 0;
 
-        // & <==========< Game Logic >==========>
+        // & <============< Game Logic >============>
+        //: |==============/ Keyboard /===============|
+        keysKB.forEach(k => {
+          // key.classList.contains(`k--${w}`) && key.classList.add('char--green')
+          //: |=========================================|
 
-        //. adding colors to right letters
-        guess.split('').forEach((l, letterIndex) => {
-          if (wordle[letterIndex] === l.toLowerCase())
-            charArr[letterIndex].classList.add('char--green');
-          else if (
-            wordle.includes(l.toLowerCase()) &&
-            guess.split('').findIndex(char => char === l) === letterIndex //: only 1 yellow of same char
-          ) {
-            charArr[letterIndex].classList.add('char--yellow');
-          }
-        });
+          //. adding colors to right letters
+          //: chars included in both wordle and guess
+          const wordleArrFilterd = wordleArr.filter(w => guess.includes(w));
 
-        //. removing yellow if char with same value is green
-        charArr.forEach((updated, idx) => {
-          //: finds the letter that is duplicate
-          const duplicate = new Set(
-            wordle.split('').filter(item => item === wordle[idx]).length > 1
-              ? wordle[idx]
-              : ''
-          );
+          wordleArr.forEach((w, wIndex) => {
+            const g = guess[wIndex];
 
-          if (
-            countInArray(wordle.split(''), duplicate) === 1 &&
-            countInArray(guess.split(''), updated.value) > 1
-          ) {
-            console.log(updated.classList, updated.value);
-            const first = charArr[guess.split('').indexOf(updated.value)];
-            const last = charArr[guess.split('').lastIndexOf(updated.value)];
-            console.log(first, last);
-            first.classList.contains('char--green')
-              ? last.classList.remove('char--yellow')
-              : last.classList.contains('char--green')
-              ? first.classList.remove('char--yellow')
-              : '';
-          }
+            if (w === g) {
+              charArr[wIndex].classList.add('char--green'); //: input fields
+
+              k.classList.contains(`k--${g}`) && k.classList.add('char--green'),
+                k.classList.remove('char--yellow'); //: keyboad
+              wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
+            } //-
+            else if (wordleArrFilterd.includes(g)) {
+              charArr[wIndex].classList.add('char--yellow'); //: input fields
+
+              k.classList.contains(`k--${g}`) &&
+                !k.classList.contains('char--green') &&
+                k.classList.add('char--yellow'); //: keyboad
+
+              wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
+            }
+
+            //: ----- end of kb
+          });
+          //: -----
         });
 
         // & <==========< end of game logic >==========>
+
         //- animation
         //. if false
       } else if (
@@ -294,11 +339,11 @@ function keydown(e) {
       ) {
         //: done with a css trick -> look into offsetWidth
         r.classList.remove('row--false');
-        r.offsetWidth; //> returns read-only property of layout width of element
+        r.offsetWidth; //> returns read-only property of layout-width of element
         r.classList.add('row--false');
       }
 
-      //! /// testing /// //
+      //^! /// testing /// //
       //. result test:
       if (e.key === 'Enter') {
         console.log(
@@ -306,7 +351,7 @@ function keydown(e) {
           guess.isInDB() || 'no value'
         );
       }
-      //! /// /// /// ///
+      //^! /// /// /// ///
     });
 
     //- sets a 'guess' word form characters

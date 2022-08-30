@@ -57,6 +57,7 @@ const testDB = [
 //! /////////////////////// tests  ////////////////////////
 const wordleTest = 'jotty';
 // const guessTest = 'volta';
+const wordleArr = wordleTest.split('');
 //* <=====< xxx end xxx >=====>
 
 const body = document.querySelector('body');
@@ -93,6 +94,7 @@ const allowedLetters = allowedLC.concat(allowedUC);
 const allowedAll = allowedLC.concat(allowedUC, allowedSys);
 
 let guess;
+// let guessArr;
 
 let count = 0;
 let currentRow = 0;
@@ -203,64 +205,83 @@ function keydown(e) {
         currentRow++;
         count = 0;
 
-        guess.split('').forEach((l, letterIndex) => {
-          if (wordleTest[letterIndex] === l.toLowerCase())
-            charArr[letterIndex].classList.add('char--green');
-          // else if (wordleTest.includes(l.toLowerCase())) {
-          //   const firstIndex = guess.split('').findIndex(char => char === l);
-          //   charArr[firstIndex].classList.add('char--yellow');
-          // }
-          else if (
-            wordleTest.includes(l.toLowerCase()) &&
-            //: only adds a value to one of same characters
-            guess.split('').findIndex(char => char === l) === letterIndex
-          ) {
-            charArr[letterIndex].classList.add('char--yellow');
+        //&  ////////////////// start //////////////////////////
+
+        // ~ --------------------------------------------------------------
+        // Notes:
+        // ~ This is the new logic I made in a seperate file
+        // {
+        //   //: |=======/ Colors /========|
+        //   const green = '[ 🟩 ]';
+        //   const yellow = '[ 🟨 ]';
+        //   const none = '[ 🔳 ]';
+        //   //: |=========================|
+        //   const wordle = 'otott'; //: previous: 'jotty'
+        //   const guess = 'toyyt';
+        //   //> ------| cl logs |-------
+        //   const wordleSplit = wordle.split('');
+        //   const guessSplit = guess.split('');
+        //   //: |=========================|
+        //   //: |====/ Adding Colors /====|
+        //   //> ------| Filtering |-------
+        //   const wArrFilter = wordleSplit.filter(w => guess.includes(w));
+        //   //> --------| Loop |----------
+        //   wordleSplit.forEach((w, index) => {
+        //     //> ------| Variables |-------
+        //     const g = guess[index];
+        //     //> --------| Logic |--------
+        //     if (w === g) {
+        //       console.log(w.toUpperCase(), green, g.toUpperCase());
+        //       wArrFilter.splice(wArrFilter.indexOf(g), 1);
+        //     } else if (wArrFilter.includes(g)) {
+        //       console.log(w.toUpperCase(), yellow, g.toUpperCase());
+        //       wArrFilter.splice(wArrFilter.indexOf(g), 1);
+        //     } else {
+        //       console.log(w.toUpperCase(), none, g.toUpperCase());
+        //     }
+        //   });
+        // }
+        //~ ------------------------------------------------------
+
+        const wordleArrFilterd = wordleArr.filter(w => guess.includes(w));
+
+        wordleArr.forEach((w, wIndex) => {
+          // const w = wordleTest[wIndex];
+          const g = guess[wIndex];
+          if (w === g)
+            charArr[wIndex].classList.add('char--green'),
+              wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
+          else if (wordleArrFilterd.includes(g)) {
+            charArr[wIndex].classList.add('char--yellow');
+            wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
           }
         });
 
         //* class regulation
         //! berfore
 
-        // wordleTest.split('').forEach((d, wordleIndexs, wordleArr) => {
-        //   console.log(wordleArr.filter(item => item === d));
-        // });
-
-        const duplicate = wordleTest.split('').filter(item => item === item);
-
-        console.log('duplicate: ', duplicate);
         //! /// /// ///
 
-        charArr.forEach((updated, idx) => {
-          console.log(
-            wordleTest.split('').filter(item => item === wordleTest[idx])
-          );
+        // charArr.forEach((updated, idx) => {
+        //   if (
+        //     // countInArray(wordleTest.split(''), duplicate) === 1 &&
+        //     // duplicate &&
+        //     countInArray(guess.split(''), updated.value) > 1
+        //   ) {
+        //     // console.log(updated.classList, updated.value);
+        //     const first = charArr[guess.split('').indexOf(updated.value)];
+        //     const last = charArr[guess.split('').lastIndexOf(updated.value)];
+        //     // console.log(first, last);
+        //     first.classList.contains('char--green')
+        //       ? last.classList.remove('char--yellow')
+        //       : last.classList.contains('char--green')
+        //       ? first.classList.remove('char--yellow')
+        //       : '';
+        //   }
+        // });
 
-          // console.log('duplicate-final: ', duplicate);
-          // const duplicate = new Set(
-          // wordleTest.split('').filter(item => item === wordleTest[idx])
-          //     .length > 1
-          //     ? wordleTest[idx]
-          //     : ''
-          // );
-          // console.log('duplicate: ', duplicate);
+        //&  ////////////////// end //////////////////////////
 
-          if (
-            // countInArray(wordleTest.split(''), duplicate) === 1 &&
-            // duplicate &&
-            countInArray(guess.split(''), updated.value) > 1
-          ) {
-            // console.log(updated.classList, updated.value);
-            const first = charArr[guess.split('').indexOf(updated.value)];
-            const last = charArr[guess.split('').lastIndexOf(updated.value)];
-            // console.log(first, last);
-            first.classList.contains('char--green')
-              ? last.classList.remove('char--yellow')
-              : last.classList.contains('char--green')
-              ? first.classList.remove('char--yellow')
-              : '';
-          }
-        });
         //. if false
       } else if (
         e.key === 'Enter' &&
@@ -283,12 +304,13 @@ function keydown(e) {
 
     //- sets a 'guess' word form characters
     guess = Array.from([...r.children]).reduce((acc, cur, i, arr) => {
-      return acc + cur.value;
+      return acc + cur.value.toLowerCase();
     }, Array.from([...r.children][0]));
   });
+  //. split guess in chars
+  // guessArr = guess.split('');
 
   //- next/previous char
-
   if (!allowedSys.includes(e.key) && count !== 4) count++;
   // if (e.key === 'Backspace' && count !== 0) count--;
 
