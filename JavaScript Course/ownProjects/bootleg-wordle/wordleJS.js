@@ -371,8 +371,9 @@ function keydown(e) {
 document.addEventListener('click', click);
 
 function click(ev) {
-  console.log(ev);
-  console.log(this);
+  // console.log(ev);
+  console.log(ev.target);
+  console.log(ev.target.classList[1]?.at(-1));
 }
 
 //&  ////////////////// start //////////////////////////

@@ -130,3 +130,37 @@ function bar(){
     alert(MyApp.color); // Alerts 'green'
 } 
 */
+
+//* Using a value from another function
+
+//: |=========================|
+
+//> ---------------------------
+const char = document.querySelector('.char');
+const keyKB = document.querySelectorAll('.key');
+//> ---------------------------
+let key;
+let kbKey;
+//> ---------------------------
+document.addEventListener('keydown', keydown);
+
+function keydown(e) {
+  key = char.value = e.key.toUpperCase();
+  consoleLog();
+}
+//> ---------------------------
+document.addEventListener('click', click);
+
+function click(ev) {
+  key = char.value = ev.target.classList[1]?.at(-1);
+
+  consoleLog();
+}
+//> ---------------------------
+function consoleLog() {
+  const keyTwo = key;
+  //   keyTwo.add(keydown);
+  console.log('key-> ', key);
+  console.log('keyTwo -> ', keyTwo);
+  console.log('kbKey -> ', kbKey);
+}
