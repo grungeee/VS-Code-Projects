@@ -137,30 +137,56 @@ function bar(){
 
 //> ---------------------------
 const char = document.querySelector('.char');
-const keyKB = document.querySelectorAll('.key');
 //> ---------------------------
 let key;
-let kbKey;
+let keyKB;
 //> ---------------------------
+
 document.addEventListener('keydown', keydown);
 
 function keydown(e) {
-  key = char.value = e.key.toUpperCase();
-  consoleLog();
+  key = e.key;
+
+  char.focus();
+  key === 'Backspace' && console.log('Backspace detected');
+  key !== 'Backspace' ? (char.value = key.toUpperCase()) : '';
+
+  console.log('key -->', key);
 }
 //> ---------------------------
+
 document.addEventListener('click', click);
-
 function click(ev) {
-  key = char.value = ev.target.classList[1]?.at(-1);
+  keyKB = ev.target.classList[1]?.slice(3);
 
-  consoleLog();
+  //   keyKB === 'Backspace' ?
+  const keydownEvent = new KeyboardEvent('keydown', { key: keyKB });
+  const backspaceEvent = new KeyboardEvent('keydown', { event: 'Backspace' });
+  console.log(keydownEvent);
+  console.log(backspaceEvent);
+
+  document.dispatchEvent(keyKB === 'Backspace' ? backspaceEvent : keydownEvent);
+
+  //   keyKB === 'Backspace' && document.dispatchEvent(backspaceEvent);
+
+  console.log('keyKB -->', keyKB);
 }
+// function click(ev) {
+//   keyKB = ev.target.classList[1]?.slice(3);
+//   keyKB === 'Backspace' && document.dispatchEvent(backspaceEvent);
+//   keyKB !== 'Backspace' && (char.value = keyKB);
+
+//   console.log('keyKB -->', keyKB);
+// }
 //> ---------------------------
-function consoleLog() {
-  const keyTwo = key;
-  //   keyTwo.add(keydown);
-  console.log('key-> ', key);
-  console.log('keyTwo -> ', keyTwo);
-  console.log('kbKey -> ', kbKey);
-}
+// const backspaceEvent = new KeyboardEvent('keydown', { event: 'Backspace' });
+// const backspaceEvent = new Event('keydown', 'Backspace');
+//> ---------------------------
+// function consoleLog(string, what) {
+//   console.log(what, key);
+// }
+
+//* Universal slicing: remove all cars after index 2
+// const click = { key: e.target.classList[1]?.split('').slice(2, -1) };
+// const e = 'k--Backspace';
+// const click = { key: e.slice(3) };
