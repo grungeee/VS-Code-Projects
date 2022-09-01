@@ -192,7 +192,7 @@ const keysKB = Array.from(document.querySelectorAll('.key'));
 // console.log(document.querySelector('.k--q').classList);
 
 //: |=================================|
-//- not sure all of these
+//- not sure with all of these
 //~ row & char are not really needed too
 const rowsAll = rows.querySelectorAll('.row');
 // const rowsAllArr = [...rows.querySelectorAll('.row')];
@@ -204,6 +204,7 @@ const charAllArr = [...row.querySelectorAll('.char')];
 
 //- Program elements
 let guess;
+let key;
 
 //. char and row counts
 let count = 0;
@@ -219,10 +220,12 @@ const alphabet = `abcdefghijklmnopqrstuvwxyz`.split('');
 document.onpaste = e => e.preventDefault();
 
 //* Keydown Event
-document.addEventListener('keydown', keydown);
+document.addEventListener('keydown', keydownTwo);
 
 function keydown(e) {
   //- disabling keys
+
+  //! take functions out of here!
   function disableKey(e) {
     // return ['Tab', 'Shift', 'Alt'].includes(e.key) ? e.preventDefault():  '';
     //: this should be better
@@ -236,8 +239,7 @@ function keydown(e) {
       ? e.key.toUpperCase()
       : '';
   }
-  //. -------------------------------------------------- key var
-  const key = isPermitted(e);
+  key = isPermitted(e);
 
   //- rows
   // [...rows.children].forEach((r, index) => {
@@ -296,10 +298,6 @@ function keydown(e) {
         count = 0;
 
         // & <============< Game Logic >============>
-        //: |==============/ Keyboard /===============|
-        // keysKB.forEach(k => {
-        // key.classList.contains(`k--${w}`) && key.classList.add('char--green')
-        //: |=========================================|
 
         //. adding colors to right letters
         //: chars included in both wordle and guess
@@ -361,11 +359,148 @@ function keydown(e) {
     }, Array.from([...r.children][0]));
   });
 
-  //- next/previous char
+  //- next char
   if (count !== 4 && key !== '') count++;
-  // if (e.key === 'Backspace' && count !== 0) count--;
 }
 
+//&  ////////////////// start //////////////////////////
+
+function keydownTwo(e) {
+  //- disabling keys
+
+  //! take functions out of here!
+  function disableKey(e) {
+    return ['Tab', 'Shift', 'Alt'].includes(e.key) && e.preventDefault();
+  }
+  disableKey(e);
+
+  //- permitting keys + toUpperCase
+  function isPermitted(e) {
+    return /[a-zA-Z]+$/g.test(e.key) && e.key.length === 1
+      ? e.key.toUpperCase()
+      : '';
+  }
+  key = isPermitted(e);
+
+  game(e, keydown);
+}
+
+function game(e, eventType) {
+  // eventType === keydown && console.log('--------------------something');
+  //- rows
+  rowsAllArr.forEach((r, index, rowArr) => {
+
+    //- one row per event
+    if (currentRow !== index) return;
+
+    //- chars
+    Array.from([...r.children]).forEach((c, i, charArr) => {
+      //- one char per event
+      if (count !== i) return;
+
+      //- input values
+      if (c.maxLength !== c.value.length && key !== '') {
+        (c.value = key), c.focus();
+      }
+
+      //- clearing field
+      if (
+        e.key === 'Backspace' &&
+        c.dataset.char === charArr[4].dataset.char &&
+        charArr[4].value !== ''
+      ) {
+        console.log('last letter');
+        e.preventDefault();
+        r.lastElementChild.value = '';
+      } else if (e.key === 'Backspace' && c.dataset.char > 0) {
+        c.previousElementSibling?.focus();
+        count--;
+      }
+
+      //- animation on field change
+      if (c.value !== '') c.classList.add('char-transition');
+      if (c.value === '') c.classList.remove('char-transition');
+
+      //- next row + game logic (on enter)
+      //. if true
+      if (
+        e.key === 'Enter' &&
+        c.value !== '' &&
+        guess.toLowerCase().isInDB()
+        // testDB.includes(guess.toLowerCase())
+      ) {
+        currentRow++;
+        count = 0;
+
+        // & <============< Game Logic >============>
+
+        //. adding colors to right letters
+        //: chars included in both wordle and guess
+        const wordleArrFilterd = wordleArr.filter(w => guess.includes(w));
+
+        wordleArr.forEach((w, wIndex) => {
+          const g = guess[wIndex];
+
+          if (w === g) {
+            charArr[wIndex].classList.add('char--green'); //: input fields
+
+            document.querySelector(`.k--${g}`).classList.remove('char--yellow');
+            document.querySelector(`.k--${g}`).classList.add('char--green'); //: keyboad
+            wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
+          } //-
+          else if (wordleArrFilterd.includes(g)) {
+            charArr[wIndex].classList.add('char--yellow'); //: input fields
+
+            !document
+              .querySelector(`.k--${g}`)
+              .classList.contains('char--green') &&
+              document.querySelector(`.k--${g}`).classList.add('char--yellow');
+            wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
+          } //-
+          else {
+            document.querySelector(`.k--${g}`).classList.add('char--none');
+          }
+        });
+        // & <==========< end of game logic >==========>
+
+        //- animation
+        //. if false
+      } else if (
+        e.key === 'Enter' &&
+        c.value !== '' &&
+        !guess.isInDB()
+        // !guess.toLowerCase().isInDB()
+      ) {
+        //: done with a css trick -> look into offsetWidth
+        r.classList.remove('row--false');
+        r.offsetWidth; //> returns read-only property of layout-width of element
+        r.classList.add('row--false');
+      }
+
+      //^! /// testing /// //
+      //. result test:
+      if (e.key === 'Enter') {
+        console.log(
+          `this is the input value: [ ${guess.toUpperCase() || 'no value'} ]`,
+          guess.isInDB() || 'no value'
+        );
+      }
+      //^! /// /// /// ///
+    });
+
+    //- sets a 'guess' word form characters
+    guess = Array.from([...r.children]).reduce((acc, cur, i, arr) => {
+      return acc + cur.value.toLowerCase();
+    }, Array.from([...r.children][0]));
+  });
+
+  //- next char
+  if (count !== 4 && key !== '') count++;
+}
+
+//&  ////////////////// end //////////////////////////
+
+//: ==========================================================================
 //* Click event
 
 document.addEventListener('click', click);
@@ -375,6 +510,3 @@ function click(ev) {
   console.log(ev.target);
   console.log(ev.target.classList[1]?.at(-1));
 }
-
-//&  ////////////////// start //////////////////////////
-//&  ////////////////// end //////////////////////////
