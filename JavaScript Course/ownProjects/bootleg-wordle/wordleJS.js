@@ -179,7 +179,7 @@ const rows = document.querySelector('.rows-container');
 const row = rows.querySelector('.row'); //: r-1
 const char = row.querySelector('.char'); //: c-1
 
-//r |=================================|
+//: |=================================|
 
 //. keyboard fields
 const keysKB = Array.from(document.querySelectorAll('.key'));
@@ -382,7 +382,7 @@ function click(e) {
     bubbles: true,
   });
 
-  console.log(keyKB === 'Backspace' ? backspaceEvent : keydownEvent);
-
   document.dispatchEvent(keyKB === 'Backspace' ? backspaceEvent : keydownEvent);
+
+  console.log(keyKB === 'Backspace' ? backspaceEvent : keydownEvent);
 }

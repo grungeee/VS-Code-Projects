@@ -1,5 +1,5 @@
 /*
- * TESTING OUT SOME STUFF
+ * TESTING SOME STUFF
  */
 
 'use strict';
@@ -201,7 +201,7 @@ let guess;
 let key;
 
 //. char and row counts
-let count = 0;
+let count = -1;
 let currentRow = 0;
 
 //>
@@ -361,11 +361,6 @@ function keydown(e) {
 //&  ////////////////// start //////////////////////////
 
 //: |========================/ New Stuff /===========================|
-//- Creating and treiggering events
-// const backspaceEvent = new KeyboardEvent('keydown', { event: 'Backspace' });
-// function dispatchBackspaceEvent() {
-// document.dispatchEvent(backspaceEvent);
-// }
 //: |================================================================|
 //* ===================== Keydown Event =====================
 
@@ -373,6 +368,7 @@ function keydown(e) {
 function keydownTwo(e) {
   disableKey(e);
   key = isPermitted(e);
+  nextChar();
   gameKeydown(e);
 }
 
@@ -390,6 +386,11 @@ function isPermitted(e) {
     : '';
 }
 
+//- next char
+function nextChar() {
+  if (count !== 4 && key !== '') count++;
+}
+
 //*
 function gameKeydown(e) {
   //- rows
@@ -400,7 +401,7 @@ function gameKeydown(e) {
     //- chars
     Array.from([...r.children]).forEach((c, i, charArr) => {
       //- one char per event
-      // if (count !== i) return;
+      if (count !== i) return;
       // if (c.value.length === 0) return;
 
       //: --------------------------------------------------
@@ -417,17 +418,17 @@ function gameKeydown(e) {
         c.value = key;
 
         // c.nextElementSibling?.focus();
-
         console.log(c.value);
         console.log(c.dataset.char, i);
-
         // lastChild === c && count--;
       }
 
       //- clearing field
 
       if (e.key === 'Backspace' && firstChild === c) {
-        firstChild.value = '';
+        // firstChild.value = '';
+        count--;
+        c.value = '';
         // } else if (e.key === 'Backspace' && lastChild !== c) {
       } else if (e.key === 'Backspace') {
         c.value = '';
@@ -437,38 +438,6 @@ function gameKeydown(e) {
         console.log(c.dataset.char, i);
       }
 
-      // if (
-      //   e.key === 'Backspace' &&
-      //   +c.dataset.char === charArr[4].dataset.char &&
-      //   charArr[4].value !== ''
-      // ) {
-      //   console.log('last letter');
-      //   r.lastElementChild.value = '';
-      //   c.previousElementSibling?.focus();
-      // } //.
-      // else if (e.key === 'Backspace' && +c.dataset.char > 0) {
-      //   c.value = '';
-      //   c.previousElementSibling?.focus();
-      //   count--;
-      // } //.
-      // else if (e.key === 'Backspace' && +c.dataset.char === 0) {
-      //   c.value = '';
-      // }
-
-      // if (
-      //   e.key === 'Backspace' &&
-      //   c.dataset.char === charArr[4].dataset.char &&
-      //   charArr[4].value !== ''
-      // ) {
-      //   console.log('last letter');
-      //   e.preventDefault();
-      //   r.lastElementChild.value = '';
-      // } //-
-      // else if (e.key === 'Backspace' && c.dataset.char > 0) {
-      //   c.previousElementSibling?.focus();
-      //   count--;
-      // }
-
       //- animation on field change
       if (c.value !== '') c.classList.add('char-transition');
       if (c.value === '') c.classList.remove('char-transition');
@@ -477,7 +446,7 @@ function gameKeydown(e) {
       //. if true
       if (e.key === 'Enter' && c.value !== '' && guess.toLowerCase().isInDB()) {
         currentRow++;
-        count = 0;
+        count = -1;
 
         // & <============< Game Logic >============>
 
@@ -545,19 +514,17 @@ function gameKeydown(e) {
   });
 
   // //- next char
+
   // if (count !== 4 && key !== '') count++;
 
-  function nextChar() {
-    // if (count !== 4 && key !== '' && e.key !== 'Backspace') count++;
-    if (count !== 4 && key !== '') count++;
-  }
-  nextChar();
+  // if (count !== 4 && key !== '' && e.key !== 'Backspace') count++;
+
   console.log(count);
 }
 
 //* ===================== Click Event =====================
 //todo:
-//o make Backspace work again
+//x make Backspace work again
 //o prevent bubbling at row elements (click targets rows instead of only keys)
 
 document.addEventListener('click', click);
