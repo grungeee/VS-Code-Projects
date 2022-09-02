@@ -56,8 +56,13 @@ body {
   animation-duration: 250ms;
   animation-iteration-count: 2;
   animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
 
-  /* animation: ease-in-out 100ms shake forwards; */
+.char--rotate {
+  animation-name: rotate;
+  animation-duration: 400ms;
+  animation-iteration-count: 1;
+  animation-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .char {
@@ -170,10 +175,12 @@ body {
 
 .k--Enter {
   width: 100px;
+  font-size: 60px;
 }
 
-.k--Delete {
+.k--Backspace {
   width: 100px;
+  font-size: 40px;
 }
 
 /**
@@ -219,29 +226,46 @@ body {
 
 @keyframes rotate {
   from {
-    transform: scaleX(100%);
+    transform: scaleY(100%);
+  }
+  10% {
+    transform: scaleY(80%);
   }
   20% {
-    transform: scaleX(50%);
+    transform: scaleY(60%);
+  }
+  30% {
+    transform: scaleY(40%);
   }
   40% {
-    transform: scaleX(10%);
+    transform: scaleY(20%);
+  }
+  50% {
+    transform: scaleY(0%);
   }
   60% {
-    transform: scaleX(80%);
+    transform: scaleY(20%);
+  }
+  70% {
+    transform: scaleY(40%);
   }
   80% {
-    transform: scaleX(90%);
+    transform: scaleY(60%);
   }
-
+  90% {
+    transform: scaleY(80%);
+  }
   to {
-    transform: scaleX(100%);
+    transform: scaleY(100%);
   }
 }
 
-
   .test {
-    font-size: 100px;
+    font-size: 150px;
+    font-weight: bold;
+    margin-bottom: 6rem;
+  -webkit-text-stroke:  rgba(0, 0, 0, 0.3);
+  -webkit-text-stroke-width: 7.00px;
     color: yellow
   }
 
@@ -340,7 +364,7 @@ body {
 <!--  -->
 
           <div class="kb-row kb-row--3">
-          <div class="key k--Enter">↵</div>
+        <div class="key k--Backspace">⌫</div>
           <div class="key k--z">Z</div>
           <div class="key k--x">X</div>
           <div class="key k--c">C</div>
@@ -348,7 +372,7 @@ body {
           <div class="key k--b">B</div>
           <div class="key k--n">N</div>
           <div class="key k--m">M</div>
-        <div class="key k--Backspace">⌫</div>
+          <div class="key k--Enter">↵</div>
 </div>
     </main>
       </main>

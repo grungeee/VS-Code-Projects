@@ -532,7 +532,7 @@ btnSort.addEventListener('click', function (e) {
 // console.log(isEven(23));
 // console.log(isEven(514));
 
-// //. Checking if number is devisible by other
+// //. Checking if number is divisible by other
 // //! i % (nth time) === 0
 // //> nth time does something
 
