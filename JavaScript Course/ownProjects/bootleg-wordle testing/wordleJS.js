@@ -362,22 +362,25 @@ function keydown(e) {
 
 //: |========================/ New Stuff /===========================|
 //- Creating and treiggering events
-const backspaceEvent = new KeyboardEvent('keydown', { event: 'Backspace' });
-function dispatchBackspaceEvent() {
-  document.dispatchEvent(backspaceEvent);
-}
+// const backspaceEvent = new KeyboardEvent('keydown', { event: 'Backspace' });
+// function dispatchBackspaceEvent() {
+// document.dispatchEvent(backspaceEvent);
+// }
 //: |================================================================|
 //* ===================== Keydown Event =====================
+
+//* Keydown Callback
 function keydownTwo(e) {
   disableKey(e);
   key = isPermitted(e);
   gameKeydown(e);
 }
 
-//*
 //- disabling keys
 function disableKey(e) {
-  return ['Tab', 'Shift', 'Alt'].includes(e.key) && e.preventDefault();
+  return (
+    ['Tab', 'Shift', 'Alt', 'Backspace'].includes(e.key) && e.preventDefault()
+  );
 }
 
 //- permitting keys + toUpperCase
@@ -397,26 +400,74 @@ function gameKeydown(e) {
     //- chars
     Array.from([...r.children]).forEach((c, i, charArr) => {
       //- one char per event
-      if (count !== i) return;
+      // if (count !== i) return;
+      // if (c.value.length === 0) return;
 
+      //: --------------------------------------------------
+
+      //: --------------------------------------------------
+
+      const firstChild = r.firstElementChild;
+      const lastChild = r.lastElementChild;
+
+      //: --------------------------------------------------
       //- input values
       if (c.maxLength !== c.value.length && key !== '') {
-        (c.value = key), c.focus();
+        // (c.value = key), c.focus();
+        c.value = key;
+
+        // c.nextElementSibling?.focus();
+
+        console.log(c.value);
+        console.log(c.dataset.char, i);
+
+        // lastChild === c && count--;
       }
 
       //- clearing field
-      if (
-        e.key === 'Backspace' &&
-        c.dataset.char === charArr[4].dataset.char &&
-        charArr[4].value !== ''
-      ) {
-        console.log('last letter');
-        e.preventDefault();
-        r.lastElementChild.value = '';
-      } else if (e.key === 'Backspace' && c.dataset.char > 0) {
-        c.previousElementSibling?.focus();
+
+      if (e.key === 'Backspace' && firstChild === c) {
+        firstChild.value = '';
+        // } else if (e.key === 'Backspace' && lastChild !== c) {
+      } else if (e.key === 'Backspace') {
+        c.value = '';
+
         count--;
+
+        console.log(c.dataset.char, i);
       }
+
+      // if (
+      //   e.key === 'Backspace' &&
+      //   +c.dataset.char === charArr[4].dataset.char &&
+      //   charArr[4].value !== ''
+      // ) {
+      //   console.log('last letter');
+      //   r.lastElementChild.value = '';
+      //   c.previousElementSibling?.focus();
+      // } //.
+      // else if (e.key === 'Backspace' && +c.dataset.char > 0) {
+      //   c.value = '';
+      //   c.previousElementSibling?.focus();
+      //   count--;
+      // } //.
+      // else if (e.key === 'Backspace' && +c.dataset.char === 0) {
+      //   c.value = '';
+      // }
+
+      // if (
+      //   e.key === 'Backspace' &&
+      //   c.dataset.char === charArr[4].dataset.char &&
+      //   charArr[4].value !== ''
+      // ) {
+      //   console.log('last letter');
+      //   e.preventDefault();
+      //   r.lastElementChild.value = '';
+      // } //-
+      // else if (e.key === 'Backspace' && c.dataset.char > 0) {
+      //   c.previousElementSibling?.focus();
+      //   count--;
+      // }
 
       //- animation on field change
       if (c.value !== '') c.classList.add('char-transition');
@@ -424,12 +475,7 @@ function gameKeydown(e) {
 
       //- next row + game logic (on enter)
       //. if true
-      if (
-        e.key === 'Enter' &&
-        c.value !== '' &&
-        guess.toLowerCase().isInDB()
-        // testDB.includes(guess.toLowerCase())
-      ) {
+      if (e.key === 'Enter' && c.value !== '' && guess.toLowerCase().isInDB()) {
         currentRow++;
         count = 0;
 
@@ -486,6 +532,9 @@ function gameKeydown(e) {
           guess.isInDB() || 'no value'
         );
       }
+
+      //& logs -----------
+      // console.log(e, count, c.dataset.char);
       //^! /// /// /// ///
     });
 
@@ -495,9 +544,15 @@ function gameKeydown(e) {
     }, Array.from([...r.children][0]));
   });
 
-  //- next char
-  if (count !== 4 && key !== '') count++;
-  console.log(e);
+  // //- next char
+  // if (count !== 4 && key !== '') count++;
+
+  function nextChar() {
+    // if (count !== 4 && key !== '' && e.key !== 'Backspace') count++;
+    if (count !== 4 && key !== '') count++;
+  }
+  nextChar();
+  console.log(count);
 }
 
 //* ===================== Click Event =====================
@@ -511,10 +566,11 @@ function click(e) {
   const keyKB = e.target.classList[1]?.slice(3);
   const keydownEvent = new KeyboardEvent('keydown', {
     key: keyKB,
+    event: keyKB,
   });
-  const backspaceEvent = new KeyboardEvent('keydown', { event: 'Backspace' });
+  const backspaceEvent = new KeyboardEvent('keydown', { key: 'Backspace' });
 
-  console.log(keyKB === 'Backspace' ? backspaceEvent : keydownEvent);
+  // console.log(keyKB === 'Backspace' ? backspaceEvent : keydownEvent);
 
   document.dispatchEvent(keyKB === 'Backspace' ? backspaceEvent : keydownEvent);
 }

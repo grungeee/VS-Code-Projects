@@ -131,46 +131,48 @@ function bar(){
 } 
 */
 
-//* Using a value from another function
+// //* Using a value from another function
 
-//: |=========================|
+// //: |=========================|
 
-//> ---------------------------
-const char = document.querySelector('.char');
-//> ---------------------------
-let key;
-let keyKB;
-//> ---------------------------
+// //> ---------------------------
+// const char = document.querySelector('.char');
+// //> ---------------------------
+// let key;
+// let keyKB;
+// //> ---------------------------
 
-document.addEventListener('keydown', keydown);
+// document.addEventListener('keydown', keydown);
 
-function keydown(e) {
-  key = e.key;
+// function keydown(e) {
+//   key = e.key;
 
-  char.focus();
-  key === 'Backspace' && console.log('Backspace detected');
-  key !== 'Backspace' ? (char.value = key.toUpperCase()) : '';
+//   char.focus();
+//   key === 'Backspace' && console.log('Backspace detected');
+//   key !== 'Backspace' && (char.value = key.toUpperCase());
 
-  console.log('key -->', key);
-}
-//> ---------------------------
+//   console.log('key -->', key);
+// }
+// //> ---------------------------
 
-document.addEventListener('click', click);
-function click(ev) {
-  keyKB = ev.target.classList[1]?.slice(3);
+// document.addEventListener('click', click);
+// function click(ev) {
+//   keyKB = ev.target.classList[1]?.slice(3);
 
-  //   keyKB === 'Backspace' ?
-  const keydownEvent = new KeyboardEvent('keydown', { key: keyKB });
-  const backspaceEvent = new KeyboardEvent('keydown', { event: 'Backspace' });
-  console.log(keydownEvent);
-  console.log(backspaceEvent);
+//   //   keyKB === 'Backspace' ?
+//   const keydownEvent = new KeyboardEvent('keydown', { key: keyKB });
+//   const backspaceEvent = new KeyboardEvent('keydown', {
+//     event: 'Backspace',
+//   });
+//   console.log(keydownEvent);
+//   console.log(backspaceEvent);
 
-  document.dispatchEvent(keyKB === 'Backspace' ? backspaceEvent : keydownEvent);
+//   document.dispatchEvent(keyKB === 'Backspace' ? backspaceEvent : keydownEvent);
 
-  //   keyKB === 'Backspace' && document.dispatchEvent(backspaceEvent);
+//   //   keyKB === 'Backspace' && document.dispatchEvent(backspaceEvent);
 
-  console.log('keyKB -->', keyKB);
-}
+//   console.log('keyKB -->', keyKB);
+// }
 // function click(ev) {
 //   keyKB = ev.target.classList[1]?.slice(3);
 //   keyKB === 'Backspace' && document.dispatchEvent(backspaceEvent);
@@ -190,3 +192,42 @@ function click(ev) {
 // const click = { key: e.target.classList[1]?.split('').slice(2, -1) };
 // const e = 'k--Backspace';
 // const click = { key: e.slice(3) };
+
+//* Going through loop iterations on change
+
+// const testWord = '_____'.toUpperCase().split('');
+// const guess = 'world'.toUpperCase().split('');
+// console.log(testWord);
+
+// testWord.forEach((c, i, arr) => {
+//   arr[i] = guess[i];
+//   //   arr.splice(i, i + 1, 'A');
+// });
+
+// // const alteredWord = testWord.splice(2, 1, 'A');
+
+// console.log(testWord);
+// // console.log(alteredWord);
+
+const guess = 'wo___'.toUpperCase().split('');
+
+guess.forEach((c, i, arr) => {
+  const char = c;
+
+  switch (char) {
+    case c:
+      i !== '_' && console.log(c);
+      break;
+    case c:
+      i !== '_' && console.log(c);
+      break;
+    case c:
+      i !== '_' && console.log(c);
+      break;
+    case c:
+      i !== '_' && console.log(c);
+      break;
+    default:
+      console.log('fail');
+  }
+});
