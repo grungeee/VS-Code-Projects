@@ -209,25 +209,91 @@ function bar(){
 // console.log(testWord);
 // // console.log(alteredWord);
 
-const guess = 'wo___'.toUpperCase().split('');
+// const guess = 'wo___'.toUpperCase().split('');
 
-guess.forEach((c, i, arr) => {
-  const char = c;
+// guess.forEach((c, i, arr) => {
+//   const char = c;
 
-  switch (char) {
-    case c:
-      i !== '_' && console.log(c);
-      break;
-    case c:
-      i !== '_' && console.log(c);
-      break;
-    case c:
-      i !== '_' && console.log(c);
-      break;
-    case c:
-      i !== '_' && console.log(c);
-      break;
-    default:
-      console.log('fail');
-  }
-});
+//   switch (char) {
+//     case c:
+//       i !== '_' && console.log(c);
+//       break;
+//     case c:
+//       i !== '_' && console.log(c);
+//       break;
+//     case c:
+//       i !== '_' && console.log(c);
+//       break;
+//     case c:
+//       i !== '_' && console.log(c);
+//       break;
+//     default:
+//       console.log('fail');
+//   }
+// });
+//: --------------------------------
+//   (function classLoopSelfinvoking(i) {
+//     setTimeout(function () {
+//       // console.log('hello'); //  your code here
+//       if (--i) classLoopSelfinvoking(i);
+//     }, 500);
+//   }
+// )(10);
+
+//: --------------------------------
+
+//* Adding a class after a delay
+//: --------------------------------
+const rows = [...document.querySelectorAll('.row')];
+const chars = [...document.querySelectorAll('.char')];
+const keys = [...document.querySelectorAll('.key')];
+
+let count = -1;
+let rowCount = 0;
+
+const syskeys = ['Enter', 'Backspace'];
+//: --------------------------------
+
+document.addEventListener('keydown', keydown);
+
+function keydown(e) {
+  count++;
+
+  rows.forEach((row, idx, arr) => {
+    // console.log(idx, rowCount);
+    if (idx !== rowCount) return;
+
+    const currentRow = [...row.children];
+    currentRow.forEach((char, ix, ar) => {
+      if (ix !== count) return;
+
+      //- add values
+      if (!syskeys.includes(e.key)) char.value = e.key;
+
+      console.log(count);
+      //- remove values
+      if (e.key === 'Backspace') (char.value = ''), count--;
+
+      //- next row
+      if (e.key === 'Enter' && currentRow.at(-1)) rowCount++, (count = -1);
+
+      //-
+    });
+  });
+}
+//: --------------------------------
+
+let index = 0;
+let arr = keys;
+
+function classLoop() {
+  setTimeout(function () {
+    arr[index].classList.add('char--green');
+    index++;
+    if (index < arr.length) {
+      classLoop();
+    }
+  }, 500);
+}
+classLoop();
+//: --------------------------------

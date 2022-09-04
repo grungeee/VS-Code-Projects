@@ -198,6 +198,7 @@ const charAllArr = [...row.querySelectorAll('.char')];
 
 //- Program elements
 let guess;
+let guessArr;
 let key;
 
 //. char and row counts
@@ -215,157 +216,17 @@ document.onpaste = e => e.preventDefault();
 
 //* Keydown Event
 
-document.addEventListener('keydown', keydownTwo);
-
-function keydown(e) {
-  //- disabling keys
-
-  //! take functions out of here!
-  function disableKey(e) {
-    // return ['Tab', 'Shift', 'Alt'].includes(e.key) ? e.preventDefault():  '';
-    //: this should be better
-    return ['Tab', 'Shift', 'Alt'].includes(e.key) && e.preventDefault();
-  }
-  disableKey(e);
-
-  //- permitting keys + toUpperCase
-  function isPermitted(e) {
-    return /[a-zA-Z]+$/g.test(e.key) && e.key.length === 1
-      ? e.key.toUpperCase()
-      : '';
-  }
-  key = isPermitted(e);
-
-  //- rows
-  // [...rows.children].forEach((r, index) => {
-  rowsAllArr.forEach((r, index, rowArr) => {
-    //! js dataset test
-    r.dataset.index = index;
-    let rowIndex = r.dataset.index;
-    // console.log(r.dataset);
-
-    //- one row per event
-    if (currentRow !== index) return;
-
-    //- chars
-    Array.from([...r.children]).forEach((c, i, charArr) => {
-      //! js dataset test
-      c.dataset.index = i;
-      let fieldIndex = c.dataset.index;
-
-      // [...r.children].forEach((c, i) => {
-      // charAll.forEach((c, i) => {
-      //- one char per event
-      if (count !== i) return;
-
-      //- input values
-      if (c.maxLength !== c.value.length && key !== '') {
-        (c.value = key), c.focus();
-      }
-
-      //- clearing field
-      if (
-        e.key === 'Backspace' &&
-        c.dataset.char === charArr[4].dataset.char &&
-        charArr[4].value !== ''
-      ) {
-        console.log('last letter');
-        e.preventDefault();
-        r.lastElementChild.value = '';
-      } else if (e.key === 'Backspace' && c.dataset.char > 0) {
-        c.previousElementSibling?.focus();
-        count--;
-      }
-
-      //- animation on field change
-      if (c.value !== '') c.classList.add('char-transition');
-      if (c.value === '') c.classList.remove('char-transition');
-
-      //- next row + game logic (on enter)
-      //. if true
-      if (
-        e.key === 'Enter' &&
-        c.value !== '' &&
-        guess.toLowerCase().isInDB()
-        // testDB.includes(guess.toLowerCase())
-      ) {
-        currentRow++;
-        count = 0;
-
-        // & <============< Game Logic >============>
-
-        //. adding colors to right letters
-        //: chars included in both wordle and guess
-        const wordleArrFilterd = wordleArr.filter(w => guess.includes(w));
-
-        wordleArr.forEach((w, wIndex) => {
-          const g = guess[wIndex];
-
-          if (w === g) {
-            charArr[wIndex].classList.add('char--green'); //: input fields
-
-            document.querySelector(`.k--${g}`).classList.remove('char--yellow');
-            document.querySelector(`.k--${g}`).classList.add('char--green'); //: keyboad
-            wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
-          } //-
-          else if (wordleArrFilterd.includes(g)) {
-            charArr[wIndex].classList.add('char--yellow'); //: input fields
-
-            !document
-              .querySelector(`.k--${g}`)
-              .classList.contains('char--green') &&
-              document.querySelector(`.k--${g}`).classList.add('char--yellow');
-            wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
-          } //-
-          else {
-            document.querySelector(`.k--${g}`).classList.add('char--none');
-          }
-        });
-        // & <==========< end of game logic >==========>
-
-        //- animation
-        //. if false
-      } else if (
-        e.key === 'Enter' &&
-        c.value !== '' &&
-        !guess.isInDB()
-        // !guess.toLowerCase().isInDB()
-      ) {
-        //: done with a css trick -> look into offsetWidth
-        r.classList.remove('row--false');
-        r.offsetWidth; //> returns read-only property of layout-width of element
-        r.classList.add('row--false');
-      }
-
-      //^! /// testing /// //
-      //. result test:
-      if (e.key === 'Enter') {
-        console.log(
-          `this is the input value: [ ${guess.toUpperCase() || 'no value'} ]`,
-          guess.isInDB() || 'no value'
-        );
-      }
-      //^! /// /// /// ///
-    });
-
-    //- sets a 'guess' word form characters
-    guess = Array.from([...r.children]).reduce((acc, cur, i, arr) => {
-      return acc + cur.value.toLowerCase();
-    }, Array.from([...r.children][0]));
-  });
-
-  //- next char
-  if (count !== 4 && key !== '') count++;
-}
+document.addEventListener('keydown', keydown);
 
 //&  ////////////////// start //////////////////////////
-
+// todo:
+//o implement animation with delay, which reveals the matches one by one
 //: |========================/ New Stuff /===========================|
 //: |================================================================|
 //* ===================== Keydown Event =====================
 
 //* Keydown Callback
-function keydownTwo(e) {
+function keydown(e) {
   disableKey(e);
   key = isPermitted(e);
   nextChar();
@@ -402,55 +263,54 @@ function gameKeydown(e) {
     Array.from([...r.children]).forEach((c, i, charArr) => {
       //- one char per event
       if (count !== i) return;
-      // if (c.value.length === 0) return;
 
       //: --------------------------------------------------
-
-      //: --------------------------------------------------
-
-      const firstChild = r.firstElementChild;
       const lastChild = r.lastElementChild;
 
-      //: --------------------------------------------------
       //- input values
       if (c.maxLength !== c.value.length && key !== '') {
-        // (c.value = key), c.focus();
         c.value = key;
-
-        // c.nextElementSibling?.focus();
-        console.log(c.value);
-        console.log(c.dataset.char, i);
-        // lastChild === c && count--;
       }
 
       //- clearing field
-
+      const firstChild = r.firstElementChild;
       if (e.key === 'Backspace' && firstChild === c) {
-        // firstChild.value = '';
         count--;
         c.value = '';
-        // } else if (e.key === 'Backspace' && lastChild !== c) {
       } else if (e.key === 'Backspace') {
         c.value = '';
-
         count--;
-
-        console.log(c.dataset.char, i);
       }
+      //: --------------------------------------------------
 
       //- animation on field change
-      if (c.value !== '') c.classList.add('char-transition');
-      if (c.value === '') c.classList.remove('char-transition');
+      if (c.value !== '') c.classList.add('char--transition');
+      if (c.value === '') c.classList.remove('char--transition');
 
+      if (c.value !== '') c.classList.add('char--rotate');
+      if (c.value === '') c.classList.remove('char--rotate');
+
+      //> ---------------------------------------------------------
       //- next row + game logic (on enter)
       //. if true
-      if (e.key === 'Enter' && c.value !== '' && guess.toLowerCase().isInDB()) {
+      if (e.key === 'Enter' && c.value !== '' && guess.isInDB()) {
         currentRow++;
         count = -1;
 
         // & <============< Game Logic >============>
 
-        //. adding colors to right letters
+        //- animation on reveal
+        // guessArr.forEach((g, gIndex) => {
+        //   if (charArr[gIndex].value.length > 0) {
+        //     // charArr[gIndex].classList.remove('char--rotate'); //: rotate char inputs
+        //     // r.offsetWidth; //> returns read-only property of layout-width of element
+        //     charArr[gIndex].classList.add('char--rotate'); //: rotate char inputs
+
+        //     console.log('rotate');
+        //   }
+        // });
+
+        //- adding colors to right letters
         //: chars included in both wordle and guess
         const wordleArrFilterd = wordleArr.filter(w => guess.includes(w));
 
@@ -458,35 +318,34 @@ function gameKeydown(e) {
           const g = guess[wIndex];
 
           if (w === g) {
-            charArr[wIndex].classList.add('char--green'); //: input fields
-
-            document.querySelector(`.k--${g}`).classList.remove('char--yellow');
-            document.querySelector(`.k--${g}`).classList.add('char--green'); //: keyboad
+            //. input fields
+            charArr[wIndex].classList.add('char--green');
             wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
+
+            //. keyboard
+            document.querySelector(`.k--${g}`).classList.remove('char--yellow');
+            document.querySelector(`.k--${g}`).classList.add('char--green');
           } //-
           else if (wordleArrFilterd.includes(g)) {
-            charArr[wIndex].classList.add('char--yellow'); //: input fields
+            //. input fields
+            charArr[wIndex].classList.add('char--yellow');
+            wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
 
+            //. keyboard
             !document
               .querySelector(`.k--${g}`)
               .classList.contains('char--green') &&
               document.querySelector(`.k--${g}`).classList.add('char--yellow');
-            wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
-          } //-
-          else {
+          } else {
             document.querySelector(`.k--${g}`).classList.add('char--none');
           }
         });
+
         // & <==========< end of game logic >==========>
 
         //- animation
         //. if false
-      } else if (
-        e.key === 'Enter' &&
-        c.value !== '' &&
-        !guess.isInDB()
-        // !guess.toLowerCase().isInDB()
-      ) {
+      } else if (e.key === 'Enter' && c.value !== '' && !guess.isInDB()) {
         //: done with a css trick -> look into offsetWidth
         r.classList.remove('row--false');
         r.offsetWidth; //> returns read-only property of layout-width of element
@@ -511,21 +370,16 @@ function gameKeydown(e) {
     guess = Array.from([...r.children]).reduce((acc, cur, i, arr) => {
       return acc + cur.value.toLowerCase();
     }, Array.from([...r.children][0]));
+
+    guessArr = guess?.split('');
   });
-
-  // //- next char
-
-  // if (count !== 4 && key !== '') count++;
-
-  // if (count !== 4 && key !== '' && e.key !== 'Backspace') count++;
-
-  console.log(count);
 }
 
 //* ===================== Click Event =====================
 //todo:
 //x make Backspace work again
 //o prevent bubbling at row elements (click targets rows instead of only keys)
+//o fix bug that makes phone keyboard to popup on keypress
 
 document.addEventListener('click', click);
 
@@ -543,6 +397,165 @@ function click(e) {
 }
 
 //: ==========================================================================
+// let key;
+
+// //. char and row counts
+// let count = -1;
+// let currentRow = 0;
+
+// //>
+// const wordleTest = 'waste';
+// let testCount = 0;
+
+// const alphabet = `abcdefghijklmnopqrstuvwxyz`.split('');
+
+// //- prevent paste event
+// document.onpaste = e => e.preventDefault();
+
+// //* Keydown Event
+
+// document.addEventListener('keydown', keydownTwo);
+
+// function keydown(e) {
+//   //- disabling keys
+
+//   //! take functions out of here!
+//   function disableKey(e) {
+//     // return ['Tab', 'Shift', 'Alt'].includes(e.key) ? e.preventDefault():  '';
+//     //: this should be better
+//     return ['Tab', 'Shift', 'Alt'].includes(e.key) && e.preventDefault();
+//   }
+//   disableKey(e);
+
+//   //- permitting keys + toUpperCase
+//   function isPermitted(e) {
+//     return /[a-zA-Z]+$/g.test(e.key) && e.key.length === 1
+//       ? e.key.toUpperCase()
+//       : '';
+//   }
+//   key = isPermitted(e);
+
+//   //- rows
+//   // [...rows.children].forEach((r, index) => {
+//   rowsAllArr.forEach((r, index, rowArr) => {
+//     //! js dataset test
+//     r.dataset.index = index;
+//     let rowIndex = r.dataset.index;
+//     // console.log(r.dataset);
+
+//     //- one row per event
+//     if (currentRow !== index) return;
+
+//     //- chars
+//     Array.from([...r.children]).forEach((c, i, charArr) => {
+//       //! js dataset test
+//       c.dataset.index = i;
+//       let fieldIndex = c.dataset.index;
+
+//       // [...r.children].forEach((c, i) => {
+//       // charAll.forEach((c, i) => {
+//       //- one char per event
+//       if (count !== i) return;
+
+//       //- input values
+//       if (c.maxLength !== c.value.length && key !== '') {
+//         (c.value = key), c.focus();
+//       }
+
+//       //- clearing field
+//       if (
+//         e.key === 'Backspace' &&
+//         c.dataset.char === charArr[4].dataset.char &&
+//         charArr[4].value !== ''
+//       ) {
+//         console.log('last letter');
+//         e.preventDefault();
+//         r.lastElementChild.value = '';
+//       } else if (e.key === 'Backspace' && c.dataset.char > 0) {
+//         c.previousElementSibling?.focus();
+//         count--;
+//       }
+
+//       //- animation on field change
+//       if (c.value !== '') c.classList.add('char-transition');
+//       if (c.value === '') c.classList.remove('char-transition');
+
+//       //- next row + game logic (on enter)
+//       //. if true
+//       if (
+//         e.key === 'Enter' &&
+//         c.value !== '' &&
+//         guess.toLowerCase().isInDB()
+//         // testDB.includes(guess.toLowerCase())
+//       ) {
+//         currentRow++;
+//         count = 0;
+
+//         // & <============< Game Logic >============>
+
+//         //. adding colors to right letters
+//         //: chars included in both wordle and guess
+//         const wordleArrFilterd = wordleArr.filter(w => guess.includes(w));
+
+//         wordleArr.forEach((w, wIndex) => {
+//           const g = guess[wIndex];
+
+//           if (w === g) {
+//             charArr[wIndex].classList.add('char--green'); //: input fields
+
+//             document.querySelector(`.k--${g}`).classList.remove('char--yellow');
+//             document.querySelector(`.k--${g}`).classList.add('char--green'); //: keyboad
+//             wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
+//           } //-
+//           else if (wordleArrFilterd.includes(g)) {
+//             charArr[wIndex].classList.add('char--yellow'); //: input fields
+
+//             !document
+//               .querySelector(`.k--${g}`)
+//               .classList.contains('char--green') &&
+//               document.querySelector(`.k--${g}`).classList.add('char--yellow');
+//             wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
+//           } //-
+//           else {
+//             document.querySelector(`.k--${g}`).classList.add('char--none');
+//           }
+//         });
+//         // & <==========< end of game logic >==========>
+
+//         //- animation
+//         //. if false
+//       } else if (
+//         e.key === 'Enter' &&
+//         c.value !== '' &&
+//         !guess.isInDB()
+//         // !guess.toLowerCase().isInDB()
+//       ) {
+//         //: done with a css trick -> look into offsetWidth
+//         r.classList.remove('row--false');
+//         r.offsetWidth; //> returns read-only property of layout-width of element
+//         r.classList.add('row--false');
+//       }
+
+//       //^! /// testing /// //
+//       //. result test:
+//       if (e.key === 'Enter') {
+//         console.log(
+//           `this is the input value: [ ${guess.toUpperCase() || 'no value'} ]`,
+//           guess.isInDB() || 'no value'
+//         );
+//       }
+//       //^! /// /// /// ///
+//     });
+
+//     //- sets a 'guess' word form characters
+//     guess = Array.from([...r.children]).reduce((acc, cur, i, arr) => {
+//       return acc + cur.value.toLowerCase();
+//     }, Array.from([...r.children][0]));
+//   });
+
+//   //- next char
+//   if (count !== 4 && key !== '') count++;
+// }
 // //* Click event 2
 
 // // document.addEventListener('click', clickTwo);
