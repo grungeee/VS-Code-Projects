@@ -268,16 +268,43 @@ body {
   color: yellow;
 }
 
+/* - base size */
+/* . 1344px */
+/* : 1344/16 = 84 */
+@media (max-width: 84em) {
+  /* .container { */
+  /* max-width: 120rem; */
+  /* } */
+}
+
+/* - phone size */
+/* . below 544px */
+/* : 544/16 = 34 */
 @media (max-width: 34em) {
   html {
-    font-size: 50%;
+    font-size: 62.25%;
+    width: 39rem;
+    margin: 0 0 0 0;
+    overflow: hidden;
+    font-size: 1rem;
+  }
+
+  .rows-container {
+    padding-top: 2rem;
+  }
+
+  .test {
+    font-size: 1rem;
   }
 
   .key {
-    max-width: 4rem;
+    max-width: 5rem;
     max-height: 6rem;
+
+    font-size: 0.2rem;
   }
 
-  .k--Backspace {
-  }
+  /* .k--Backspace {
+    
+  } */
 }
