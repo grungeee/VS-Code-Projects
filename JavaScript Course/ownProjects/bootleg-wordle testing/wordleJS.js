@@ -287,8 +287,8 @@ function gameKeydown(e) {
       if (c.value !== '') c.classList.add('char--transition');
       if (c.value === '') c.classList.remove('char--transition');
 
-      if (c.value !== '') c.classList.add('char--rotate');
-      if (c.value === '') c.classList.remove('char--rotate');
+      // if (c.value !== '') c.classList.add('char--rotate');
+      // if (c.value === '') c.classList.remove('char--rotate');
 
       //> ---------------------------------------------------------
       //- next row + game logic (on enter)
@@ -317,28 +317,38 @@ function gameKeydown(e) {
         wordleArr.forEach((w, wIndex) => {
           const g = guess[wIndex];
 
-          if (w === g) {
-            //. input fields
-            charArr[wIndex].classList.add('char--green');
-            wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
+          setTimeout(() => {
+            //: reveal colors one by one
+            //. reveal animation
+            charArr[wIndex].classList.add('char--rotate'); //: rotate char inputs
 
-            //. keyboard
-            document.querySelector(`.k--${g}`).classList.remove('char--yellow');
-            document.querySelector(`.k--${g}`).classList.add('char--green');
-          } //-
-          else if (wordleArrFilterd.includes(g)) {
-            //. input fields
-            charArr[wIndex].classList.add('char--yellow');
-            wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
+            if (w === g) {
+              //. input fields
+              charArr[wIndex].classList.add('char--green');
+              wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
 
-            //. keyboard
-            !document
-              .querySelector(`.k--${g}`)
-              .classList.contains('char--green') &&
-              document.querySelector(`.k--${g}`).classList.add('char--yellow');
-          } else {
-            document.querySelector(`.k--${g}`).classList.add('char--none');
-          }
+              //. keyboard
+              document
+                .querySelector(`.k--${g}`)
+                .classList.remove('char--yellow');
+              document.querySelector(`.k--${g}`).classList.add('char--green');
+            } //-
+            else if (wordleArrFilterd.includes(g)) {
+              //. input fields
+              charArr[wIndex].classList.add('char--yellow');
+              wordleArrFilterd.splice(wordleArrFilterd.indexOf(g), 1);
+
+              //. keyboard
+              !document
+                .querySelector(`.k--${g}`)
+                .classList.contains('char--green') &&
+                document
+                  .querySelector(`.k--${g}`)
+                  .classList.add('char--yellow');
+            } else {
+              document.querySelector(`.k--${g}`).classList.add('char--none');
+            }
+          }, wIndex * 500);
         });
 
         // & <==========< end of game logic >==========>

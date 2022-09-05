@@ -251,33 +251,48 @@ const keys = [...document.querySelectorAll('.key')];
 let count = -1;
 let rowCount = 0;
 
-const syskeys = ['Enter', 'Backspace'];
 //: --------------------------------
 
 document.addEventListener('keydown', keydown);
 
 function keydown(e) {
-  count++;
+  const syskeys = ['Enter', 'Backspace', 'Shift'];
+  const isSyskey = syskeys.includes(e.key);
 
+  if (count !== 2 && e.key !== '' && !isSyskey) count++;
+  if (e.key === 'Backspace') e.preventDefault();
+
+  //- rows
   rows.forEach((row, idx, arr) => {
     // console.log(idx, rowCount);
     if (idx !== rowCount) return;
 
+    //- chars
     const currentRow = [...row.children];
     currentRow.forEach((char, ix, ar) => {
       if (ix !== count) return;
 
       //- add values
-      if (!syskeys.includes(e.key)) char.value = e.key;
+      if (e.key.length === 1 && !char.value.length) char.value = e.key;
 
-      console.log(count);
       //- remove values
-      if (e.key === 'Backspace') (char.value = ''), count--;
+      if (e.key === 'Backspace' && ix !== -1) (char.value = ''), count--;
 
       //- next row
       if (e.key === 'Enter' && currentRow.at(-1)) rowCount++, (count = -1);
 
-      //-
+      if (e.key === 'Enter' && currentRow.at(-1)) {
+        // classLoop();
+        ar.forEach((c, i) => {
+          setTimeout(function () {
+            console.log(c, i);
+            c.classList.add('char--rotate');
+            c.classList.add('char--yellow');
+          }, i * 500);
+        });
+      }
+
+      //^!________________
     });
   });
 }
@@ -288,7 +303,9 @@ let arr = keys;
 
 function classLoop() {
   setTimeout(function () {
+    arr[index].classList.add('char--rotate');
     arr[index].classList.add('char--green');
+    // arr[index].style.animationPlayState = running ? 'paused' : 'running';
     index++;
     if (index < arr.length) {
       classLoop();
@@ -297,3 +314,16 @@ function classLoop() {
 }
 classLoop();
 //: --------------------------------
+
+function testLoop() {
+  setTimeout(function () {
+    arr[index].classList.add('char--rotate');
+    arr[index].classList.add('char--green');
+    // arr[index].style.animationPlayState = running ? 'paused' : 'running';
+    index++;
+    if (index < arr.length) {
+      testLoop();
+    }
+  }, 500);
+}
+// testLoop();
