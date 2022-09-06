@@ -194,10 +194,11 @@ let key;
 let count = -1;
 let currentRow = 0;
 //> -----------------------------------------------------------------
-document.addEventListener('click', function (e) {
-  console.log(e);
-  console.log(e.target.getBoundingClientRect());
-});
+
+// document.addEventListener('click', function (e) {
+//   console.log(e);
+//   console.log(e.target.getBoundingClientRect());
+// });
 
 const wordleTest = 'waste';
 const alphabet = `abcdefghijklmnopqrstuvwxyz`.split('');
