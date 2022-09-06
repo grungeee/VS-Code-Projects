@@ -173,18 +173,6 @@ const rows = document.querySelector('.rows-container');
 const row = rows.querySelector('.row'); //: r-1
 const char = row.querySelector('.char'); //: c-1
 
-//r |=================================|
-
-//. keyboard fields
-const keysKB = Array.from(document.querySelectorAll('.key'));
-
-// keysKB.forEach(
-//   key => key.classList.contains('k--q') && key.classList.add('char--green')
-// );
-// console.log(keysKB[0]);
-
-// console.log(document.querySelector('.k--q').classList);
-
 //: |=================================|
 //- not sure with all of these
 //~ row & char are not really needed too
@@ -195,6 +183,7 @@ const rowsAllArr = Array.from(rows.querySelectorAll('.row'));
 const charAll = rows.querySelectorAll('.char');
 const charAllArr = [...row.querySelectorAll('.char')];
 // console.log(charAll, charAllArr);
+const logo = [...document.querySelectorAll('.logo')];
 
 //- Program elements
 let guess;
@@ -204,13 +193,15 @@ let key;
 //. char and row counts
 let count = -1;
 let currentRow = 0;
+//> -----------------------------------------------------------------
+document.addEventListener('click', function (e) {
+  console.log(e);
+  console.log(e.target.getBoundingClientRect());
+});
 
-//>
 const wordleTest = 'waste';
-let testCount = 0;
-
 const alphabet = `abcdefghijklmnopqrstuvwxyz`.split('');
-
+//> -----------------------------------------------------------------
 //- prevent paste event
 document.onpaste = e => e.preventDefault();
 
@@ -299,17 +290,6 @@ function gameKeydown(e) {
 
         // & <============< Game Logic >============>
 
-        //- animation on reveal
-        // guessArr.forEach((g, gIndex) => {
-        //   if (charArr[gIndex].value.length > 0) {
-        //     // charArr[gIndex].classList.remove('char--rotate'); //: rotate char inputs
-        //     // r.offsetWidth; //> returns read-only property of layout-width of element
-        //     charArr[gIndex].classList.add('char--rotate'); //: rotate char inputs
-
-        //     console.log('rotate');
-        //   }
-        // });
-
         //- adding colors to right letters
         //: chars included in both wordle and guess
         const wordleArrFilterd = wordleArr.filter(w => guess.includes(w));
@@ -349,6 +329,10 @@ function gameKeydown(e) {
               document.querySelector(`.k--${g}`).classList.add('char--none');
             }
           }, wIndex * 500);
+          if (wordle === guess)
+            setTimeout(() => {
+              logo.forEach(l => l.classList.add('char--green'));
+            }, 2500);
         });
 
         // & <==========< end of game logic >==========>
