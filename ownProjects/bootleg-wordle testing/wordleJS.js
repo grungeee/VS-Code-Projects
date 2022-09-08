@@ -194,7 +194,56 @@ let key;
 let count = -1;
 let currentRow = 0;
 //> -----------------------------------------------------------------
+const containers = document.querySelectorAll('.container');
 
+function addLogoScreen() {
+  containers[0].insertAdjacentHTML(
+    'afterbegin',
+    `
+        <div class="logo-container">
+          <div class="logo">W</div>
+          <div class="logo">O</div>
+          <div class="logo">R</div>
+          <div class="logo">D</div>
+          <div class="logo">L</div>
+          <div class="logo">E</div>
+        </div>
+        <div class='overlay'></div>
+`
+  );
+}
+addLogoScreen();
+
+const logoContainer = document.querySelector('.logo-container');
+const logoLetters = [...document.querySelectorAll('.logo')];
+const overlay = document.querySelector('.overlay');
+document.addEventListener('click', clickOverlay);
+function clickOverlay(e) {
+  function removeLogoScreen() {
+    e.target.classList.contains('overlay');
+    logoContainer.remove(this);
+    overlay.remove(this);
+    // ! only after animation end initiate the game function
+  }
+  // removeLogoScreen();
+
+  function runAnimation() {
+    logoContainer.classList.remove('move-in-out');
+    e.target.offsetWidth; //> returns read-only property of layout-width of element
+    logoContainer.classList.add('move-in-out');
+
+    logoLetters.reverse().forEach((l, i) => {
+      setTimeout(() => {
+        l.classList.remove('rotateX');
+        l.offsetWidth;
+        l.classList.add('rotateX');
+      }, i * (25 * i));
+    });
+  }
+
+  runAnimation();
+}
+//> -----------------------------------------------------------------
 // document.addEventListener('click', function (e) {
 //   console.log(e);
 //   console.log(e.target.getBoundingClientRect());

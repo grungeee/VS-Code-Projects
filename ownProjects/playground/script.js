@@ -242,88 +242,100 @@ function bar(){
 
 //: --------------------------------
 
-//* Adding a class after a delay
-//: --------------------------------
-const rows = [...document.querySelectorAll('.row')];
-const chars = [...document.querySelectorAll('.char')];
-const keys = [...document.querySelectorAll('.key')];
+// //* Adding a class after a delay
+// //: --------------------------------
+// const rows = [...document.querySelectorAll('.row')];
+// const chars = [...document.querySelectorAll('.char')];
+// const keys = [...document.querySelectorAll('.key')];
 
-let count = -1;
-let rowCount = 0;
+// let count = -1;
+// let rowCount = 0;
 
-//: --------------------------------
+// //: --------------------------------
 
-document.addEventListener('keydown', keydown);
+// document.addEventListener('keydown', keydown);
 
-function keydown(e) {
-  const syskeys = ['Enter', 'Backspace', 'Shift'];
-  const isSyskey = syskeys.includes(e.key);
+// function keydown(e) {
+//   const syskeys = ['Enter', 'Backspace', 'Shift'];
+//   const isSyskey = syskeys.includes(e.key);
 
-  if (count !== 2 && e.key !== '' && !isSyskey) count++;
-  if (e.key === 'Backspace') e.preventDefault();
+//   if (count !== 2 && e.key !== '' && !isSyskey) count++;
+//   if (e.key === 'Backspace') e.preventDefault();
 
-  //- rows
-  rows.forEach((row, idx, arr) => {
-    // console.log(idx, rowCount);
-    if (idx !== rowCount) return;
+//   //- rows
+//   rows.forEach((row, idx, arr) => {
+//     // console.log(idx, rowCount);
+//     if (idx !== rowCount) return;
 
-    //- chars
-    const currentRow = [...row.children];
-    currentRow.forEach((char, ix, ar) => {
-      if (ix !== count) return;
+//     //- chars
+//     const currentRow = [...row.children];
+//     currentRow.forEach((char, ix, ar) => {
+//       if (ix !== count) return;
 
-      //- add values
-      if (e.key.length === 1 && !char.value.length) char.value = e.key;
+//       //- add values
+//       if (e.key.length === 1 && !char.value.length) char.value = e.key;
 
-      //- remove values
-      if (e.key === 'Backspace' && ix !== -1) (char.value = ''), count--;
+//       //- remove values
+//       if (e.key === 'Backspace' && ix !== -1) (char.value = ''), count--;
 
-      //- next row
-      if (e.key === 'Enter' && currentRow.at(-1)) rowCount++, (count = -1);
+//       //- next row
+//       if (e.key === 'Enter' && currentRow.at(-1)) rowCount++, (count = -1);
 
-      if (e.key === 'Enter' && currentRow.at(-1)) {
-        // classLoop();
-        ar.forEach((c, i) => {
-          setTimeout(function () {
-            console.log(c, i);
-            c.classList.add('char--rotate');
-            c.classList.add('char--yellow');
-          }, i * 500);
-        });
-      }
+//       if (e.key === 'Enter' && currentRow.at(-1)) {
+//         // classLoop();
+//         ar.forEach((c, i) => {
+//           setTimeout(function () {
+//             console.log(c, i);
+//             c.classList.add('char--rotate');
+//             c.classList.add('char--yellow');
+//           }, i * 500);
+//         });
+//       }
 
-      //^!________________
-    });
-  });
-}
-//: --------------------------------
+//       //^!________________
+//     });
+//   });
+// }
+// //: --------------------------------
 
-let index = 0;
-let arr = keys;
+// let index = 0;
+// let arr = keys;
 
-function classLoop() {
-  setTimeout(function () {
-    arr[index].classList.add('char--rotate');
-    arr[index].classList.add('char--green');
-    // arr[index].style.animationPlayState = running ? 'paused' : 'running';
-    index++;
-    if (index < arr.length) {
-      classLoop();
-    }
-  }, 500);
-}
-classLoop();
-//: --------------------------------
+// function classLoop() {
+//   setTimeout(function () {
+//     arr[index].classList.add('char--rotate');
+//     arr[index].classList.add('char--green');
+//     // arr[index].style.animationPlayState = running ? 'paused' : 'running';
+//     index++;
+//     if (index < arr.length) {
+//       classLoop();
+//     }
+//   }, 500);
+// }
+// classLoop();
+// //: --------------------------------
 
-function testLoop() {
-  setTimeout(function () {
-    arr[index].classList.add('char--rotate');
-    arr[index].classList.add('char--green');
-    // arr[index].style.animationPlayState = running ? 'paused' : 'running';
-    index++;
-    if (index < arr.length) {
-      testLoop();
-    }
-  }, 500);
-}
-// testLoop();
+// function testLoop() {
+//   setTimeout(function () {
+//     arr[index].classList.add('char--rotate');
+//     arr[index].classList.add('char--green');
+//     // arr[index].style.animationPlayState = running ? 'paused' : 'running';
+//     index++;
+//     if (index < arr.length) {
+//       testLoop();
+//     }
+//   }, 500);
+// }
+// // testLoop();
+
+//* Adding an HTML element with JS
+containers = document.querySelectorAll('.container');
+
+console.log(containers);
+
+containers[0].insertAdjacentHTML(
+  'afterbegin',
+  `
+<div> This is a test </div>
+`
+);
