@@ -449,6 +449,22 @@ function click(e) {
 }
 
 //: ==========================================================================
+
+//* Phone inner viewport
+
+let timeoutId = null;
+const documentHeight = () => {
+  clearTimeout(timeoutId); // avoid execution of previous timeouts
+  timeoutId = setTimeout(() => {
+    const doc = document.documentElement;
+    doc.style.setProperty('--doc-height', `${window.innerHeight}px`);
+  }, 200);
+};
+window.addEventListener('resize', documentHeight);
+documentHeight();
+
+//: ==========================================================================
+
 // let key;
 
 // //. char and row counts
