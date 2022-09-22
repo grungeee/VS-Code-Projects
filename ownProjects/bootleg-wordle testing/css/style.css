@@ -27,6 +27,9 @@ body {
 
   overflow: hidden;
   /* height: 100vh; */
+
+  /* touch-action: none; */
+  touch-action: manipulation;
 }
 
 .header {
@@ -224,8 +227,6 @@ body {
   align-items: center;
 
   flex: 1 1; /* grow + shrink > 0% */
-
-  touch-action: manipulation;
 }
 
 /**
@@ -324,7 +325,7 @@ body {
   position: absolute;
   top: 0;
   right: 0;
-  margin: 1.5rem 4rem;
+  margin: 1rem 4rem;
 
   color: rgb(235, 241, 255);
 
@@ -382,10 +383,11 @@ body {
   }
 
   .game-container {
-    height: var(--doc-height);
+    /* height: var(--doc-height); */
   }
   .rows-container {
     /* padding-top: 4rem; */
+    margin-top: 2rem;
   }
 
   .logo {
@@ -396,8 +398,8 @@ body {
   .keyboard {
     --keyboard-width: 96vw;
 
-    height: var(--doc-height);
-    margin-top: 4rem;
+    /* height: var(--doc-height); */
+    margin-top: 2rem;
     /* padding-bottom: 10vh; */
 
     /* padding: 0 2rem 8rem 2rem; */
