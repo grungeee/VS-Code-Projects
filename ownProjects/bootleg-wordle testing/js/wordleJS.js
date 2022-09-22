@@ -339,9 +339,6 @@ function gameKeydown(e) {
       if (c.value !== '') c.classList.add('char--transition');
       if (c.value === '') c.classList.remove('char--transition');
 
-      // if (c.value !== '') c.classList.add('char--rotate');
-      // if (c.value === '') c.classList.remove('char--rotate');
-
       //> ---------------------------------------------------------
       //- next row + game logic (on enter)
       //. if true

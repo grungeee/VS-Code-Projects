@@ -16,7 +16,7 @@ const include = guess1.forEach((letter, i) => {
       : wordle1.includes(letter) &&
         guess1.findIndex(char => char === letter) === i
       ? '[ 🟨 ]'
-      : '[ 🟥 ]',
+  : '[ 🟥 ]',
     // wordle1.includes(letter) ? '[ ✅ ]' : '[ ❌ ]',
     letter.toUpperCase()
   );
