@@ -11,6 +11,8 @@ html {
 :root {
   /* --keyboard-width: ; */
   --game-container-max-width: 70rem;
+  --keyboard-max-height: calc();
+  --keyboard-max-width: 50vw;
 }
 body {
   /* font-family: 'Rubik', sans-serif; */
@@ -61,7 +63,10 @@ body {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
-  max-width: var(--game-container-max-width);
+  /* ~ these do not do anything */
+  /* max-width: var(--game-container-max-width); */
+  width: 80vw;
+  /* ~ ---- ~ */
   height: 100vh;
   align-items: center;
   /* justify-content: center; */
@@ -84,6 +89,8 @@ body {
   flex-direction: column;
 
   /* padding: 2rem 2rem; */
+
+  /* width: 100vw; */
 }
 .rows-container {
   /* margin-top: 5rem; */
@@ -153,13 +160,6 @@ body {
   background-color: #8dff94 !important;
 }
 
-.char--yellow {
-  /* color: #555555 !important; */
-  color: #444 !important;
-  /* background-color: #f9ffa8 !important; */
-  background-color: #f4ff61 !important;
-}
-
 .char--transition {
   border: 0.4rem solid rgba(0, 0, 0, 0.2);
   animation: ease-in-out 100ms ease forwards;
@@ -178,18 +178,28 @@ body {
 
 .keyboard {
   /* margin-top: 10rem; */
-  padding: 10rem 0;
+  /* o | - make dynamic padding  width relative to height (1:2 / 2:3 / ...)  */
+
+  /* padding: 10rem 20rem; */
   display: flex;
   gap: 0.5rem;
   flex-direction: column;
   justify-content: flex-end;
   /* align-items: center; */
   justify-self: flex-end;
-  width: 100vw;
+
+  /* width: 100vw; */
+
+  /* --keyboard-max-width: 50vw; */
+  width: 50vw;
+  height: 100vh;
+
+  /* min-height: calc(50vw / 2); */
 
   /* bottom: 0; */
 
-  flex-grow: 1;
+  /* flex-grow: 1; */
+
   /* position: absolute;
   left: 50%;
   bottom: 5%;
@@ -215,7 +225,11 @@ body {
   background-color: #4b4b4b;
   border: 0.4px solid rgba(0, 0, 0, 0.1);
 
-  height: 8rem;
+  /* --keyboard-max-width: 50vw; */
+  height: calc(var(--keyboard-max-width) / 8);
+  /* max-height: var(--keyboard-max-height); */
+  /* max-height: 8rem; */
+
   /* width: 6rem; */
   border-radius: 1rem;
   cursor: pointer;
@@ -224,9 +238,12 @@ body {
   justify-content: center;
   align-items: center;
 
-  flex-grow: 1;
-  flex-shrink: 1;
+  /* flex-grow: 1; */
+  /* flex-shrink: 1; */
+  flex: 1; /* grow + shrink */
   flex-basis: 0%;
+
+  touch-action: manipulation;
 }
 
 /**
@@ -247,13 +264,19 @@ body {
 }
 
 .k--Enter {
+  flex: 1.5;
+  /* flex-grow: 2; */
   /* width: 10rem; */
   font-size: 6rem;
 }
 
 .k--Backspace {
-  /* width: 10rem; */
+  flex: 1.5;
   font-size: 6rem;
+}
+
+.spacer {
+  flex: 0.5;
 }
 
 /* * LOGO */
@@ -311,26 +334,27 @@ body {
   display: none;
 }
 
+.version {
+  font-family: 'neon_tubes_2regular';
+  font-weight: normal;
+  font-size: 3rem;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 1.5rem 4rem;
+
+  color: rgb(235, 241, 255);
+
+  text-shadow: 0rem 0rem 3rem rgb(10, 14, 39), 0rem 0rem 5rem rgb(0, 128, 255),
+    0rem 0rem 2rem rgb(234, 0, 255), 0rem 0rem 2rem rgb(0, 128, 255);
+}
+
 /* todo: */
 /* x add a vertical/horizontal rotation animation */
 /* * MEDIA QUERIES */
 
 /* @media (min-width: 84em) {
-  html {
-    font-size: 62.25%;
-  }
-  .container {
-    max-width: 120rem;
-  }
-  .logo {
-    font-size: 6rem;
-    padding: 1rem 0;
-  }
-} */
-
-/* . 1344px */
-/* : 1344/16 = 84 */
-/* @media (max-width: 84em) {
   html {
     font-size: 62.25%;
   }
@@ -366,7 +390,6 @@ body {
 /* : 544/16 = 34 */
 @media (max-width: 34em) {
   html {
-    /* font-size: 62.25%; */
     font-size: 62.25%;
     /* margin: 0 0 0 0; */
     /* overflow-x: hidden; */
@@ -383,7 +406,8 @@ body {
   }
 
   .keyboard {
-    padding: 0 0 14rem 0;
+    padding: 0 2rem 8rem 2rem;
+    /* margin: 0 10rem; */
     /* position: fixed; */
     /* margin: 0 1rem; */
     /* padding-bottom: 10rem; */
@@ -405,13 +429,12 @@ body {
   }
 
   .k--Enter {
-    width: 5.2rem;
+    /* width: 5.2rem; */
     font-size: 3rem;
     font-weight: 200;
   }
 
   .k--Backspace {
-    width: 5.2rem;
     font-size: 2.3rem;
     font-weight: 200;
   }
