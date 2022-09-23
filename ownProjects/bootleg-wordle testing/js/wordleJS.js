@@ -430,8 +430,8 @@ function gameKeydown(e) {
 //* ===================== Click Event =====================
 //todo:
 //x make Backspace work again
+//x fix bug that makes phone keyboard to popup on keypress
 //o prevent bubbling at row elements (click targets rows instead of only keys)
-//o fix bug that makes phone keyboard to popup on keypress
 
 document.addEventListener('click', click);
 
