@@ -1,42 +1,67 @@
-'use strickt';
-//* Tests for the wordle app
-const wordle1 = 'renos'.split('');
-const guess1 = 'rotno'.split('');
+function addHowTo() {
+  body.innerHTML = '';
 
-console.log('wordle: ', wordle1);
-console.log('guess: ', guess1);
-console.log(guess1.join(''));
+  body.insertAdjacentHTML(
+    'afterbegin',
+    `
+<div style='background-color: black; color: blue; font-size: 50px;'>TEST</div>
+<br/>
 
-const include = guess1.forEach((letter, i) => {
-  console.log(
-    wordle1[i].toUpperCase(),
+<div style='background:lightpink;'>
 
-    wordle1[i] === guess1[i]
-      ? '[ ✅ ]'
-      : wordle1.includes(letter) &&
-        guess1.findIndex(char => char === letter) === i
-      ? '[ 🟨 ]'
-  : '[ 🟥 ]',
-    // wordle1.includes(letter) ? '[ ✅ ]' : '[ ❌ ]',
-    letter.toUpperCase()
+<h1 style='color: coral; font-size: 50px;'>How to play</h1>
+
+<p style='color: black; font-size: 16px'>
+Guess the WORDLE in 6 tries.
+<br/>
+<br/>
+Each guess must be a valid 5-letter word. Hit the enter button to submit.
+
+<br/>
+<br/>
+After each guess, the color of the tiles will change to show how close your guess was to the word.
+</p>
+
+<br/>
+<hr style='border-top: 2px solid #000'>
+
+<br/>
+<div style='font-size:20px;'>
+<br/>
+<strong>Examples</strong>
+<br/>
+<br/>
+
+<div>[W][E][A][R][Y]</div>
+<strong>The Letter W is in the word and in the correct spot</strong>
+<br/>
+<br/>
+
+<div>[P][I][L][L][S]</div>
+<strong>The letter I is in the word but in the wrong spot.</strong>
+<br/>
+<br/>
+
+<div>[V][A][G][U][E]</div>
+<strong>The letter U is not in the word in any spot.</strong>
+
+<br/>
+<hr style='border-top: 2px solid #000'>
+
+<br/>
+<br/>
+
+<p>
+A new WORDLE will be available each time you start a new game!
+</p>
+</div>
+<div>
+ `
   );
-  //:
-  // console.log(guess1.filter((letter, _, arr) => letter === guess1[i]));
-  //>
-  // console.log(guess1.filter(letter => letter === guess1[i]).length);
-  //:
-  // guess1.find(l => console.log(l );)
-  //:
-  console.log(
-    guess1.findIndex(char => char === letter),
-    guess1[guess1.findIndex(char => char === letter)],
-    i === guess1.findIndex(char => char === letter)
-  );
 
-  const doesInclude = guess1.some(letter => wordle1.includes(letter));
-});
-
-console.log('countInArray(guess1, o) :>> ', countInArray(guess1, 'o'));
-function countInArray(array, what) {
-  return array.filter(item => item === what).length;
+  body.addEventListener('click', function (e) {
+    body.style.color = 'green';
+  });
 }
+
+// addHowTo();

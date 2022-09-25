@@ -195,10 +195,12 @@ let count = -1;
 let currentRow = 0;
 //> -----------------------------------------------------------------
 //* Animation on game load
-const containers = document.querySelectorAll('.container');
+const header = document.querySelector('.header');
+const modal = document.querySelector('.modal');
+// o | need to add X to close the modal window
 
 function addLogoScreen() {
-  containers[0].insertAdjacentHTML(
+  header.insertAdjacentHTML(
     'afterbegin',
     `
         <div class="logo-container">
@@ -213,7 +215,7 @@ function addLogoScreen() {
 `
   );
 }
-// addLogoScreen();
+addLogoScreen();
 
 const logoContainer = document.querySelector('.logo-container');
 const logoLetters = [...document.querySelectorAll('.logo')];
@@ -249,11 +251,12 @@ function startupAnimations() {
     setTimeout(() => {
       logoContainer.remove();
       overlay.remove();
+      modal.classList.remove('hidden');
       // ! only after animation end initiate the game function
     }, 2000);
   }
 }
-// startupAnimations();
+startupAnimations();
 //> -----------------------------------------------------------------
 // document.addEventListener('click', function (e) {
 //   console.log(e);
@@ -446,6 +449,9 @@ function click(e) {
   // console.log(keyKB === 'Backspace' ? backspaceEvent : keydownEvent);
 
   document.dispatchEvent(keyKB === 'Backspace' ? backspaceEvent : keydownEvent);
+
+  // - remove modal window
+  e.target === modal && modal.classList.add('hidden');
 }
 
 //: ==========================================================================
