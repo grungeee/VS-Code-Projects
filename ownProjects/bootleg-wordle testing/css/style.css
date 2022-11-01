@@ -7,9 +7,9 @@
   --html-font-size: 62.25%;
   /* --keyboard-width: ; */
   --game-container-width: 80vw;
-  --keyboard-height: calc();
   --keyboard-width: 35vw;
   --doc-height: 100%;
+  --1pix-rel-to-kb-width: calc(var(--keyboard-width) / 670);
 
   /* - colors: */
   --white: #fff;
@@ -96,8 +96,8 @@ body {
 
   /* > -------------------------- < */
   width: 100vw;
-  height: 100%;
-  /* height: 90vh; */
+  height: 100vh;
+  height: var(--doc-height);
   align-items: center;
 
   /* justify-content: space-between; */
@@ -136,6 +136,7 @@ body {
 .row {
   display: flex;
   gap: 0.5rem;
+  /* margin-bottom: calc(var(--1pix-rel-to-kb-width) * 5); */
 }
 
 .row--false {
@@ -148,7 +149,6 @@ body {
 .char {
   color: #fff;
   background-color: #444;
-  font-size: 4rem;
   font-family: inherit;
 
   border: 0.4rem solid rgba(0, 0, 0, 0.1);
@@ -161,16 +161,14 @@ body {
   /* align-items: center; */
   /* flex: 1 1; */
 
-  /* height: 6.4rem; */
-  /* width: 6.4rem; */
+  font-size: 4rem;
+  height: 6.4rem;
+  width: 6.4rem;
 
-  height: calc(var(--keyboard-width) / 10);
-  width: calc(var(--keyboard-width) / 10);
-
-  height: calc((var(--keyboard-width) / 670) * 64);
-  width: calc((var(--keyboard-width) / 670) * 64);
-
-  font-size: calc((var(--keyboard-width) / 670) * 40);
+  /* height: calc(var(--1pix-rel-to-kb-width) * 64); */
+  /* width: calc(var(--1pix-rel-to-kb-width) * 64); */
+  /* font-size: calc(var(--1pix-rel-to-kb-width) * 40); */
+  /* margin-right: calc(var(--1pix-rel-to-kb-width) * 5); */
 
   pointer-events: none;
   caret-color: transparent;
@@ -184,21 +182,16 @@ body {
 }
 
 .char--none {
-  text-align: center;
   color: var(--white) !important;
   background-color: var(--light-grey) !important;
 }
 
 .char--green {
-  text-align: center;
-  /* color: #555555 !important; */
   color: var(--light-grey-char) !important;
-  /* background-color: #a8ffae !important; */
   background-color: var(--green) !important;
 }
 
 .char--yellow {
-  text-align: center;
   color: var(--light-grey-char) !important;
   background-color: var(--yellow) !important;
 }
@@ -221,7 +214,7 @@ body {
 */
 
 .keyboard {
-  /* o | - make dynamic padding  width relative to height (1:2 / 2:3 / ...)  */
+  /* x | - make dynamic padding width relative to height (1:2 / 2:3 / ...)  */
 
   display: flex;
   /* gap: 0.5rem; */
@@ -237,6 +230,7 @@ body {
   /* --keyboard-width: 50vw; */
   width: var(--keyboard-width);
   margin-top: 14rem;
+  margin-top: calc((var(--keyboard-width) / 670) * 140);
 
   /* prevent selection */
   -webkit-user-select: none; /* Safari */
@@ -279,6 +273,11 @@ body {
   flex: 1 1; /* grow + shrink > 0% */
 }
 
+/* > k--l dumbass for some reason doesn't want to drop his margin */
+.k--l,
+.key:last-of-type {
+  margin-right: 0;
+}
 /*
  o | replace active with add+remove becuase animation shuld be activated on tap, not hold
 */
@@ -546,9 +545,9 @@ body {
   }
 
   .char {
-    height: calc((var(--keyboard-width) / 670) * 110);
+    /* height: calc((var(--keyboard-width) / 670) * 110);
     width: calc((var(--keyboard-width) / 670) * 110);
-    font-size: calc((var(--keyboard-width) / 670) * 55);
+    font-size: calc((var(--keyboard-width) / 670) * 55); */
   }
 
   .keyboard {

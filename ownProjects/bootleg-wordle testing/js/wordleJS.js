@@ -215,7 +215,7 @@ function addLogoScreen() {
 `
   );
 }
-addLogoScreen();
+// addLogoScreen();
 
 const logoContainer = document.querySelector('.logo-container');
 const logoLetters = [...document.querySelectorAll('.logo')];
@@ -256,7 +256,7 @@ function startupAnimations() {
     }, 2000);
   }
 }
-startupAnimations();
+// startupAnimations();
 //> -----------------------------------------------------------------
 // document.addEventListener('click', function (e) {
 //   console.log(e);
